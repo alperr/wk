@@ -12,6 +12,9 @@ var map = {
 	"var SOURCE_ELEMENT = " : "element.js",
 	"var SOURCE_INDEX = " : "index.html",
 	"var SOURCE_SAMPLE = " : "sample.js",
+	"var SOURCE_BASIC_HTML = " : "basic-template.html",
+	"var SOURCE_BASIC_CSS = " : "basic-template.css",
+	"var SOURCE_BASIC_JS = " : "basic-template.js"
 }
 for (var i in lines)
 {

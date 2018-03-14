@@ -17,6 +17,9 @@ var SOURCE_STORE = 'dmFyIHN0b3JlID0ge307CnN0b3JlLl8gPSB7fTsKCnN0b3JlLmhhcyA9IGZ1
 var SOURCE_UTIL = 'dmFyIHV0aWwgPSB7fTsKdXRpbC5yYW5kb21BbHBoYU51bSA9IGZ1bmN0aW9uKGxlbmd0aCkKewoJLy8gNjIgY2hhcnMgCgkvLyBNYXRoLmxvZzIoNjIpID0gNS45NTQgYml0IGVudHJvcHkgcGVyIGNoYXJhY3RlcgoJLy8gbGVuZ3RoID0gMjIgd2lsbCBnaXZlIHlvdSBhIH4xMjggYml0IHJhbmRvbW5lc3MKCXZhciBhbHBoYWJldCA9ICcwMTIzNDU2Nzg5YWJjZGVmZ2hpamtsbW5vcHJxc3R1d3Z4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVXVlhZWicKCXZhciByID0gJyc7Cglmb3IgKHZhciBpPTA7aTxsZW5ndGg7aSsrKQoJCXIgKz0gYWxwaGFiZXRbTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogYWxwaGFiZXQubGVuZ3RoKV07CgkKCXJldHVybiByOwp9Cg==';
 var SOURCE_INDEX = 'PGh0bWwgbGFuZz0iZW4iPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgiPgoJCTx0aXRsZT53azwvdGl0bGU+CgkJPHN0eWxlPgoJCQkjcm9vdHsKCQkJCXdpZHRoOiAxMDAlOwoJCQkJaGVpZ2h0OiAxMDAlOwoJCQkJb3ZlcmZsb3c6IG5vbmU7CgkJCQlwb3NpdGlvbjogcmVsYXRpdmU7CgkJCX0KCQk8L3N0eWxlPgoJCTxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iZGV2LmNzcyI+CgkJPHNjcmlwdCBzcmM9J2Rldi5qcyc+PC9zY3JpcHQ+Cgk8L2hlYWQ+CgkKCTxib2R5PgoJCTxkaXYgaWQ9J3Jvb3QnPjwvZGl2PgoJPC9ib2R5PgoJPHNjcmlwdD4KCXdpbmRvdy5vbmxvYWQgPSBmdW5jdGlvbiAoKQoJewoJCW5ldyBBcHBsaWNhdGlvbihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKTsKCX0KCTwvc2NyaXB0Pgo8L2h0bWw+';
 var SOURCE_SAMPLE = 'ZnVuY3Rpb24gU2FtcGxlQ29tcG9uZW50KHJvb3Qsb3B0aW9ucykKewoJLy8gY29uc3RydWN0b3IKCgkvLyBwdWJsaWMgbWV0aG9kCglzZWxmLmEgPSBmdW5jdGlvbigpCgl7CgoJfQoKCS8vIHByaXZhdGUgbWV0aG9kCglmdW5jdGlvbiBiKCkKCXsKCgl9Cn0=';
+var SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwbGljYXRpb24nPgoJPGgxPndlbGNvbWUgdG8gYmFzaWMgd2sgcHJvamVjdDwvaDE+Cgk8cD50aGlzIHBhZ2UgaXMgZ2VuZXJhdGVkIGJ5IGFwcGxpY2F0aW9uIGNvbXBvbmVudDwvcD4KCTxwPml0IGNhbiBiZSBmb3VuZCB1bmRlciA8c3Ryb25nPi9jb21wb25lbnRzPC9zdHJvbmc+IGZvbGRlcjwvcD4KPC9kaXY+';
+var SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uIGgxewoJY29sb3I6ICMwNjA7Cn0KCi5hcHBsaWNhdGlvbiBwewoJY29sb3I6ICNjMGE7Cn0=';
+var SOURCE_BASIC_JS = 'ZnVuY3Rpb24gQXBwbGljYXRpb24ocm9vdCxvcHRpb25zKQp7CgkKfQ==';
 
 // rename these
 var BASE_INPUT_PATH = "./components/";
@@ -67,6 +70,11 @@ function init(a)
 	FS.writeFileSync("./classes/store.js",Buffer.from(SOURCE_STORE, 'base64').toString('ascii'),"utf8");
 	FS.writeFileSync("./dist/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
 	log("- classes created");
+
+	FS.mkdirSync("./components/application");
+	FS.writeFileSync("./components/application/application.js",Buffer.from(SOURCE_BASIC_JS, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./components/application/application.css",Buffer.from(SOURCE_BASIC_CSS, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./components/application/application.html",Buffer.from(SOURCE_BASIC_HTML, 'base64').toString('ascii'),"utf8");
 
 	highlight("project initialized successfully , you can run _start_ command now");
 	highlight("wk start  | auto-builds components and serves them under ./dist folder");
