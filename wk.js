@@ -6,25 +6,27 @@ var command = args[0];
 // console.log(command);
 
 var commands = {
-	"init" : true,
-	"run"  : true
+	"init"  : init,
+	"start" : start
 }
 
-printSmallHelp();
-
+if (typeof commands[command] == 'undefined')
+	printSmallHelp();
+else
+	commands[command]();
 
 function printSmallHelp()
 {
 	console.log("wk init   | initializes a new project with boilerplate code");
 	console.log("wk start  | auto-builds components and serves them under dist folder");
-	console.log("wk help   | detailed help");
 }
 
+function init()
+{
+	console.log("initializing");
+}
 
-
-// Usage:
-//   microz <path> (create|init)
-//   microz <path> api run [<param=value> ...]
-//   microz <path> script <name> create
-//   microz <path> script <name> run [<param=value> ...]
-//   microz <path> test [<target>]
+function start()
+{
+	console.log("starting");
+}
