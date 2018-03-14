@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 var BG_RED = "\x1b[41m";
-var FG_RED = "\x1b[31m"
+var FG_RED = "\x1b[31m";
+var BG_GREEN = "\x1b[42m";
+var FG_BLACK = "\x1b[30m";
 var RESET = "\x1b[0m";
 
 var FS = require('fs');
@@ -15,7 +17,7 @@ var SOURCE_STORE = 'dmFyIHN0b3JlID0ge307CnN0b3JlLl8gPSB7fTsKCnN0b3JlLmhhcyA9IGZ1
 var SOURCE_UTIL = 'dmFyIHV0aWwgPSB7fTsKdXRpbC5yYW5kb21BbHBoYU51bSA9IGZ1bmN0aW9uKGxlbmd0aCkKewoJLy8gNjIgY2hhcnMgCgkvLyBNYXRoLmxvZzIoNjIpID0gNS45NTQgYml0IGVudHJvcHkgcGVyIGNoYXJhY3RlcgoJLy8gbGVuZ3RoID0gMjIgd2lsbCBnaXZlIHlvdSBhIH4xMjggYml0IHJhbmRvbW5lc3MKCXZhciBhbHBoYWJldCA9ICcwMTIzNDU2Nzg5YWJjZGVmZ2hpamtsbW5vcHJxc3R1d3Z4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVXVlhZWicKCXZhciByID0gJyc7Cglmb3IgKHZhciBpPTA7aTxsZW5ndGg7aSsrKQoJCXIgKz0gYWxwaGFiZXRbTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogYWxwaGFiZXQubGVuZ3RoKV07CgkKCXJldHVybiByOwp9Cg==';
 var SOURCE_INDEX = 'PGh0bWwgbGFuZz0iZW4iPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgiPgoJCTx0aXRsZT53azwvdGl0bGU+CgkJPHN0eWxlPgoJCQkjcm9vdHsKCQkJCXdpZHRoOiAxMDAlOwoJCQkJaGVpZ2h0OiAxMDAlOwoJCQkJb3ZlcmZsb3c6IG5vbmU7CgkJCQlwb3NpdGlvbjogcmVsYXRpdmU7CgkJCX0KCQk8L3N0eWxlPgoJCTxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iZGV2LmNzcyI+CgkJPHNjcmlwdCBzcmM9J2Rldi5qcyc+PC9zY3JpcHQ+Cgk8L2hlYWQ+CgkKCTxib2R5PgoJCTxkaXYgaWQ9J3Jvb3QnPjwvZGl2PgoJPC9ib2R5PgoJPHNjcmlwdD4KCXdpbmRvdy5vbmxvYWQgPSBmdW5jdGlvbiAoKQoJewoJCW5ldyBBcHBsaWNhdGlvbihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKTsKCX0KCTwvc2NyaXB0Pgo8L2h0bWw+';
 
-// rename this
+// rename these
 var BASE_INPUT_PATH = "./components/";
 var CLASS_INPUT_PATH = "./classes/";
 var OUTPUT_PATH = "./dist/dev";
@@ -65,8 +67,8 @@ function init(a)
 	FS.writeFileSync("./dist/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
 	log("- classes created");
 
-	log("project initialized successfully , you can run _start_ command now");
-	log("	wk start  | auto-builds components and serves them under ./dist folder");
+	highlight("project initialized successfully , you can run _start_ command now");
+	highlight("wk start  | auto-builds components and serves them under ./dist folder");
 }
 
 function deinit(a)
@@ -74,7 +76,7 @@ function deinit(a)
 	deleteFolderRecursive("./dist");
 	deleteFolderRecursive("./classes");
 	deleteFolderRecursive("./components");
-	log("- de initialized project and delete all files");
+	log("- de initialized project and deleted all files");
 }
 
 function start(a)
@@ -116,8 +118,7 @@ function start(a)
 		server.listen(port);
 		log("listening localhost:" + port);
 		opn('http://localhost:' + port);
-
-	});	
+	});
 }
 
 function newComponent(a)
@@ -165,6 +166,10 @@ function error(m)
 function log(m)
 {
 	console.log(RESET, m, RESET);
+}
+function highlight(m)
+{
+	console.log(BG_GREEN, m, RESET);
 }
 
 function onchange()
