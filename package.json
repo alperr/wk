@@ -1,6 +1,6 @@
 {
   "name": "wkt",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "bin": {
     "wk": "./bin/wk",
     "wkt": "./bin/wk"

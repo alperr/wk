@@ -11,6 +11,7 @@ var command = args[0];
 
 var commands = {
 	"init"  : init,
+	"deinit"  : deinit,
 	"start" : start,
 	"new" : newComponent
 }
@@ -35,7 +36,25 @@ function printSmallHelp(c)
 
 function init(a)
 {
+	if (isProjectValid())
+	{
+		error("current folder is already initialized");
+		return;
+	}
+	
 	log("initializing a new project");
+	if (!FS.existsSync("./dist")){FS.mkdirSync("./dist");}
+	if (!FS.existsSync("./classes")){FS.mkdirSync("./classes");}
+	if (!FS.existsSync("./components")){FS.mkdirSync("./components");}
+	log("- folders created");
+}
+
+function deinit(a)
+{
+	if (FS.existsSync("./dist")){FS.rmdirSync("./dist");}
+	if (FS.existsSync("./classes")){FS.rmdirSync("./classes");}
+	if (FS.existsSync("./components")){FS.rmdirSync("./components");}
+	log("- de initialized");
 }
 
 function start(a)
@@ -57,10 +76,8 @@ function start(a)
 	var http = require('http');
 	var serveStatic = require('serve-static');
 	
-	// Serve up public/ftp folder
 	var serve = serveStatic('./dist', {'index': ['index.html', 'index.htm']});
 	
-	// Create server
 	var server = http.createServer(
 	function onRequest (req, res)
 	{
@@ -72,7 +89,7 @@ function start(a)
 }
 
 function newComponent(a)
-{
+{	
 	if (a.length > 1)
 	{
 		error(a.join(" ") + " is not a valid component name, it has whitespaces in it");
@@ -82,6 +99,14 @@ function newComponent(a)
 	{
 		log("usage:")
 		log("	wk new ComponentName | creates a new component under ./components folder with given ComponentName");
+		return;
+	}
+
+	if (!isProjectValid())
+	{
+		error("current folder is not a valid wk project, initialize first");
+		log("usage:");
+		log("	wk init   | initializes a new project with boilerplate code");
 		return;
 	}
 
@@ -177,7 +202,7 @@ function isProjectValid()
 		// error("dist does not exist");
 		return false;
 	}
-		
+
 
 	if (!FS.existsSync("./components"))
 	{
@@ -191,6 +216,6 @@ function isProjectValid()
 		// error("classes does not exist");
 		return false;
 	}
-	
+
 	return true;
 }
