@@ -1,7 +1,5 @@
 function SampleComponent(root,options)
 {
-	var self = this;
-	root.innerHTML = atob("{{markup}}");
 	// constructor
 
 	// public method
