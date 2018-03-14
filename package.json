@@ -5,7 +5,7 @@
     "wk": "./bin/wk"
   },
   "scripts": {
-    "pub": "git add -A && git commit -m 'npm release' && git push && echo -e '#!/usr/bin/env node\n$(cat wk.js)' > bin/wk && npm version patch && npm publish"
+    "pub": "git add -A && git commit -m 'npm release' && git push && cp wk.js bin/wk && npm version patch && npm publish"
   }
 }
 

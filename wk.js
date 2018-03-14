@@ -1,1 +1,2 @@
-console.log("alperlaperlaperlpaelrpaler");
+#!/usr/bin/env node
+console.log("xczxcxzczxczxc");
