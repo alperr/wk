@@ -156,12 +156,28 @@ function newComponent(a)
 		return;
 	}
 
-	log("creating a new component named " + a[0]);
+	createComponentFiles(a[0]);
 }
 
 function createComponentFiles(name)
 {
+	if (FS.existsSync("./components/" + name))
+	{
+		error("a component with a name " + name + " already exists");
+		return;
+	}
+	log("creating a new component named " + name);
 
+	var pascal = dash2PascalCase(name);
+	var js = Buffer.from(SOURCE_SAMPLE, 'base64').toString('ascii');
+	js.replace("SampleComponent",pascal);
+
+	FS.mkdirSync("./components/" + name);
+	FS.writeFileSync("./components/" + name + "/" + name + ".html" , "", "utf8");
+	FS.writeFileSync("./components/" + name + "/" + name + ".css" , "", "utf8");
+	FS.writeFileSync("./components/" + name + "/" + name + ".js" , js, "utf8");
+
+	log("created a new component named " + name);
 }
 
 function error(m)
