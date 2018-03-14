@@ -16,6 +16,7 @@ var SOURCE_ELEMENT = 'RWxlbWVudC5wcm90b3R5cGUuZmluZCA9IGZ1bmN0aW9uKHN0cikKewoJc3
 var SOURCE_STORE = 'dmFyIHN0b3JlID0ge307CnN0b3JlLl8gPSB7fTsKCnN0b3JlLmhhcyA9IGZ1bmN0aW9uKGtleSkKewoJcmV0dXJuIHR5cGVvZiBzdG9yZS5fW2tleV0gIT0gJ3VuZGVmaW5lZCcKfQoKc3RvcmUuZ2V0ID0gZnVuY3Rpb24oa2V5KQp7CglyZXR1cm4gc3RvcmUuX1trZXldOwp9CgpzdG9yZS5zZXQgPSBmdW5jdGlvbihrZXksdmFsdWUpCnsKCXJldHVybiBzdG9yZS5fW2tleV0gPSB2YWx1ZTsKfQo=';
 var SOURCE_UTIL = 'dmFyIHV0aWwgPSB7fTsKdXRpbC5yYW5kb21BbHBoYU51bSA9IGZ1bmN0aW9uKGxlbmd0aCkKewoJLy8gNjIgY2hhcnMgCgkvLyBNYXRoLmxvZzIoNjIpID0gNS45NTQgYml0IGVudHJvcHkgcGVyIGNoYXJhY3RlcgoJLy8gbGVuZ3RoID0gMjIgd2lsbCBnaXZlIHlvdSBhIH4xMjggYml0IHJhbmRvbW5lc3MKCXZhciBhbHBoYWJldCA9ICcwMTIzNDU2Nzg5YWJjZGVmZ2hpamtsbW5vcHJxc3R1d3Z4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVXVlhZWicKCXZhciByID0gJyc7Cglmb3IgKHZhciBpPTA7aTxsZW5ndGg7aSsrKQoJCXIgKz0gYWxwaGFiZXRbTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogYWxwaGFiZXQubGVuZ3RoKV07CgkKCXJldHVybiByOwp9Cg==';
 var SOURCE_INDEX = 'PGh0bWwgbGFuZz0iZW4iPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgiPgoJCTx0aXRsZT53azwvdGl0bGU+CgkJPHN0eWxlPgoJCQkjcm9vdHsKCQkJCXdpZHRoOiAxMDAlOwoJCQkJaGVpZ2h0OiAxMDAlOwoJCQkJb3ZlcmZsb3c6IG5vbmU7CgkJCQlwb3NpdGlvbjogcmVsYXRpdmU7CgkJCX0KCQk8L3N0eWxlPgoJCTxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iZGV2LmNzcyI+CgkJPHNjcmlwdCBzcmM9J2Rldi5qcyc+PC9zY3JpcHQ+Cgk8L2hlYWQ+CgkKCTxib2R5PgoJCTxkaXYgaWQ9J3Jvb3QnPjwvZGl2PgoJPC9ib2R5PgoJPHNjcmlwdD4KCXdpbmRvdy5vbmxvYWQgPSBmdW5jdGlvbiAoKQoJewoJCW5ldyBBcHBsaWNhdGlvbihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKTsKCX0KCTwvc2NyaXB0Pgo8L2h0bWw+';
+var SOURCE_SAMPLE = 'ZnVuY3Rpb24gU2FtcGxlQ29tcG9uZW50KHJvb3Qsb3B0aW9ucykKewoJdmFyIHNlbGYgPSB0aGlzOwoJcm9vdC5pbm5lckhUTUwgPSBhdG9iKCJ7e21hcmt1cH19Iik7CgkvLyBjb25zdHJ1Y3RvcgoKCS8vIHB1YmxpYyBtZXRob2QKCXNlbGYuYSA9IGZ1bmN0aW9uKCkKCXsKCgl9CgoJLy8gcHJpdmF0ZSBtZXRob2QKCWZ1bmN0aW9uIGIoKQoJewoKCX0KfQ==';
 
 // rename these
 var BASE_INPUT_PATH = "./components/";
@@ -149,6 +150,11 @@ function newComponent(a)
 		error(a.join(" ") + " is not a valid component name, component names are lower-case-dash-seperated");
 		return;
 	}
+	if (a[0].indexOf("--") != -1)
+	{
+		error(a.join(" ") + " is not a valid component name, -- is not allowed");
+		return;
+	}
 
 	log("creating a new component named " + a[0]);
 }
@@ -273,4 +279,14 @@ function isProjectValid()
 		});
 		FS.rmdirSync(path);
 	}
+}
+
+function dash2PascalCase(s)
+{
+	var words = s.split("-");
+	var r = [];
+	for (var i in words)
+		r.push(words[i][0].toUpperCase() + words[i].slice(1));
+
+	return r.join("");
 }

@@ -10,7 +10,8 @@ var map = {
 	"var SOURCE_UTIL = " : "util.js",
 	"var SOURCE_STORE = " : "store.js",
 	"var SOURCE_ELEMENT = " : "element.js",
-	"var SOURCE_INDEX = " : "index.html"
+	"var SOURCE_INDEX = " : "index.html",
+	"var SOURCE_SAMPLE = " : "sample.js",
 }
 for (var i in lines)
 {
