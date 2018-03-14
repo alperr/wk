@@ -1,6 +1,6 @@
 {
   "name": "web-komponents",
-  "version": "1.1.8",
+  "version": "1.1.12",
   "bin": {
     "wk": "./bin/wk"
   },
