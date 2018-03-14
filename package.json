@@ -1,0 +1,7 @@
+{
+  "name": "wk",
+  "version": "1.0.0",
+  "scripts": {
+    "patch-release": "npm version patch && npm publish && git push --follow-tags"
+  }
+}
