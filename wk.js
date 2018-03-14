@@ -92,6 +92,7 @@ function start(a)
 	var finalhandler = require('finalhandler');
 	var http = require('http');
 	var serveStatic = require('serve-static');
+	var opn = require("opn");
 	
 	var serve = serveStatic('./dist', {'index': ['index.html', 'index.htm']});
 	
@@ -101,8 +102,19 @@ function start(a)
 		serve(req, res, finalhandler(req, res))
 	})
 	
-	server.listen(3001);
-	log("listening localhost:3001");
+	var pf = require("portfinder");
+	pf.basePort = 3000;
+	pf.getPort(function (err, port)
+	{
+		if (err)
+		{
+			error("no port available for http server");
+		}
+		server.listen(port);
+		log("listening localhost:" + port);
+		opn('http://localhost:' + port);
+
+	});	
 }
 
 function newComponent(a)
@@ -244,4 +256,4 @@ function isProjectValid()
 		});
 		FS.rmdirSync(path);
 	}
-};
+}

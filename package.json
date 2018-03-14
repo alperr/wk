@@ -1,13 +1,15 @@
 {
   "name": "wkt",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "bin": {
     "wk": "./bin/wk",
     "wkt": "./bin/wk"
   },
   "dependencies": {
     "serve-static": "1.13.2",
-    "finalhandler": "1.1.1"
+    "finalhandler": "1.1.1",
+    "opn": "5.2.0",
+    "portfinder": "1.0.13"
   },
   "scripts": {
     "pub": "git add -A && git commit -m 'npm release' && git push && cp wk.js ./bin/wk && npm publish"
