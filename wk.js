@@ -64,6 +64,9 @@ function init(a)
 	FS.writeFileSync("./classes/store.js",Buffer.from(SOURCE_STORE, 'base64').toString('ascii'),"utf8");
 	FS.writeFileSync("./dist/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
 	log("- classes created");
+
+	log("project initialized successfully , you can run _start_ command now");
+	log("	wk start  | auto-builds components and serves them under ./dist folder");
 }
 
 function deinit(a)
@@ -124,10 +127,11 @@ function newComponent(a)
 		error(a.join(" ") + " is not a valid component name, it has whitespaces in it");
 		return;
 	}
+
 	if (a.length == 0)
 	{
 		log("usage:")
-		log("	wk new ComponentName | creates a new component under ./components folder with given ComponentName");
+		log("	wk new component-name | creates a new component under ./components folder with given component-name");
 		return;
 	}
 
@@ -139,8 +143,18 @@ function newComponent(a)
 		return;
 	}
 
+	if ( a[0].toLowerCase() != a[0])
+	{
+		error(a.join(" ") + " is not a valid component name, component names are lower-case-dash-seperated");
+		return;
+	}
+
 	log("creating a new component named " + a[0]);
-	log(a.length);
+}
+
+function createComponentFiles(name)
+{
+
 }
 
 function error(m)
@@ -227,12 +241,10 @@ function isProjectValid()
 		return false;
 	}
 
-
 	if (!FS.existsSync("./components"))
 	{
 		return false;
 	}
-		
 
 	if (!FS.existsSync("./classes"))
 	{

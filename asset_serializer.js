@@ -24,5 +24,3 @@ for (var i in lines)
 
 var out = lines.join("\n");
 FS.writeFileSync("wk.js",out,"utf8");
-
-
