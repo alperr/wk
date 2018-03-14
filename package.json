@@ -1,10 +1,10 @@
 {
-	"name": "web-komponents",
-	"version": "1.0.0",
-	"bin": {
-		"wk": "./wk.js"
-	},
-	"scripts": {
-		"patch-release": "npm version patch && npm publish && git push --follow-tags"
-	}
+  "name": "web-komponents",
+  "version": "1.0.1",
+  "bin": {
+    "wk": "./wk.js"
+  },
+  "scripts": {
+    "patch-release": "npm version patch && npm publish && git push --follow-tags"
+  }
 }
