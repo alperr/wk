@@ -15,30 +15,61 @@ var commands = {
 args = args.slice(1);
 
 if (typeof commands[command] == 'undefined')
-	printSmallHelp();
+	printSmallHelp(command);
 else
 	commands[command](args);
 
 
 
-function printSmallHelp()
+function printSmallHelp(c)
 {
-	console.log(FG_RED, "wk init   | initializes a new project with boilerplate code");
-	console.log(FG_RED, "wk start  | auto-builds components and serves them under ./dist folder");
-	console.log(FG_RED, "wk new    | creates a new component under ./components folder", RESET);
+	error("invalid command: " + c);
+	// log("");
+	log("usage:");
+	// log("--------");
+	log("	wk init   | initializes a new project with boilerplate code");
+	log("	wk start  | auto-builds components and serves them under ./dist folder");
+	log("	wk new    | creates a new component under ./components folder");
 }
 
 function init(a)
 {
-	console.log("initializing");
+	log("initializing a new project");
 }
 
 function start(a)
 {
-	console.log("starting");
+	log("starting file server and auto-builder");
 }
 
 function newComponent(a)
 {
-	console.log("Creating a new component named " + a);
+	if (a.length > 1)
+	{
+		error(a.join(" ") + " is not a valid component name, it has whitespaces in it");
+		// log("usage:")
+		// log("	wk new ComponentName | creates a new component under ./components folder with given ComponentName");
+		return;
+	}
+	if (a.length == 0)
+	{
+		log("usage:")
+		log("	wk new ComponentName | creates a new component under ./components folder with given ComponentName");
+		return;
+	}
+
+	log("Creating a new component named " + a[0]);
+	log(a.length);
+
+}
+
+
+function error(m)
+{
+	console.log(FG_RED, m, RESET);
+}
+
+function log(m)
+{
+	console.log(RESET,m,RESET);
 }

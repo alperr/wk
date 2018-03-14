@@ -4,6 +4,8 @@ var BG_RED = "\x1b[41m";
 var FG_RED = "\x1b[31m"
 var RESET = "\x1b[0m";
 
+var FS = require('fs');
+
 var args = process.argv.slice(2);
 var command = args[0];
 
@@ -23,10 +25,9 @@ else
 
 function printSmallHelp(c)
 {
-	error("invalid command: " + c);
-	// log("");
+	if (typeof c != 'undefined')
+		error("invalid command: " + c);
 	log("usage:");
-	// log("--------");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./dist folder");
 	log("	wk new    | creates a new component under ./components folder");
@@ -47,8 +48,6 @@ function newComponent(a)
 	if (a.length > 1)
 	{
 		error(a.join(" ") + " is not a valid component name, it has whitespaces in it");
-		// log("usage:")
-		// log("	wk new ComponentName | creates a new component under ./components folder with given ComponentName");
 		return;
 	}
 	if (a.length == 0)
@@ -60,9 +59,7 @@ function newComponent(a)
 
 	log("Creating a new component named " + a[0]);
 	log(a.length);
-
 }
-
 
 function error(m)
 {
