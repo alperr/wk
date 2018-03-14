@@ -1,8 +1,6 @@
-var FS = require("fs");
+// run this when assets are changed
 
-new Buffer(FS.readFileSync("./asset/util.js","utf8")).toString('base64');
-new Buffer(FS.readFileSync("./asset/store.js","utf8")).toString('base64');
-new Buffer(FS.readFileSync("./asset/element.js","utf8")).toString('base64');
+var FS = require("fs");
 
 var wk = FS.readFileSync("./wk.js","utf8");
 var lines = wk.split("\n");
@@ -11,7 +9,8 @@ var map = {
 	"var SOURCE_DISPATCHER = " : "dispatcher.js",
 	"var SOURCE_UTIL = " : "util.js",
 	"var SOURCE_STORE = " : "store.js",
-	"var SOURCE_ELEMENT = " : "element.js"
+	"var SOURCE_ELEMENT = " : "element.js",
+	"var SOURCE_INDEX = " : "index.html"
 }
 for (var i in lines)
 {

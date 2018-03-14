@@ -13,6 +13,7 @@ var SOURCE_DISPATCHER = 'aWYgKHR5cGVvZiBfX3drID09ICJ1bmRlZmluZWQiKQoJdmFyIF9fd2s
 var SOURCE_ELEMENT = 'RWxlbWVudC5wcm90b3R5cGUuZmluZCA9IGZ1bmN0aW9uKHN0cikKewoJc3RyID0gJy4nK3N0cjsKCXJldHVybiB0aGlzLnF1ZXJ5U2VsZWN0b3JBbGwoc3RyKVswXTsKfQ==';
 var SOURCE_STORE = 'dmFyIHN0b3JlID0ge307CnN0b3JlLl8gPSB7fTsKCnN0b3JlLmhhcyA9IGZ1bmN0aW9uKGtleSkKewoJcmV0dXJuIHR5cGVvZiBzdG9yZS5fW2tleV0gIT0gJ3VuZGVmaW5lZCcKfQoKc3RvcmUuZ2V0ID0gZnVuY3Rpb24oa2V5KQp7CglyZXR1cm4gc3RvcmUuX1trZXldOwp9CgpzdG9yZS5zZXQgPSBmdW5jdGlvbihrZXksdmFsdWUpCnsKCXJldHVybiBzdG9yZS5fW2tleV0gPSB2YWx1ZTsKfQo=';
 var SOURCE_UTIL = 'dmFyIHV0aWwgPSB7fTsKdXRpbC5yYW5kb21BbHBoYU51bSA9IGZ1bmN0aW9uKGxlbmd0aCkKewoJLy8gNjIgY2hhcnMgCgkvLyBNYXRoLmxvZzIoNjIpID0gNS45NTQgYml0IGVudHJvcHkgcGVyIGNoYXJhY3RlcgoJLy8gbGVuZ3RoID0gMjIgd2lsbCBnaXZlIHlvdSBhIH4xMjggYml0IHJhbmRvbW5lc3MKCXZhciBhbHBoYWJldCA9ICcwMTIzNDU2Nzg5YWJjZGVmZ2hpamtsbW5vcHJxc3R1d3Z4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVXVlhZWicKCXZhciByID0gJyc7Cglmb3IgKHZhciBpPTA7aTxsZW5ndGg7aSsrKQoJCXIgKz0gYWxwaGFiZXRbTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogYWxwaGFiZXQubGVuZ3RoKV07CgkKCXJldHVybiByOwp9Cg==';
+var SOURCE_INDEX = 'PGh0bWwgbGFuZz0iZW4iPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgiPgoJCTx0aXRsZT53azwvdGl0bGU+CgkJPHN0eWxlPgoJCQkjcm9vdHsKCQkJCXdpZHRoOiAxMDAlOwoJCQkJaGVpZ2h0OiAxMDAlOwoJCQkJb3ZlcmZsb3c6IG5vbmU7CgkJCQlwb3NpdGlvbjogcmVsYXRpdmU7CgkJCX0KCQk8L3N0eWxlPgoJCTxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iZGV2LmNzcyI+CgkJPHNjcmlwdCBzcmM9J2Rldi5qcyc+PC9zY3JpcHQ+Cgk8L2hlYWQ+CgkKCTxib2R5PgoJCTxkaXYgaWQ9J3Jvb3QnPjwvZGl2PgoJPC9ib2R5PgoJPHNjcmlwdD4KCXdpbmRvdy5vbmxvYWQgPSBmdW5jdGlvbiAoKQoJewoJCW5ldyBBcHBsaWNhdGlvbihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKTsKCX0KCTwvc2NyaXB0Pgo8L2h0bWw+';
 
 var commands = {
 	"init"  : init,
@@ -51,14 +52,21 @@ function init(a)
 	if (!FS.existsSync("./classes")){FS.mkdirSync("./classes");}
 	if (!FS.existsSync("./components")){FS.mkdirSync("./components");}
 	log("- folders created");
+
+	FS.writeFileSync("./classes/util.js",Buffer.from(SOURCE_UTIL, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./classes/element.js",Buffer.from(SOURCE_ELEMENT, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./classes/dispatcher.js",Buffer.from(SOURCE_DISPATCHER, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./classes/store.js",Buffer.from(SOURCE_STORE, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./dist/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
+	log("- classes created");
 }
 
 function deinit(a)
 {
-	if (FS.existsSync("./dist")){FS.rmdirSync("./dist");}
-	if (FS.existsSync("./classes")){FS.rmdirSync("./classes");}
-	if (FS.existsSync("./components")){FS.rmdirSync("./components");}
-	log("- de initialized");
+	deleteFolderRecursive("./dist");
+	deleteFolderRecursive("./classes");
+	deleteFolderRecursive("./components");
+	log("- de initialized project and delete all files");
 }
 
 function start(a)
@@ -203,23 +211,36 @@ function isProjectValid()
 {
 	if (!FS.existsSync("./dist"))
 	{
-		// error("dist does not exist");
 		return false;
 	}
 
 
 	if (!FS.existsSync("./components"))
 	{
-		// error("components folder is missing");
 		return false;
 	}
 		
 
 	if (!FS.existsSync("./classes"))
 	{
-		// error("classes does not exist");
 		return false;
 	}
 
 	return true;
 }
+
+ function deleteFolderRecursive(path)
+ {
+	if (FS.existsSync(path))
+	{
+		FS.readdirSync(path).forEach(function(file, index)
+		{
+			var curPath = path + "/" + file;
+			if (FS.lstatSync(curPath).isDirectory())
+				deleteFolderRecursive(curPath);
+			else
+				FS.unlinkSync(curPath);
+		});
+		FS.rmdirSync(path);
+	}
+};
