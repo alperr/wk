@@ -5,6 +5,6 @@
     "wk": "./bin/wk"
   },
   "scripts": {
-    "patch-release": "npm version patch && gp && npm publish"
+    "publish": "gp && cp wk.js bin/wk && npm version patch && npm publish"
   }
 }
