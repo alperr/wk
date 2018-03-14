@@ -1,8 +1,9 @@
 {
-  "name": "wkjs",
+  "name": "wkt",
   "version": "0.0.2",
   "bin": {
-    "wk": "./bin/wk"
+    "wk": "./bin/wk",
+    "wkt": "./bin/wk"
   },
   "scripts": {
     "pub": "git add -A && git commit -m 'npm release' && git push && cp wk.js bin/wk && npm version patch && npm publish"
