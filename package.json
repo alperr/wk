@@ -10,6 +10,6 @@
     "finalhandler": "1.1.1"
   },
   "scripts": {
-    "pub": "cp wk.js ./bin/wk && npm publish"
+    "pub": "git add -A && git commit -m 'npm release' && git push && cp wk.js ./bin/wk && npm publish"
   }
 }
