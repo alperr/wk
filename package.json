@@ -2,7 +2,7 @@
   "name": "web-komponents",
   "version": "1.0.3",
   "bin": {
-    "wk": "./wk.js"
+    "wk": "node ./wk.js"
   },
   "scripts": {
     "patch-release": "npm version patch && npm publish && git push --follow-tags"
