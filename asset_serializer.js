@@ -14,7 +14,8 @@ var map = {
 	"var SOURCE_SAMPLE = " : "sample.js",
 	"var SOURCE_BASIC_HTML = " : "basic-template.html",
 	"var SOURCE_BASIC_CSS = " : "basic-template.css",
-	"var SOURCE_BASIC_JS = " : "basic-template.js"
+	"var SOURCE_BASIC_JS = " : "basic-template.js",
+	"var SOURCE_ROUTER = " : "router.js",
 }
 for (var i in lines)
 {
