@@ -1,7 +1,16 @@
-.application h1{
-	color: #060;
+.application *{
+	font-family: 'Futura', Helvetica, sans-serif;
 }
 
-.application p{
+.application pre{
+	font-family: monospace;
+	background: #eee;
+	width: 100%;
+	padding: 20px;
+	font-size: 18px;
+	height: 24px;;
+}
+
+.application .accent{
 	color: #c0a;
 }
