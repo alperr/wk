@@ -238,7 +238,7 @@ function onchange()
 		var markup = FS.readFileSync(input + ".html","utf8");
 		var js = FS.readFileSync(input + ".js","utf8");
 		
-		js = js.replace("{","{\n\tvar self = this;\n\troot.innerHTML = atob('"+new Buffer(markup).toString('base64')+"');");
+		js = js.replace("{","{\n\tvar self = this;\n\tself.root = root;\n\troot.innerHTML = atob('"+new Buffer(markup).toString('base64')+"');");
 
 		// js = js.replace('{{markup}}', new Buffer(markup).toString('base64'));
 
