@@ -1,6 +1,47 @@
 # wk
 wk is a command line tool for generating boilerplate code for basic web components
 
+
+## global data store
+wk exposes a global variable named **store** which has following methods for managing global data
+
+- set(key,value)
+- get(key)
+- has(key)
+- delete(key)
+
+usage example:
+
+	store.set("somekey","anyvalue");
+	store.set("anotherkey",132);
+	store.get("anotherkey");
+
+*located in /classes/store.js*
+
+this feature is completely optional and can be deleted safely
+
+## event dispatcher
+publish/subscribe pattern is implemented in wk with following global functions
+
+- pub(event)
+- sub(event,handler)
+- unsub(event,handler)
+	
+usage example:
+
+	// some component fires an event
+	pub("SOME_EVENT");
+
+	// another component gets notified when that event is fired (published)
+	sub("SOME_EVENT",function()
+	{
+
+	});
+
+*located in /classes/dispatcher.js*
+
+this feature is completely optional and can be deleted safely
+
 ## templates
 templates are simple .html files with no logic and style attached to them
 
