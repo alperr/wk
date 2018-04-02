@@ -1,17 +1,20 @@
-var store: any = {};
-store._ = {};
-
-store.has = function(key)
+if (typeof __wk == "undefined")
+	var __wk: any = {};
+__wk.store = {};
+namespace Store
 {
-	return typeof store._[key] != 'undefined'
-}
-
-store.get = function(key)
-{
-	return store._[key];
-}
-
-store.set = function(key,value)
-{
-	return store._[key] = value;
+	export function has(key): boolean
+	{
+		return typeof __wk.store[key] != 'undefined'
+	}
+	
+	export function get(key)
+	{
+		return __wk.store[key];
+	}
+	
+	export function set(key,value)
+	{
+		return __wk.store[key] = value;
+	}
 }

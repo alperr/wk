@@ -1,4 +1,4 @@
-/// <reference path="../../classes/element.ts" />
+/// <reference path="../../classes/component.ts" />
 
 class SampleComponent extends Component
 {
