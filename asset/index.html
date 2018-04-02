@@ -19,9 +19,17 @@
 		<div id='root'></div>
 	</body>
 	<script>
+	
 	window.onload = function ()
 	{
-		new Application(document.getElementById('root'));
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET","dev.json");
+		xhr.send();
+		xhr.onload = function()
+		{
+			window.__markup_data = JSON.parse(xhr.responseText);
+			new Application(document.getElementById('root'));
+		}	
 	}
 	</script>
 </html>
