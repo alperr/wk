@@ -4,6 +4,7 @@ class Component
 	constructor(root: HTMLDivElement, markup: string)
 	{
 		this.root = root;
+		this.loadMarkup(markup);
 	}
 
 	public find = (query: string): Element =>

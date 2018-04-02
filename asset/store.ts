@@ -1,4 +1,4 @@
-var store = {};
+var store: any = {};
 store._ = {};
 
 store.has = function(key)
