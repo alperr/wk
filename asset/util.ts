@@ -1,4 +1,4 @@
-var util = {};
+var util: any = {};
 util.randomAlphaNum = function(length)
 {
 	// 62 chars 

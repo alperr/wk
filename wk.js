@@ -68,15 +68,15 @@ function init(a)
 	if (!FS.existsSync("./components")){FS.mkdirSync("./components");}
 	log("- folders created");
 
-	FS.writeFileSync("./classes/util.js",Buffer.from(SOURCE_UTIL, 'base64').toString('ascii'),"utf8");
-	FS.writeFileSync("./classes/element.js",Buffer.from(SOURCE_ELEMENT, 'base64').toString('ascii'),"utf8");
-	FS.writeFileSync("./classes/dispatcher.js",Buffer.from(SOURCE_DISPATCHER, 'base64').toString('ascii'),"utf8");
-	FS.writeFileSync("./classes/store.js",Buffer.from(SOURCE_STORE, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./classes/util.ts",Buffer.from(SOURCE_UTIL, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./classes/element.ts",Buffer.from(SOURCE_ELEMENT, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./classes/dispatcher.ts",Buffer.from(SOURCE_DISPATCHER, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./classes/store.ts",Buffer.from(SOURCE_STORE, 'base64').toString('ascii'),"utf8");
 	FS.writeFileSync("./dist/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
 	log("- classes created");
 
 	FS.mkdirSync("./components/application");
-	FS.writeFileSync("./components/application/application.js",Buffer.from(SOURCE_BASIC_JS, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./components/application/application.ts",Buffer.from(SOURCE_BASIC_JS, 'base64').toString('ascii'),"utf8");
 	FS.writeFileSync("./components/application/application.css",Buffer.from(SOURCE_BASIC_CSS, 'base64').toString('ascii'),"utf8");
 	FS.writeFileSync("./components/application/application.html",Buffer.from(SOURCE_BASIC_HTML, 'base64').toString('ascii'),"utf8");
 

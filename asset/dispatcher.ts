@@ -1,5 +1,5 @@
 if (typeof __wk == "undefined")
-	var __wk = {};
+	var __wk: any = {};
 
 __wk.events = {};
 
