@@ -270,7 +270,15 @@ function onchange(event,changeFileName)
 	command += tsFiles.join(" ");
 	// console.log(tsFiles);
 	// console.log(command);
-	EXEC(command);
+	try{
+		EXEC(command);
+	}catch(e)
+	{
+		console.log('\x1b[31m%s\x1b[0m', 'typescript build failed');
+		return;
+	}
+
+	
 
 	try { FS.unlinkSync( OUTPUT_PATH + ".css" ); } catch (e) { }
 	FS.writeFileSync( OUTPUT_PATH + ".css" , css , 'utf8');
