@@ -1,3 +1,5 @@
+/// <reference path="../../classes/element.ts" />
+
 class SampleComponent extends Component
 {
 	constructor(root: HTMLDivElement, options: Object)
