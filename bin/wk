@@ -274,8 +274,8 @@ function onchange(event,changeFileName)
 		EXEC(command);
 	}catch(e)
 	{
-		console.log(e.stdout);
-		console.log('\x1b[31m%s\x1b[0m', 'typescript build failed');
+		error('typescript build failed');
+		console.log(e.stdout.toString('utf8'));
 		return;
 	}
 
