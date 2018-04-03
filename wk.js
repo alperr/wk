@@ -36,6 +36,11 @@ var commands = {
 	"build" : productionBuild
 }
 
+
+var timer;
+var counter = 0;
+var changedFiles = [];
+
 var args = process.argv.slice(2);
 var command = args[0];
 args = args.slice(1);
@@ -232,9 +237,7 @@ function minorLog(m)
 	console.log(FG_DIM, m, RESET);
 }
 
-var timer;
-var counter = 0;
-var changedFiles = [];
+
 function onchange(event,changeFileName)
 {
 	if ( !changeFileName.endsWith(".ts") && !changeFileName.endsWith(".css") && !changeFileName.endsWith(".html"))
@@ -245,9 +248,34 @@ function onchange(event,changeFileName)
 	changedFiles.push(changeFileName);
 	timer = setTimeout(function()
 	{
-		minorLog(counter + " save action captured, building");
-		minorLog(changedFiles);
 		
+		// minorLog(changedFiles);
+
+
+		var isHtmlChanged = false;
+		var isCssChanged = false;
+		var isTypescriptChanged = false;
+
+		for (var i in changedFiles)
+		{
+			if (changedFiles[i].endsWith(".ts"))
+				isTypescriptChanged = true;
+
+			if (changedFiles[i].endsWith(".css"))
+				isCssChanged = true;
+
+			if (changedFiles[i].endsWith(".html"))
+				isHtmlChanged = true;
+		}
+
+		var msg = [];
+		if (isTypescriptChanged) msg.push("ts");
+		if (isCssChanged) msg.push("css");
+		if (isHtmlChanged) msg.push("html");
+		msg = "[" + msg.join(", ") + "]";
+			
+
+		minorLog(counter + " save action captured, started compiling " + msg);
 		counter = 0;
 		changedFiles = [];
 		console.time('\x1b[32mbuild completed successfully\x1b[0m');
@@ -304,18 +332,22 @@ function onchange(event,changeFileName)
 				css += FS.readFileSync(input + ".css","utf8") + '\n';
 		}
 
-		command = "tsc --out ./dist/dev.js ";	
-		command += tsFiles.join(" ");
-		// console.log(tsFiles);
-		// console.log(command);
-		try{
-			EXEC(command);
-		}catch(e)
+		if (isTypescriptChanged)
 		{
-			error('typescript build failed');
-			error(e.stdout.toString('utf8'));
-			return;
+			command = "tsc --out ./dist/dev.js ";	
+			command += tsFiles.join(" ");
+			// console.log(tsFiles);
+			// console.log(command);
+			try{
+				EXEC(command);
+			}catch(e)
+			{
+				error('typescript build failed');
+				error(e.stdout.toString('utf8'));
+				return;
+			}
 		}
+
 
 		try { FS.unlinkSync( OUTPUT_PATH + ".css" ); } catch (e) { }
 		FS.writeFileSync( OUTPUT_PATH + ".css" , css , 'utf8');
@@ -324,7 +356,7 @@ function onchange(event,changeFileName)
 		FS.writeFileSync( OUTPUT_PATH + ".json" , JSON.stringify(markupMap) , 'utf8');
 
 		console.timeEnd('\x1b[32mbuild completed successfully\x1b[0m');
-	},500);
+	},250);
 }
 
 function isProjectValid()
