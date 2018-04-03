@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
+// **** INCLUDES ****
+var FS = require('fs');
+var EXEC = require('child_process').execSync;
+
+
+// **** CONSTANTS ****
 var BG_RED = "\x1b[41m";
 var FG_RED = "\x1b[31m";
 var BG_GREEN = "\x1b[42m";
 var FG_BLACK = "\x1b[30m";
 var RESET = "\x1b[0m";
-
-var FS = require('fs');
-var EXEC = require('child_process').execSync;
-
-var args = process.argv.slice(2);
-var command = args[0];
 
 var SOURCE_DISPATCHER = 'aWYgKHR5cGVvZiBfX3drID09ICJ1bmRlZmluZWQiKQoJdmFyIF9fd2s6IGFueSA9IHt9OwoKX193ay5ldmVudHMgPSB7fTsKCmZ1bmN0aW9uIHN1YihhY3Rpb246IG51bWJlciwgZikKewoJaWYgKHR5cGVvZiBfX3drLmV2ZW50c1thY3Rpb25dID09ICd1bmRlZmluZWQnKQoJCV9fd2suZXZlbnRzW2FjdGlvbl0gPSBbXTsKCglfX3drLmV2ZW50c1thY3Rpb25dLnB1c2goZik7Cn0KCmZ1bmN0aW9uIHVuc3ViKGFjdGlvbjogbnVtYmVyLCBmKQp7CglpZiAodHlwZW9mIF9fd2suZXZlbnRzW2FjdGlvbl0gPT0gJ3VuZGVmaW5lZCcpCgkJcmV0dXJuOwoKCWZvciAodmFyIGk9MDtpPF9fd2suZXZlbnRzW2FjdGlvbl0ubGVuZ3RoO2krKykKCXsKCQlpZiAoX193ay5ldmVudHNbYWN0aW9uXVtpXSA9PSBmKQoJCXsKCQkJX193ay5ldmVudHNbYWN0aW9uXS5zcGxpY2UoaSwxKTsKCQkJaS0tOwoJCX0KCX0KfQoKZnVuY3Rpb24gcHViKGFjdGlvbjogbnVtYmVyKQp7CglpZiAoIChhY3Rpb24gfCAwKSAhPSBhY3Rpb24pCgkJdGhyb3coJ2JhZCBhY3Rpb24nKTsKCglpZiAodHlwZW9mIF9fd2suZXZlbnRzW2FjdGlvbl0gPT0gJ3VuZGVmaW5lZCcpCgkJcmV0dXJuOwoKCWZvciAodmFyIGk9MDtpPF9fd2suZXZlbnRzW2FjdGlvbl0ubGVuZ3RoO2krKykKCQlfX3drLmV2ZW50c1thY3Rpb25dW2ldKCk7Cn0KCnZhciBzaWcgPSBmdW5jdGlvbihhY3Rpb246IG51bWJlcikKewoJcmV0dXJuIGZ1bmN0aW9uKCl7IHB1YihhY3Rpb24pIH0KfQ==';
 var SOURCE_ELEMENT = 'Y2xhc3MgQ29tcG9uZW50CnsKCXB1YmxpYyByb290OiBIVE1MRGl2RWxlbWVudDsKCWNvbnN0cnVjdG9yKHJvb3Q6IEhUTUxEaXZFbGVtZW50LCBtYXJrdXA6IHN0cmluZykKCXsKCQl0aGlzLnJvb3QgPSByb290OwoJCXRoaXMubG9hZE1hcmt1cChtYXJrdXApOwoJfQoKCXB1YmxpYyBmaW5kID0gKHF1ZXJ5OiBzdHJpbmcpOiBFbGVtZW50ID0+Cgl7CgkJcXVlcnkgPSAnLicgKyBxdWVyeTsKCQlyZXR1cm4gdGhpcy5yb290LnF1ZXJ5U2VsZWN0b3JBbGwocXVlcnkpWzBdOwkJCgl9CgoJcHJpdmF0ZSBsb2FkTWFya3VwID0gKGtleTogc3RyaW5nKSA9PgoJewoJCXZhciB3OiBhbnkgPSB3aW5kb3c7CgkJaWYgKCF3Ll9fbWFya3VwX2RhdGFba2V5XSkKCQkJdGhyb3cgInRoZXJlIGlzIG5vIG1hcmt1cCBmb3IgIiArIGtleTsKCgkJdGhpcy5yb290LmlubmVySFRNTCA9IGF0b2Iody5fX21hcmt1cF9kYXRhW2tleV0pOwoJfQp9';
@@ -23,17 +23,20 @@ var SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3Rl
 var SOURCE_BASIC_JS = 'Ly8vIDxyZWZlcmVuY2UgcGF0aD0iLi4vLi4vY2xhc3Nlcy9jb21wb25lbnQudHMiIC8+CgpjbGFzcyBBcHBsaWNhdGlvbiBleHRlbmRzIENvbXBvbmVudAp7Cgljb25zdHJ1Y3Rvcihyb290LCBvcHRpb25zKQoJewoJCXN1cGVyKHJvb3QsICJhcHBsaWNhdGlvbiIpOwoJfQp9';
 var SOURCE_ROUTER = 'ZnVuY3Rpb24gUm91dGVyKHBhZ2VEYXRhLCBvbnBhZ2Vub3Rmb3VuZCAsIGNvbnRhaW5lcjQwNCkKewoJdmFyIHNlbGYgPSB0aGlzOwoJdmFyIGFsbENvbnRhaW5lcnMgPSBbXTsKCXZhciBjdXJyZW50UGFnZVVybDsKCXZhciBjdXJyZW50UGFnZVVybEV4YWN0OwoJZm9yICh2YXIgayBpbiBwYWdlRGF0YSkKCXsKCQlpZiAodHlwZW9mIHBhZ2VEYXRhW2tdWydjb250YWluZXInXSA9PT0gJ3VuZGVmaW5lZCcpCgkJCSB0aHJvdyAoJ2Nhbm5vdCBmaW5kIGEgY29udGFpbmVyIGZvciAnICsgayk7CgkJaWYgKHBhZ2VEYXRhW2tdWydjb250YWluZXInXSkKCQkJYWxsQ29udGFpbmVycy5wdXNoKHBhZ2VEYXRhW2tdWydjb250YWluZXInXSk7Cgl9Cgl3aW5kb3cub25wb3BzdGF0ZSA9IGZ1bmN0aW9uIChlKQoJewoJCWlmIChlLnN0YXRlKQoJCQlzZWxmLm9wZW4oZS5zdGF0ZSwgZmFsc2UpOwoJfTsKCXdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCdoYXNoY2hhbmdlJywgZnVuY3Rpb24gKCkKCXsKCQl2YXIgdHJpbW1lZCA9IHdpbmRvdy5sb2NhdGlvbi5wYXRobmFtZSArIHdpbmRvdy5sb2NhdGlvbi5oYXNoOwoJCXNlbGYub3Blbih0cmltbWVkLCBmYWxzZSk7Cgl9KTsKCglzZWxmLm9wZW4gPSBmdW5jdGlvbih1cmwsIHNob3VsZEFkZFRvSGlzdG9yeSkKCXsKCQlpZiAodHlwZW9mIHNob3VsZEFkZFRvSGlzdG9yeSA9PSAidW5kZWZpbmVkIikKCQkJc2hvdWxkQWRkVG9IaXN0b3J5ID0gdHJ1ZTsKCQkKCQl2YXIgZGF0YSA9ICcnOwoJCXZhciBleGFjdFVybCA9IHVybDsKCgkJaWYgKCFwYWdlRGF0YVt1cmxdKQoJCXsKCQkJdmFyIHIgPSBmaW5kTWF0Y2hpbmdVcmwodXJsKTsKCQkJaWYgKCFyLnN1Y2Nlc3MpCgkJCXsKCQkJCWlmIChvbnBhZ2Vub3Rmb3VuZCkKCQkJCQlvbnBhZ2Vub3Rmb3VuZCh1cmwpOwoJCQkJCgkJCQloaWRlQWxsKCk7CgkJCQljb250YWluZXI0MDQuc3R5bGUuZGlzcGxheSA9ICdibG9jayc7CgkJCQlyZXR1cm47CgkJCX0KCQkJZXhhY3RVcmwgPSByLnVybDsKCQkJZGF0YSA9IHIuZGF0YTsKCQl9CgkJaWYgKHNob3VsZEFkZFRvSGlzdG9yeSkKCQkJd2luZG93Lmhpc3RvcnkucHVzaFN0YXRlKHVybCwgJ1RpdGxlJywgdXJsKTsKCQkKCQloaWRlQWxsKCk7CgkJY29udGFpbmVyNDA0LnN0eWxlLmRpc3BsYXkgPSAnbm9uZSc7CgkJaWYgKHBhZ2VEYXRhW2V4YWN0VXJsXVsnY29udGFpbmVyJ10pCgkJCXBhZ2VEYXRhW2V4YWN0VXJsXVsnY29udGFpbmVyJ10uc3R5bGUuZGlzcGxheSA9ICdibG9jayc7CgkJCgkJaWYgKGN1cnJlbnRQYWdlVXJsKQoJCXsKCQkJaWYgKGN1cnJlbnRQYWdlVXJsICE9IHVybCAmJiBwYWdlRGF0YVtjdXJyZW50UGFnZVVybEV4YWN0XVsnb251bm1vdW50J10pCgkJCQlwYWdlRGF0YVtjdXJyZW50UGFnZVVybEV4YWN0XVsnb251bm1vdW50J10oKTsKCQl9CgkKCQlpZiAoY3VycmVudFBhZ2VVcmwgIT0gdXJsICYmIHBhZ2VEYXRhW2V4YWN0VXJsXVsnb25tb3VudCddKQoJCQlwYWdlRGF0YVtleGFjdFVybF1bJ29ubW91bnQnXShkYXRhKTsKCQoJCWN1cnJlbnRQYWdlVXJsID0gdXJsOwoJCWN1cnJlbnRQYWdlVXJsRXhhY3QgPSBleGFjdFVybDsKCQlkb2N1bWVudC5ib2R5LnNjcm9sbFRvcCA9IDA7Cgl9CQoKCWZ1bmN0aW9uIGhpZGVBbGwoKQoJewoJCWZvciAodmFyIGkgPSAwOyBpIDwgYWxsQ29udGFpbmVycy5sZW5ndGg7IGkrKykKCQkJYWxsQ29udGFpbmVyc1tpXS5zdHlsZS5kaXNwbGF5ID0gJ25vbmUnOwoJfQoKCWZ1bmN0aW9uIGZpbmRNYXRjaGluZ1VybCAodXJsKQoJewoJCXZhciByID0KCQl7CgkJCSd1cmwnOiAnJywKCQkJJ2RhdGEnOiAnJywKCQkJJ3N1Y2Nlc3MnOiBmYWxzZQoJCX07CgkJdmFyIGZvdW5kVXJsOwoJCWZvciAodmFyIGsgaW4gcGFnZURhdGEpCgkJewoJCQlpZiAoayA9PSAnLycpCgkJCQljb250aW51ZTsKCQkJaWYgKHVybC5pbmRleE9mKGspID09IDApCgkJCXsKCQkJCWZvdW5kVXJsID0gazsKCQkJCXIuc3VjY2VzcyA9IHRydWU7CgkJCQlicmVhazsKCQkJfQoJCX0KCQlpZiAoIXIuc3VjY2VzcykKCQkJcmV0dXJuIHI7CgkJCgkJci51cmwgPSBmb3VuZFVybDsKCQlyLmRhdGEgPSB1cmwuc3Vic3RyKHIudXJsLmxlbmd0aCk7CgkJcmV0dXJuIHI7Cgl9CgkKCXNlbGYub3Blbih3aW5kb3cubG9jYXRpb24ucGF0aG5hbWUgKyB3aW5kb3cubG9jYXRpb24uaGFzaCArIHdpbmRvdy5sb2NhdGlvbi5zZWFyY2gsIGZhbHNlKTsJCn0=';
 
-// rename these
-var BASE_INPUT_PATH = "./components/";
-var CLASS_INPUT_PATH = "./classes/";
+var COMPONENT_BASE_PATH = "./components/";
+var CLASS_BASE_PATH = "./classes/";
 var OUTPUT_PATH = "./dist/dev";
 
 var commands = {
 	"init"  : init,
 	"deinit"  : deinit,
 	"start" : start,
-	"new" : newComponent	
+	"new" : newComponent,
+	"build" : productionBuild
 }
+
+var args = process.argv.slice(2);
+var command = args[0];
 args = args.slice(1);
 
 if (typeof commands[command] == 'undefined')
@@ -50,6 +53,7 @@ function printSmallHelp(c)
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./dist folder");
 	log("	wk new    | creates a new component under ./components folder");
+	log("	wk build  | makes a production build (minifies css and js) under ./build folder");
 }
 
 function init(a)
@@ -80,8 +84,9 @@ function init(a)
 	FS.writeFileSync("./components/application/application.css",Buffer.from(SOURCE_BASIC_CSS, 'base64').toString('ascii'),"utf8");
 	FS.writeFileSync("./components/application/application.html",Buffer.from(SOURCE_BASIC_HTML, 'base64').toString('ascii'),"utf8");
 
-	highlight("project initialized successfully , you can run _start_ command now");
-	highlight("wk start  | auto-builds components and serves them under ./dist folder");
+	highlight("project initialized successfully");
+	log("you can run **start** command now")
+	log("wk start  | auto-builds components and serves them under ./dist folder");
 }
 
 function deinit(a)
@@ -103,8 +108,8 @@ function start(a)
 	}
 	log("starting file server and auto-builder");
 
-	FS.watch(BASE_INPUT_PATH, { "recursive" : true } , onchange);
-	FS.watch(CLASS_INPUT_PATH, { "recursive" : true } , onchange);
+	FS.watch(COMPONENT_BASE_PATH, { "recursive" : true } , onchange);
+	FS.watch(CLASS_BASE_PATH, { "recursive" : true } , onchange);
 	onchange("change",".ts");
 
 	var finalhandler = require('finalhandler');
@@ -171,6 +176,21 @@ function newComponent(a)
 	createComponentFiles(a[0]);
 }
 
+
+function productionBuild()
+{
+	log("building for production");
+
+	var UGLIFYJS = require("uglify-js");
+	var CHEERIO = require('cheerio');
+	var $ = CHEERIO.load(FS.readFileSync("./dist/index.html"));
+	
+	var name = randomString(16);
+	$("link[href$='dev.css']").attr("href" , name + ".css");
+	$("script[src$='dev.js']").attr("src" , name + ".js");
+	log($.html());
+}
+
 function createComponentFiles(name)
 {
 	if (FS.existsSync("./components/" + name))
@@ -219,16 +239,16 @@ function onchange(event,changeFileName)
 	var tsFiles = [];
 	var names = [];
 	
-	var files = FS.readdirSync(CLASS_INPUT_PATH);
+	var files = FS.readdirSync(CLASS_BASE_PATH);
 	files.forEach(function(file)
 	{
 		if (!file.endsWith(".ts"))
 			return;
 
-		tsFiles.push(CLASS_INPUT_PATH + file);
+		tsFiles.push(CLASS_BASE_PATH + file);
 	});
 
-	files = FS.readdirSync(BASE_INPUT_PATH);
+	files = FS.readdirSync(COMPONENT_BASE_PATH);
 	files.forEach(function(file)
 	{
 		if (file.indexOf('.') == 0)
@@ -239,7 +259,7 @@ function onchange(event,changeFileName)
 
 	for (var i=0;i<names.length;i++)
 	{
-		var input = BASE_INPUT_PATH + names[i] + '/' + names[i];
+		var input = COMPONENT_BASE_PATH + names[i] + '/' + names[i];
 
 		if (!FS.existsSync(input + '.html')) 
 		{
@@ -275,7 +295,7 @@ function onchange(event,changeFileName)
 	}catch(e)
 	{
 		error('typescript build failed');
-		console.log(e.stdout.toString('utf8'));
+		error(e.stdout.toString('utf8'));
 		return;
 	}
 
@@ -332,4 +352,14 @@ function dash2PascalCase(s)
 		r.push(words[i][0].toUpperCase() + words[i].slice(1));
 
 	return r.join("");
+}
+
+function randomString(length)
+{
+	var alphabet = 'abcdefghijklmnoprqstuwvxyz'
+	var r = '';
+	for (var i=0;i<length;i++)
+		r += alphabet[Math.floor(Math.random() * alphabet.length)];
+	
+	return r;
 }

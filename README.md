@@ -2,8 +2,42 @@
 wk is a command line tool for generating boilerplate code for basic web components
 
 
-## global data store
-wk exposes a global variable named **store** which has following methods for managing global data
+##Installing
+
+visit following link to download & install nodejs
+
+	https://nodejs.org
+
+
+install typescript and wk CLI
+
+	npm i -g typescript
+	npm i -g wk
+
+
+##Usage
+
+create an empty folder and navigate to it
+
+	mkdir your-project
+	cd your-project
+
+run **init** command to generate boilerplate files
+	
+	wk init
+
+run **start** command to start a web server and file watcher that compiles your files on file change
+
+	wk start
+
+run **build** command to make an optimized production build
+
+	wk build
+
+##Builtin Functionality
+
+## Global Data Store
+wk exposes a global variable named **Store** which has following methods for managing global data
 
 - set(key,value)
 - get(key)
@@ -16,11 +50,11 @@ usage example:
 	store.set("anotherkey",132);
 	store.get("anotherkey");
 
-*located in /classes/store.js*
+*located in /classes/store.ts*
 
 this feature is completely optional and can be deleted safely
 
-## event dispatcher
+## Event Dispatcher
 publish/subscribe pattern is implemented in wk with following global functions
 
 - pub(event)
@@ -42,7 +76,7 @@ usage example:
 
 this feature is completely optional and can be deleted safely
 
-## templates
+## Templates
 templates are simple .html files with no logic and style attached to them
 
 they are used for creating non-primitive html elements

@@ -19,7 +19,6 @@
 		<div id='root'></div>
 	</body>
 	<script>
-	
 	window.onload = function ()
 	{
 		var xhr = new XMLHttpRequest();
@@ -29,7 +28,7 @@
 		{
 			window.__markup_data = JSON.parse(xhr.responseText);
 			new Application(document.getElementById('root'));
-		}	
+		}
 	}
 	</script>
 </html>

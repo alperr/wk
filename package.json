@@ -1,6 +1,6 @@
 {
   "name": "wk-toolkit",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "bin": {
     "wk": "./bin/wk"
   },
@@ -9,7 +9,8 @@
     "finalhandler": "1.1.1",
     "opn": "5.2.0",
     "portfinder": "1.0.13",
-    "typescript": "2.8.1"
+    "uglify-js" : "3.3.18",
+    "cheerio" : "1.0.0-rc.2"
   },
   "scripts": {
     "pub": "cp wk.js ./bin/wk && git add -A && git commit -m 'npm release' && git push && npm publish"
