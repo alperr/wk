@@ -2,7 +2,7 @@
 
 class SampleComponent extends Component
 {
-	constructor(root: HTMLDivElement, options: Object)
+	constructor(root: Element, options: Object)
 	{
 		super(root, "sample-component");
 

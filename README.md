@@ -6,7 +6,7 @@ Unlike all other major frameworks , wk appreciates imperative programming
 
 ## Installing
 
-visit [https://nodejs.org](nodejs website) link to download & install nodejs
+visit [nodejs website](https://nodejs.org) to download & install nodejs
 
 
 install typescript and wk CLI

@@ -1,7 +1,7 @@
 class Component
 {
-	public root: HTMLDivElement;
-	constructor(root: HTMLDivElement, markup: string)
+	public root: Element;
+	constructor(root: Element, markup: string)
 	{
 		this.root = root;
 		this.loadMarkup(markup);
