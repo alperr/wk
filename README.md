@@ -2,7 +2,7 @@
 wk is a command line tool for generating boilerplate code for basic web components
 
 
-##Installing
+## Installing
 
 visit following link to download & install nodejs
 
@@ -15,7 +15,7 @@ install typescript and wk CLI
 	npm i -g wk
 
 
-##Usage
+## Usage
 
 create an empty folder and navigate to it
 
@@ -34,9 +34,9 @@ run **build** command to make an optimized production build
 
 	wk build
 
-##Builtin Functionality
+## Builtin Functionality
 
-## Global Data Store
+### Global Data Store
 wk exposes a global variable named **Store** which has following methods for managing global data
 
 - set(key,value)
@@ -54,7 +54,7 @@ usage example:
 
 this feature is completely optional and can be deleted safely
 
-## Event Dispatcher
+### Event Dispatcher
 publish/subscribe pattern is implemented in wk with following global functions
 
 - pub(event)
@@ -76,7 +76,7 @@ usage example:
 
 this feature is completely optional and can be deleted safely
 
-## Templates
+### Templates
 templates are simple .html files with no logic and style attached to them
 
 they are used for creating non-primitive html elements
@@ -108,7 +108,7 @@ creates a dom node that contains the content of the template given
 
 templates are child elements of components, a template can't be shared between 2 different component
 
-### rules
+#### Rules
 
 - template and parent component name must be different
 - template files must be placed under parent component folder
