@@ -8,6 +8,7 @@ var EXEC = require('child_process').execSync;
 // **** CONSTANTS ****
 var BG_RED = "\x1b[41m";
 var FG_RED = "\x1b[31m";
+var FG_DIM = "\x1b[2m";
 var BG_GREEN = "\x1b[42m";
 var FG_BLACK = "\x1b[30m";
 var RESET = "\x1b[0m";
@@ -226,9 +227,14 @@ function highlight(m)
 	console.log(BG_GREEN, m, RESET);
 }
 
+function minorLog(m)
+{
+	console.log(FG_DIM, m, RESET);
+}
 
 var timer;
 var counter = 0;
+var changedFiles = [];
 function onchange(event,changeFileName)
 {
 	if ( !changeFileName.endsWith(".ts") && !changeFileName.endsWith(".css") && !changeFileName.endsWith(".html"))
@@ -236,10 +242,14 @@ function onchange(event,changeFileName)
 
 	clearTimeout(timer);
 	counter++;
+	changedFiles.push(changeFileName);
 	timer = setTimeout(function()
 	{
-		highlight(counter + " save action captured, building");
+		minorLog(counter + " save action captured, building");
+		minorLog(changedFiles);
+		
 		counter = 0;
+		changedFiles = [];
 		console.time('\x1b[32mbuild completed successfully\x1b[0m');
 
 		var css = '';
