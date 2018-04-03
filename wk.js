@@ -238,7 +238,7 @@ function onchange(event,changeFileName)
 	counter++;
 	timer = setTimeout(function()
 	{
-		highlight(counter + " save captured");
+		highlight(counter + " save action captured, building");
 		counter = 0;
 		console.time('\x1b[32mbuild completed successfully\x1b[0m');
 
@@ -314,7 +314,7 @@ function onchange(event,changeFileName)
 		FS.writeFileSync( OUTPUT_PATH + ".json" , JSON.stringify(markupMap) , 'utf8');
 
 		console.timeEnd('\x1b[32mbuild completed successfully\x1b[0m');
-	},300);
+	},500);
 }
 
 function isProjectValid()
