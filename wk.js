@@ -64,7 +64,6 @@ function init(a)
 		return;
 	}
 	
-	
 	log("initializing a new project");
 	if (!FS.existsSync("./dist")){FS.mkdirSync("./dist");}
 	if (!FS.existsSync("./classes")){FS.mkdirSync("./classes");}
@@ -227,85 +226,95 @@ function highlight(m)
 	console.log(BG_GREEN, m, RESET);
 }
 
+
+var timer;
+var counter = 0;
 function onchange(event,changeFileName)
 {
 	if ( !changeFileName.endsWith(".ts") && !changeFileName.endsWith(".css") && !changeFileName.endsWith(".html"))
 		return;
 
-	console.time('\x1b[32mbuild completed successfully\x1b[0m');
-
-	var css = '';
-	var markupMap = {};
-	var tsFiles = [];
-	var names = [];
-	
-	var files = FS.readdirSync(CLASS_BASE_PATH);
-	files.forEach(function(file)
+	clearTimeout(timer);
+	counter++;
+	timer = setTimeout(function()
 	{
-		if (!file.endsWith(".ts"))
-			return;
+		highlight(counter + " save captured");
+		counter = 0;
+		console.time('\x1b[32mbuild completed successfully\x1b[0m');
 
-		tsFiles.push(CLASS_BASE_PATH + file);
-	});
-
-	files = FS.readdirSync(COMPONENT_BASE_PATH);
-	files.forEach(function(file)
-	{
-		if (file.indexOf('.') == 0)
-			return;	
-
-		names.push(file);
-	});
-
-	for (var i=0;i<names.length;i++)
-	{
-		var input = COMPONENT_BASE_PATH + names[i] + '/' + names[i];
-
-		if (!FS.existsSync(input + '.html')) 
+		var css = '';
+		var markupMap = {};
+		var tsFiles = [];
+		var names = [];
+		
+		var files = FS.readdirSync(CLASS_BASE_PATH);
+		files.forEach(function(file)
 		{
-			error('missing file ->' + input + '.html  build cancelled');
+			if (!file.endsWith(".ts"))
+				return;
+
+			tsFiles.push(CLASS_BASE_PATH + file);
+		});
+
+		files = FS.readdirSync(COMPONENT_BASE_PATH);
+		files.forEach(function(file)
+		{
+			if (file.indexOf('.') == 0)
+				return;	
+
+			names.push(file);
+		});
+
+		for (var i=0;i<names.length;i++)
+		{
+			var input = COMPONENT_BASE_PATH + names[i] + '/' + names[i];
+
+			if (!FS.existsSync(input + '.html')) 
+			{
+				error('missing file ->' + input + '.html  build cancelled');
+				return;
+			}
+
+			if (!FS.existsSync(input + '.ts')) 
+			{
+				error('missing file ->' + input + '.ts  build cancelled');
+				return;
+			}
+
+			if (markupMap[names[i]])
+			{
+				error('duplicate markup file ->' + names[i] + '.html  build cancelled');
+				return;
+			}
+			var markup = FS.readFileSync(input + ".html","utf8");
+			markupMap[names[i]] = new Buffer(markup).toString('base64');
+			tsFiles.push(input + ".ts");
+
+			if (FS.existsSync(input + '.css')) 
+				css += FS.readFileSync(input + ".css","utf8") + '\n';
+		}
+
+		command = "tsc --out ./dist/dev.js ";	
+		command += tsFiles.join(" ");
+		// console.log(tsFiles);
+		// console.log(command);
+		try{
+			EXEC(command);
+		}catch(e)
+		{
+			error('typescript build failed');
+			error(e.stdout.toString('utf8'));
 			return;
 		}
 
-		if (!FS.existsSync(input + '.ts')) 
-		{
-			error('missing file ->' + input + '.ts  build cancelled');
-			return;
-		}
+		try { FS.unlinkSync( OUTPUT_PATH + ".css" ); } catch (e) { }
+		FS.writeFileSync( OUTPUT_PATH + ".css" , css , 'utf8');
 
-		if (markupMap[names[i]])
-		{
-			error('duplicate markup file ->' + names[i] + '.html  build cancelled');
-			return;
-		}
-		var markup = FS.readFileSync(input + ".html","utf8");
-		markupMap[names[i]] = new Buffer(markup).toString('base64');
-		tsFiles.push(input + ".ts");
+		try { FS.unlinkSync( OUTPUT_PATH + ".json" ); } catch (e) { }
+		FS.writeFileSync( OUTPUT_PATH + ".json" , JSON.stringify(markupMap) , 'utf8');
 
-		if (FS.existsSync(input + '.css')) 
-			css += FS.readFileSync(input + ".css","utf8") + '\n';
-	}
-
-	command = "tsc --out ./dist/dev.js ";	
-	command += tsFiles.join(" ");
-	// console.log(tsFiles);
-	// console.log(command);
-	try{
-		EXEC(command);
-	}catch(e)
-	{
-		error('typescript build failed');
-		error(e.stdout.toString('utf8'));
-		return;
-	}
-
-	try { FS.unlinkSync( OUTPUT_PATH + ".css" ); } catch (e) { }
-	FS.writeFileSync( OUTPUT_PATH + ".css" , css , 'utf8');
-
-	try { FS.unlinkSync( OUTPUT_PATH + ".json" ); } catch (e) { }
-	FS.writeFileSync( OUTPUT_PATH + ".json" , JSON.stringify(markupMap) , 'utf8');
-
-	console.timeEnd('\x1b[32mbuild completed successfully\x1b[0m');
+		console.timeEnd('\x1b[32mbuild completed successfully\x1b[0m');
+	},300);
 }
 
 function isProjectValid()
