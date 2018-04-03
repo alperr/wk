@@ -243,19 +243,19 @@ function onchange(event,changeFileName)
 
 		if (!FS.existsSync(input + '.html')) 
 		{
-			console.log('\x1b[31m%s\x1b[0m', 'missing file ->' + input + '.html  build cancelled');
+			error('missing file ->' + input + '.html  build cancelled');
 			return;
 		}
 
 		if (!FS.existsSync(input + '.ts')) 
 		{
-			console.log('\x1b[31m%s\x1b[0m', 'missing file ->' + input + '.ts  build cancelled');
+			error('missing file ->' + input + '.ts  build cancelled');
 			return;
 		}
 
 		if (markupMap[names[i]])
 		{
-			console.log('\x1b[31m%s\x1b[0m', 'duplicate markup file ->' + names[i] + '.html  build cancelled');
+			error('duplicate markup file ->' + names[i] + '.html  build cancelled');
 			return;
 		}
 		var markup = FS.readFileSync(input + ".html","utf8");
@@ -274,7 +274,7 @@ function onchange(event,changeFileName)
 		EXEC(command);
 	}catch(e)
 	{
-		console.log(e);
+		console.log(e.stdout);
 		console.log('\x1b[31m%s\x1b[0m', 'typescript build failed');
 		return;
 	}
