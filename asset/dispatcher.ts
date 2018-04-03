@@ -3,7 +3,7 @@ if (typeof __wk == "undefined")
 
 __wk.events = {};
 
-function sub(action , f)
+function sub(action: number, f)
 {
 	if (typeof __wk.events[action] == 'undefined')
 		__wk.events[action] = [];
@@ -11,7 +11,7 @@ function sub(action , f)
 	__wk.events[action].push(f);
 }
 
-function unsub(action , f)
+function unsub(action: number, f)
 {
 	if (typeof __wk.events[action] == 'undefined')
 		return;
@@ -26,7 +26,7 @@ function unsub(action , f)
 	}
 }
 
-function pub(action)
+function pub(action: number)
 {
 	if ( (action | 0) != action)
 		throw('bad action');
@@ -38,7 +38,7 @@ function pub(action)
 		__wk.events[action][i]();
 }
 
-var sig = function(action)
+var sig = function(action: number)
 {
 	return function(){ pub(action) }
 }
