@@ -64,7 +64,7 @@ function printSmallHelp(c)
 
 function init(a)
 {
-	if (isProjectValid())
+	if (isProjectValid("./"))
 	{
 		error("current folder is already initialized");
 		return;
@@ -104,11 +104,24 @@ function deinit(a)
 
 function start(a)
 {
-	if (!isProjectValid())
+	if (!isProjectValid("./"))
 	{
-		error("current folder is not a valid wk project, initialize first");
-		log("usage:");
-		log("	wk init   | initializes a new project with boilerplate code");
+		if (isProjectValid("../"))
+		{
+			error("current folder is not the base folder of project");
+			error("navigate to up one level and try **wk start** again")
+		}
+		else if (isProjectValid("../../"))
+		{
+			error("current folder is not the base folder of project");
+			error("navigate to up 2 level and try **wk start** again")
+		}
+		else
+		{
+			error("current folder is not a valid wk project, initialize first");
+			log("usage:");
+			log("	wk init   | initializes a new project with boilerplate code");
+		}
 		return;
 	}
 	log("starting file server and auto-builder");
@@ -248,10 +261,6 @@ function onchange(event,changeFileName)
 	changedFiles.push(changeFileName);
 	timer = setTimeout(function()
 	{
-		
-		// minorLog(changedFiles);
-
-
 		var isHtmlChanged = false;
 		var isCssChanged = false;
 		var isTypescriptChanged = false;
@@ -359,19 +368,19 @@ function onchange(event,changeFileName)
 	},250);
 }
 
-function isProjectValid()
+function isProjectValid(path)
 {
-	if (!FS.existsSync("./dist"))
+	if (!FS.existsSync(path + "dist"))
 	{
 		return false;
 	}
 
-	if (!FS.existsSync("./components"))
+	if (!FS.existsSync(path + "components"))
 	{
 		return false;
 	}
 
-	if (!FS.existsSync("./classes"))
+	if (!FS.existsSync(path + "classes"))
 	{
 		return false;
 	}
