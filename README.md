@@ -1,12 +1,12 @@
 # wk
-wk is a command line tool for generating boilerplate code for basic web components
 
+wk is a lightweight web framework for typescript with an almost-zero overhead. All provided functionality (router, event dispatcher, global data store) are optional and can be removed if not needed.
+
+Unlike all other major frameworks , wk appreciates imperative programming
 
 ## Installing
 
-visit following link to download & install nodejs
-
-	https://nodejs.org
+visit [https://nodejs.org](nodejs website) link to download & install nodejs
 
 
 install typescript and wk CLI
@@ -72,9 +72,18 @@ usage example:
 
 	});
 
-*located in /classes/dispatcher.js*
+*located in /classes/dispatcher.ts*
 
 this feature is completely optional and can be deleted safely
+
+
+### Router
+
+
+
+### Components
+
+Components are the bare bones of the wk.
 
 ### Templates
 templates are simple .html files with no logic and style attached to them
