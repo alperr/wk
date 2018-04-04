@@ -172,7 +172,7 @@ function newComponent(a)
 		return;
 	}
 
-	if (!isProjectValid())
+	if (!isProjectValid("./"))
 	{
 		error("current folder is not a valid wk project, initialize first");
 		log("usage:");
