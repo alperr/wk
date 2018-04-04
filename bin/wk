@@ -15,7 +15,7 @@ var RESET = "\x1b[0m";
 
 var SOURCE_DISPATCHER = 'aWYgKHR5cGVvZiBfX3drID09ICJ1bmRlZmluZWQiKQoJdmFyIF9fd2s6IGFueSA9IHt9OwoKX193ay5ldmVudHMgPSB7fTsKCmZ1bmN0aW9uIHN1YihhY3Rpb246IG51bWJlciwgZikKewoJaWYgKHR5cGVvZiBfX3drLmV2ZW50c1thY3Rpb25dID09ICd1bmRlZmluZWQnKQoJCV9fd2suZXZlbnRzW2FjdGlvbl0gPSBbXTsKCglfX3drLmV2ZW50c1thY3Rpb25dLnB1c2goZik7Cn0KCmZ1bmN0aW9uIHVuc3ViKGFjdGlvbjogbnVtYmVyLCBmKQp7CglpZiAodHlwZW9mIF9fd2suZXZlbnRzW2FjdGlvbl0gPT0gJ3VuZGVmaW5lZCcpCgkJcmV0dXJuOwoKCWZvciAodmFyIGk9MDtpPF9fd2suZXZlbnRzW2FjdGlvbl0ubGVuZ3RoO2krKykKCXsKCQlpZiAoX193ay5ldmVudHNbYWN0aW9uXVtpXSA9PSBmKQoJCXsKCQkJX193ay5ldmVudHNbYWN0aW9uXS5zcGxpY2UoaSwxKTsKCQkJaS0tOwoJCX0KCX0KfQoKZnVuY3Rpb24gcHViKGFjdGlvbjogbnVtYmVyKQp7CglpZiAoIChhY3Rpb24gfCAwKSAhPSBhY3Rpb24pCgkJdGhyb3coJ2JhZCBhY3Rpb24nKTsKCglpZiAodHlwZW9mIF9fd2suZXZlbnRzW2FjdGlvbl0gPT0gJ3VuZGVmaW5lZCcpCgkJcmV0dXJuOwoKCWZvciAodmFyIGk9MDtpPF9fd2suZXZlbnRzW2FjdGlvbl0ubGVuZ3RoO2krKykKCQlfX3drLmV2ZW50c1thY3Rpb25dW2ldKCk7Cn0KCnZhciBzaWcgPSBmdW5jdGlvbihhY3Rpb246IG51bWJlcikKewoJcmV0dXJuIGZ1bmN0aW9uKCl7IHB1YihhY3Rpb24pIH0KfQ==';
 var SOURCE_ELEMENT = 'Y2xhc3MgQ29tcG9uZW50CnsKCXB1YmxpYyByb290OiBFbGVtZW50OwoJY29uc3RydWN0b3Iocm9vdDogRWxlbWVudCwgbWFya3VwOiBzdHJpbmcpCgl7CgkJdGhpcy5yb290ID0gcm9vdDsKCQl0aGlzLmxvYWRNYXJrdXAobWFya3VwKTsKCX0KCglwdWJsaWMgZmluZCA9IChxdWVyeTogc3RyaW5nKTogRWxlbWVudCA9PgoJewoJCXF1ZXJ5ID0gJy4nICsgcXVlcnk7CgkJcmV0dXJuIHRoaXMucm9vdC5xdWVyeVNlbGVjdG9yQWxsKHF1ZXJ5KVswXTsJCQoJfQoKCXByaXZhdGUgbG9hZE1hcmt1cCA9IChrZXk6IHN0cmluZykgPT4KCXsKCQl2YXIgdzogYW55ID0gd2luZG93OwoJCWlmICghdy5fX21hcmt1cF9kYXRhW2tleV0pCgkJCXRocm93ICJ0aGVyZSBpcyBubyBtYXJrdXAgZm9yICIgKyBrZXk7CgoJCXRoaXMucm9vdC5pbm5lckhUTUwgPSBhdG9iKHcuX19tYXJrdXBfZGF0YVtrZXldKTsKCX0KfQ==';
-var SOURCE_STORE = 'aWYgKHR5cGVvZiBfX3drID09ICJ1bmRlZmluZWQiKQoJdmFyIF9fd2s6IGFueSA9IHt9OwpfX3drLnN0b3JlID0ge307Cm5hbWVzcGFjZSBTdG9yZQp7CglleHBvcnQgZnVuY3Rpb24gaGFzKGtleTogbnVtYmVyKTogYm9vbGVhbgoJewoJCXJldHVybiB0eXBlb2YgX193ay5zdG9yZVtrZXldICE9ICd1bmRlZmluZWQnCgl9CgkKCWV4cG9ydCBmdW5jdGlvbiBnZXQoa2V5OiBudW1iZXIpCgl7CgkJcmV0dXJuIF9fd2suc3RvcmVba2V5XTsKCX0KCQoJZXhwb3J0IGZ1bmN0aW9uIHNldChrZXk6IG51bWJlciwgdmFsdWUpCgl7CgkJcmV0dXJuIF9fd2suc3RvcmVba2V5XSA9IHZhbHVlOwoJfQp9';
+var SOURCE_STORE = 'aWYgKHR5cGVvZiBfX3drID09ICJ1bmRlZmluZWQiKQoJdmFyIF9fd2s6IGFueSA9IHt9OwpfX3drLnN0b3JlID0ge307CmZ1bmN0aW9uIGhhcyhrZXk6IG51bWJlcik6IGJvb2xlYW4KewoJcmV0dXJuIHR5cGVvZiBfX3drLnN0b3JlW2tleV0gIT0gJ3VuZGVmaW5lZCcKfQpmdW5jdGlvbiBnZXQoa2V5OiBudW1iZXIpCnsKCXJldHVybiBfX3drLnN0b3JlW2tleV07Cn0KZnVuY3Rpb24gc2V0KGtleTogbnVtYmVyLCB2YWx1ZSkKewoJcmV0dXJuIF9fd2suc3RvcmVba2V5XSA9IHZhbHVlOwp9';
 var SOURCE_UTIL = 'bmFtZXNwYWNlIFV0aWwKewoJZXhwb3J0IGZ1bmN0aW9uIHJhbmRvbUFscGhhTnVtKGxlbmd0aDogbnVtYmVyKTogc3RyaW5nCgl7CgkJLy8gNjIgY2hhcnMgCgkJLy8gTWF0aC5sb2cyKDYyKSA9IDUuOTU0IGJpdCBlbnRyb3B5IHBlciBjaGFyYWN0ZXIKCQkvLyBsZW5ndGggPSAyMiB3aWxsIGdpdmUgeW91IGEgfjEyOCBiaXQgcmFuZG9tbmVzcwoJCXZhciBhbHBoYWJldCA9ICcwMTIzNDU2Nzg5YWJjZGVmZ2hpamtsbW5vcHJxc3R1d3Z4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVXVlhZWicKCQl2YXIgciA9ICcnOwoJCWZvciAodmFyIGk9MDtpPGxlbmd0aDtpKyspCgkJCXIgKz0gYWxwaGFiZXRbTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogYWxwaGFiZXQubGVuZ3RoKV07CgkJCgkJcmV0dXJuIHI7Cgl9Cn0=';
 var SOURCE_INDEX = 'PGh0bWwgbGFuZz0iZW4iPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgiPgoJCTx0aXRsZT53azwvdGl0bGU+CgkJPHN0eWxlPgoJCQkjcm9vdHsKCQkJCXdpZHRoOiAxMDAlOwoJCQkJaGVpZ2h0OiAxMDAlOwoJCQkJb3ZlcmZsb3c6IG5vbmU7CgkJCQlwb3NpdGlvbjogcmVsYXRpdmU7CgkJCX0KCQk8L3N0eWxlPgoJCTxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iZGV2LmNzcyI+CgkJPHNjcmlwdCBzcmM9J2Rldi5qcyc+PC9zY3JpcHQ+Cgk8L2hlYWQ+CgkKCTxib2R5PgoJCTxkaXYgaWQ9J3Jvb3QnPjwvZGl2PgoJPC9ib2R5PgoJPHNjcmlwdD4KCXdpbmRvdy5vbmxvYWQgPSBmdW5jdGlvbiAoKQoJewoJCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCQl4aHIub3BlbigiR0VUIiwiZGV2Lmpzb24iKTsKCQl4aHIuc2VuZCgpOwoJCXhoci5vbmxvYWQgPSBmdW5jdGlvbigpCgkJewoJCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJCW5ldyBBcHBsaWNhdGlvbihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKTsKCQl9Cgl9Cgk8L3NjcmlwdD4KPC9odG1sPg==';
 var SOURCE_SAMPLE = 'Ly8vIDxyZWZlcmVuY2UgcGF0aD0iLi4vLi4vY2xhc3Nlcy9jb21wb25lbnQudHMiIC8+CgpjbGFzcyBTYW1wbGVDb21wb25lbnQgZXh0ZW5kcyBDb21wb25lbnQKewoJY29uc3RydWN0b3Iocm9vdDogRWxlbWVudCwgb3B0aW9uczogT2JqZWN0KQoJewoJCXN1cGVyKHJvb3QsICJzYW1wbGUtY29tcG9uZW50Iik7CgoJfQoKCXB1YmxpYyBhID0gKCk9PgoJewoJCQoJfQoKCXByaXZhdGUgYiA9ICgpPT4KCXsKCgl9Cn0=';
@@ -59,7 +59,7 @@ function printSmallHelp(c)
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./dist folder");
 	log("	wk new    | creates a new component under ./components folder");
-	log("	wk build  | makes a production build (minifies css and js) under ./build folder");
+	log("	wk build  | makes a production build under ./build folder (minifies js&css)");
 }
 
 function init(a)
@@ -191,6 +191,19 @@ function newComponent(a)
 		return;
 	}
 
+
+	if (a[0].indexOf("_") != -1)
+	{
+		error(a.join(" ") + " is not a valid component name, _ is not allowed");
+		return;
+	}
+
+	if (Number.isInteger(Number(a[0][0])))
+	{
+		error(a.join(" ") + " is not a valid component name, component name cannot start with a number");
+		return;
+	}
+
 	createComponentFiles(a[0]);
 }
 
@@ -216,16 +229,18 @@ function createComponentFiles(name)
 		error("a component with a name " + name + " already exists");
 		return;
 	}
-	log("creating a new component named " + name);
 
 	var pascal = dash2PascalCase(name);
 	var ts = Buffer.from(SOURCE_SAMPLE, 'base64').toString('ascii');
 	ts = ts.replace("SampleComponent", pascal);
 	ts = ts.replace("sample-component", name);
 
+	var html = '<div class="'+name+'"></div>';
+	var css = '.'+name+'{}';
+
 	FS.mkdirSync("./components/" + name);
-	FS.writeFileSync("./components/" + name + "/" + name + ".html" , "", "utf8");
-	FS.writeFileSync("./components/" + name + "/" + name + ".css" , "", "utf8");
+	FS.writeFileSync("./components/" + name + "/" + name + ".html" , html, "utf8");
+	FS.writeFileSync("./components/" + name + "/" + name + ".css" , css, "utf8");
 	FS.writeFileSync("./components/" + name + "/" + name + ".ts" , ts, "utf8");
 
 	log("created a new component named " + name);
