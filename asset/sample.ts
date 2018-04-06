@@ -2,19 +2,9 @@
 
 class SampleComponent extends Component
 {
-	constructor(root: Element, options: Object)
+	constructor(root: Element, options?: Object)
 	{
 		super(root, "sample-component");
-
-	}
-
-	public a = ()=>
-	{
-		
-	}
-
-	private b = ()=>
-	{
 
 	}
 }

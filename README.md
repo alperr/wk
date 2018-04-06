@@ -30,6 +30,11 @@ run **start** command to start a web server and file watcher that compiles your 
 
 	wk start
 
+run **new** command to create a new component folder with ts/html/css files in it
+
+	wk start
+
+
 run **build** command to make an optimized production build
 
 	wk build
@@ -39,10 +44,10 @@ run **build** command to make an optimized production build
 ### Global Data Store
 wk exposes a global variable named **Store** which has following methods for managing global data
 
-- set(key,value)
-- get(key)
-- has(key)
-- delete(key)
+- set(key: number,value)
+- get(key: number)
+- has(key: number)
+- delete(key: number)
 
 usage example:
 
@@ -57,17 +62,19 @@ this feature is completely optional and can be deleted safely
 ### Event Dispatcher
 publish/subscribe pattern is implemented in wk with following global functions
 
-- pub(event)
-- sub(event,handler)
-- unsub(event,handler)
+- pub(event: number)
+- sub(event: number,handler)
+- unsub(event: number,handler)
 	
 usage example:
 
+	var SOME_EVENT = 0;
+	var OTHER_EVENT = 1;
 	// some component fires an event
-	pub("SOME_EVENT");
+	pub(SOME_EVENT);
 
 	// another component gets notified when that event is fired (published)
-	sub("SOME_EVENT",function()
+	sub(SOME_EVENT,function()
 	{
 
 	});
