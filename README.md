@@ -143,7 +143,7 @@ templates are child elements of components, a template can't be shared between 2
 
 ### Conventions
 
-1. class, mamespace and interface names are PascalCase
-2. file, folder, html attributes and html class names are kebap-case
+1. class, namespace and interface names are PascalCase
+2. file, folder, html attributes are kebap-case
 3. method and variables are camelCase
 4. braces are in Allman Style
