@@ -125,12 +125,12 @@ let's say we have created a template file comment-section.html with the followin
 			<div class="user-name"></div>        
 		</div>
 	</div>
-  
-  
+
+
 dom node that contains above content can be created by calling createTemplate method of the root object.
 
-    var d = root.createTemplate("comment-section");
-    
+	var d = root.createTemplate("comment-section");
+
 creates a dom node that contains the content of the template given
 
 templates are child elements of components, a template can't be shared between 2 different component
