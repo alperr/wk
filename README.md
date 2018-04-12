@@ -32,8 +32,10 @@ run **start** command to start a web server and file watcher that compiles your 
 
 run **new** command to create a new component folder with ts/html/css files in it
 
-	wk start
+	wk new component-name
 
+
+you can write any kebap-case name for your component
 
 run **build** command to make an optimized production build
 
@@ -83,14 +85,21 @@ usage example:
 
 this feature is completely optional and can be deleted safely
 
+### Components
+
+Components are the bare bones of the wk.Every component has its own ts,html and css file.
+Every component starts with a call to base class contructor.
+
+	super(root,"component-name")
+
+which populates the **root** element with the markup writen in .html file of that component.
+
 
 ### Router
 
+	not documented yet
 
 
-### Components
-
-Components are the bare bones of the wk.
 
 ### Templates
 templates are simple .html files with no logic and style attached to them

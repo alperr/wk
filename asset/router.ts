@@ -1,4 +1,12 @@
-function Router(pageData, onpagenotfound , container404)
+interface route_data_t
+{
+	path: string;
+	container: HTMLDivElement;
+	onshow?: Function;
+	onhide?: Function;
+}
+
+function Router(pageData: Array<route_data_t>, onpagenotfound , container404)
 {
 	var self = this;
 	var allContainers = [];
@@ -73,7 +81,7 @@ function Router(pageData, onpagenotfound , container404)
 			allContainers[i].style.display = 'none';
 	}
 
-	function findMatchingUrl (url)
+	function findMatchingUrl(url)
 	{
 		var r =
 		{
