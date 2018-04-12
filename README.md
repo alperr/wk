@@ -53,9 +53,11 @@ wk exposes a global variable named **Store** which has following methods for man
 
 usage example:
 
-	store.set("somekey","anyvalue");
-	store.set("anotherkey",132);
-	store.get("anotherkey");
+	var SOME_KEY = 0;
+	var OTHER_KEY = 1;
+	store.set(SOME_KEY, "anyvalue");
+	store.set(OTHER_KEY, 132);
+	store.get(OTHER_KEY);
 
 *located in /classes/store.ts*
 
@@ -87,10 +89,10 @@ this feature is completely optional and can be deleted safely
 
 ### Components
 
-Components are the bare bones of the wk.Every component has its own ts,html and css file.
-Every component starts with a call to base class contructor.
+Components are the bare bones of the wk. Every component has its own ts,html and css file.
+and  starts with a call to base class contructor.
 
-	super(root,"component-name")
+	super(root,"component-name");
 
 which populates the **root** element with the markup writen in .html file of that component.
 
