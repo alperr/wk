@@ -89,7 +89,7 @@ this feature is completely optional and can be deleted safely
 
 ### Components
 
-Components are the bare bones of the wk. Every component has its own ts,html and css file.
+Components are the bare bones of the wk. Every component has its own ts,html and css file 
 and  starts with a call to base class contructor.
 
 	super(root,"component-name");
@@ -139,3 +139,11 @@ templates are child elements of components, a template can't be shared between 2
 
 - template and parent component name must be different
 - template files must be placed under parent component folder
+
+
+### Conventions
+
+1. class, mamespace and interface names are PascalCase
+2. file, folder, html attributes and html class names are kebap-case
+3. method and variables are camelCase
+4. braces are in Allman Style
