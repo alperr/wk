@@ -1,7 +1,7 @@
 class Component
 {
 	public root: Element;
-	constructor(root: Element, markup: string)
+	constructor(root: Element, markup: number)
 	{
 		this.root = root;
 		this.loadMarkup(markup);
@@ -13,7 +13,7 @@ class Component
 		return this.root.querySelectorAll(query)[0];		
 	}
 
-	private loadMarkup = (key: string) =>
+	private loadMarkup = (key: number) =>
 	{
 		var w: any = window;
 		if (!w.__markup_data[key])
