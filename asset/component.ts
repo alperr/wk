@@ -1,9 +1,9 @@
 class Component
 {
-	public root: Element;
+	public root: HTMLElement;
 	constructor(root: Element, markup: number)
 	{
-		this.root = root;
+		this.root = <HTMLElement>root;
 		this.loadMarkup(markup);
 	}
 
