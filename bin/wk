@@ -126,6 +126,8 @@ function start(a)
 		return;
 	}
 	log("starting file server and auto-builder");
+	
+	updateComponentEnums();
 
 	FS.watch(COMPONENT_BASE_PATH, { "recursive" : true } , onchange);
 	FS.watch(CLASS_BASE_PATH, { "recursive" : true } , onchange);
@@ -391,7 +393,6 @@ function onchange(event,changeFileName)
 				return;
 			}
 		}
-
 
 		try { FS.unlinkSync( OUTPUT_PATH + ".css" ); } catch (e) { }
 		FS.writeFileSync( OUTPUT_PATH + ".css" , css , 'utf8');
