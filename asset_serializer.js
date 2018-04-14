@@ -14,7 +14,6 @@ var map = {
 	"var SOURCE_SAMPLE = " 				: "sample.ts",
 	"var SOURCE_BASIC_HTML = " 			: "basic-template.html",
 	"var SOURCE_BASIC_CSS = " 			: "basic-template.css",
-	"var SOURCE_BASIC_JS = " 			: "basic-template.ts",
 	"var SOURCE_ROUTER = " 				: "router.ts"
 }
 for (var i in lines)
