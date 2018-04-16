@@ -390,7 +390,7 @@ function onchange(event,changeFileName)
 
 		if (isTypescriptChanged)
 		{
-			command = "tsc --out ./dist/dev.js --lib 'es6','dom'";
+			command = "tsc --out ./dist/dev.js --lib 'es6','dom' ";
 			command += tsFiles.join(" ");
 			// console.log(tsFiles);
 			// console.log(command);

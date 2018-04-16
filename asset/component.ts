@@ -10,7 +10,7 @@ class Component
 	public find = (query: string): Element =>
 	{
 		query = '.' + query;
-		return this.root.querySelectorAll(query)[0];		
+		return this.root.querySelectorAll(query)[0];
 	}
 
 	private loadMarkup = (key: number) =>
