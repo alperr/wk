@@ -7,7 +7,7 @@ class Component
 		this.loadMarkup(markup);
 	}
 
-	public find = (query: string): Element =>
+	public find = (query: string): any =>
 	{
 		query = '.' + query;
 		return this.root.querySelectorAll(query)[0];
