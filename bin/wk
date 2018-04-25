@@ -4,7 +4,6 @@
 var FS = require('fs');
 var EXEC = require('child_process').execSync;
 
-
 // **** CONSTANTS ****
 var BG_RED = "\x1b[41m";
 var FG_RED = "\x1b[31m";
@@ -157,7 +156,15 @@ function start(a)
 		}
 		server.listen(port);
 		log("listening localhost:" + port);
-		opn('http://localhost:' + port);
+		
+		setTimeout(function(){
+			log("opening localhost:" + port + " in 2 seconds");
+		}, 1000);
+
+		setTimeout(function(){
+			opn('http://localhost:' + port);
+		}, 3000);
+		
 	});
 }
 
