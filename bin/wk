@@ -147,7 +147,7 @@ function start()
 	})
 	
 	var pf = require("portfinder");
-	pf.basePort = 000;
+	pf.basePort = 6000;
 	pf.getPort(function (err, port)
 	{
 		if (err)
@@ -247,7 +247,15 @@ function deleteComponent(a)
 
 function listComponents()
 {
-
+	if (!isProjectValid("./"))
+	{
+		error("current folder is not a valid wk project, initialize first");
+		log("usage:");
+		log("	wk init   | initializes a new project with boilerplate code");
+		return;
+	}
+	var z = fs.readdirSync("./components/")
+	console.log(z);
 }
 
 // TODO 
