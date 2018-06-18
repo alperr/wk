@@ -64,7 +64,7 @@ function printSmallHelp(c)
 	log("	wk build  | makes a production build under ./build folder (minifies js&css)");
 }
 
-function init(a)
+function init()
 {
 	if (isProjectValid("./"))
 	{
@@ -95,7 +95,7 @@ function init(a)
 	log("wk start  | auto-builds components and serves them under ./dist folder");
 }
 
-function deinit(a)
+function deinit()
 {
 	deleteFolderRecursive("./dist");
 	deleteFolderRecursive("./classes");
@@ -103,7 +103,7 @@ function deinit(a)
 	log("- de initialized project and deleted all files");
 }
 
-function start(a)
+function start()
 {
 	if (!isProjectValid("./"))
 	{
@@ -147,7 +147,7 @@ function start(a)
 	})
 	
 	var pf = require("portfinder");
-	pf.basePort = 3000;
+	pf.basePort = 000;
 	pf.getPort(function (err, port)
 	{
 		if (err)
@@ -157,10 +157,6 @@ function start(a)
 		server.listen(port);
 		log("listening localhost:" + port);
 		
-		setTimeout(function(){
-			log("opening localhost:" + port + " in 2 seconds");
-		}, 1000);
-
 		setTimeout(function(){
 			opn('http://localhost:' + port);
 		}, 3000);
@@ -218,10 +214,35 @@ function newComponent(a)
 	createComponentFiles(a[0]);
 	updateComponentEnums();
 }
-function deleteComponent()
+
+function deleteComponent(a)
 {
+	if (a.length == 0)
+	{
+		log("usage:")
+		log("	wk del component-name |  deletes a component, this command is not reversible");
+		return;
+	}
 
+	if (!isProjectValid("./"))
+	{
+		error("current folder is not a valid wk project, initialize first");
+		log("usage:");
+		log("	wk init   | initializes a new project with boilerplate code");
+		return;
+	}
 
+	var input = "./components" + a[0] + '/' + a[0];
+
+	if (!FS.existsSync(input + '.html') || !FS.existsSync(input + '.ts') || !FS.existsSync(input + '.css'))
+	{
+		error("there is no component named " + a[0]);
+		return;
+	}
+
+	deleteFolderRecursive("./components" + a[0]);
+	updateComponentEnums();
+	log("deleted component -> " + a[0])
 }
 
 function listComponents()
@@ -229,11 +250,14 @@ function listComponents()
 
 }
 
+// TODO 
+// not completed yet
 function productionBuild()
 {
 	log("building for production");
 
-	var UGLIFYJS = require("uglify-js");
+	// implement minifying later
+	// var UGLIFYJS = require("uglify-js");
 	var CHEERIO = require('cheerio');
 	var $ = CHEERIO.load(FS.readFileSync("./dist/index.html"));
 	
@@ -279,7 +303,8 @@ function updateComponentEnums()
 		s += "\nconst " + name + " = " + counter + ";";
 		counter++;
 	}
-	
+
+	// remove this 
 	s = Buffer.from(SOURCE_ELEMENT, 'base64').toString('ascii') + s;
 	FS.writeFileSync("./classes/component.ts", s, "utf8");
 }
@@ -304,7 +329,7 @@ function minorLog(m)
 }
 
 
-function onchange(event,changeFileName)
+function onchange(event, changeFileName)
 {
 	if ( !changeFileName.endsWith(".ts") && !changeFileName.endsWith(".css") && !changeFileName.endsWith(".html"))
 		return;
