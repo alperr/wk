@@ -147,7 +147,7 @@ function start()
 	})
 	
 	var pf = require("portfinder");
-	pf.basePort = 6000;
+	pf.basePort = 8040;
 	pf.getPort(function (err, port)
 	{
 		if (err)
@@ -160,7 +160,6 @@ function start()
 		setTimeout(function(){
 			opn('http://localhost:' + port);
 		}, 3000);
-		
 	});
 }
 
