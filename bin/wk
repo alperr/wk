@@ -178,13 +178,8 @@ function newComponent(a)
 		return;
 	}
 
-	if (!isProjectValid("./"))
-	{
-		error("current folder is not a valid wk project, initialize first");
-		log("usage:");
-		log("	wk init   | initializes a new project with boilerplate code");
+	if (!printNotValidProjectMessage("./"))
 		return;
-	}
 
 	if ( a[0].toLowerCase() != a[0])
 	{
@@ -223,13 +218,8 @@ function deleteComponent(a)
 		return;
 	}
 
-	if (!isProjectValid("./"))
-	{
-		error("current folder is not a valid wk project, initialize first");
-		log("usage:");
-		log("	wk init   | initializes a new project with boilerplate code");
+	if (!printNotValidProjectMessage("./"))
 		return;
-	}
 
 	var input = "./components" + a[0] + '/' + a[0];
 
@@ -246,14 +236,10 @@ function deleteComponent(a)
 
 function listComponents()
 {
-	if (!isProjectValid("./"))
-	{
-		error("current folder is not a valid wk project, initialize first");
-		log("usage:");
-		log("	wk init   | initializes a new project with boilerplate code");
+	if (!printNotValidProjectMessage("./"))
 		return;
-	}
-	var z = fs.readdirSync("./components/")
+
+	var z = FS.readdirSync("./components/");
 	console.log(z);
 }
 
@@ -451,6 +437,20 @@ function onchange(event, changeFileName)
 
 		console.timeEnd('\x1b[32mbuild completed successfully\x1b[0m');
 	},250);
+}
+
+
+function printNotValidProjectMessage(path)
+{
+	if (!isProjectValid(path))
+	{
+		error("current folder is not a valid wk project, initialize first");
+		log("usage:");
+		log("	wk init   | initializes a new project with boilerplate code");
+		return  false;
+	}
+
+	return true;
 }
 
 function isProjectValid(path)
