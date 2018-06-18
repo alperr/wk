@@ -239,8 +239,16 @@ function listComponents()
 	if (!printNotValidProjectMessage("./"))
 		return;
 
-	var z = FS.readdirSync("./components/");
-	console.log(z);
+	var components = FS.readdirSync("./components/")
+	log("Components:");
+	for (var i in components)
+		log("	" + components[i]);
+
+		
+	var classes = FS.readdirSync("./classes/")
+	log("Classes:");
+	for (var i in classes)
+		log("	" + classes[i]);
 }
 
 // TODO 
