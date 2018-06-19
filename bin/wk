@@ -221,7 +221,7 @@ function deleteComponent(a)
 	if (!printNotValidProjectMessage("./"))
 		return;
 
-	var input = "./components" + a[0] + '/' + a[0];
+	var input = "./components/" + a[0] + '/' + a[0];
 
 	if (!FS.existsSync(input + '.html') || !FS.existsSync(input + '.ts') || !FS.existsSync(input + '.css'))
 	{
@@ -229,7 +229,7 @@ function deleteComponent(a)
 		return;
 	}
 
-	deleteFolderRecursive("./components" + a[0]);
+	deleteFolderRecursive("./components/" + a[0]);
 	updateComponentEnums();
 	log("deleted component -> " + a[0])
 }
