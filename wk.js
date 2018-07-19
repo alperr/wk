@@ -55,7 +55,7 @@ function printSmallHelp(c)
 {
 	if (typeof c != 'undefined')
 		error("invalid command: " + c);
-	log("version: 0.0.49");
+	log("version: 0.0.50");
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./dist folder");
@@ -243,13 +243,19 @@ function listComponents()
 	var components = FS.readdirSync("./components/")
 	log("Components:");
 	for (var i in components)
-		log("	" + components[i]);
-
+	{
+		if (!components[i].startsWith("."))
+			log("	" + components[i]);
+	}
 		
 	var classes = FS.readdirSync("./classes/")
 	log("Classes:");
 	for (var i in classes)
-		log("	" + classes[i]);
+	{
+		if (!classes[i].startsWith("."))
+			log("	" + classes[i]);
+	}
+		
 }
 
 // TODO 
@@ -301,6 +307,9 @@ function updateComponentEnums()
 	var s = "";
 	for (var i in components)
 	{
+		if (components[i].startsWith("."))
+			continue;
+
 		var name = "MARKUP_" + dash2UpperCase(components[i]);
 		s += "\nconst " + name + " = " + counter + ";";
 		counter++;
@@ -415,7 +424,6 @@ function onchange(event, changeFileName)
 			}
 			var markup = FS.readFileSync(input + ".html","utf8");
 			markupMap.push(new Buffer(markup).toString('base64'));
-			// [names[i]]
 			tsFiles.push(input + ".ts");
 
 			if (FS.existsSync(input + '.css')) 
