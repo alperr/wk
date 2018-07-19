@@ -55,7 +55,7 @@ function printSmallHelp(c)
 {
 	if (typeof c != 'undefined')
 		error("invalid command: " + c);
-	log("version: 0.0.50");
+	log("version: 0.0.51");
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./dist folder");
