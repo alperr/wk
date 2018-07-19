@@ -41,52 +41,6 @@ run **build** command to make an optimized production build
 
 	wk build
 
-## Builtin Functionality
-
-### Global Data Store
-wk exposes a global variable named **Store** which has following methods for managing global data
-
-- set(key: number,value)
-- get(key: number)
-- has(key: number)
-- delete(key: number)
-
-usage example:
-
-	var SOME_KEY = 0;
-	var OTHER_KEY = 1;
-	store.set(SOME_KEY, "anyvalue");
-	store.set(OTHER_KEY, 132);
-	store.get(OTHER_KEY);
-
-*located in /classes/store.ts*
-
-this feature is completely optional and can be deleted safely
-
-### Event Dispatcher
-publish/subscribe pattern is implemented in wk with following global functions
-
-- pub(event: number)
-- sub(event: number,handler)
-- unsub(event: number,handler)
-	
-usage example:
-
-	var SOME_EVENT = 0;
-	var OTHER_EVENT = 1;
-	// some component fires an event
-	pub(SOME_EVENT);
-
-	// another component gets notified when that event is fired (published)
-	sub(SOME_EVENT,function()
-	{
-
-	});
-
-*located in /classes/dispatcher.ts*
-
-this feature is completely optional and can be deleted safely
-
 ### Components
 
 Components are the bare bones of the wk. Every component has its own ts,html and css file 
