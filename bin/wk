@@ -51,7 +51,7 @@ function printSmallHelp(c)
 {
 	if (typeof c != 'undefined')
 		error("invalid command: " + c);
-	log("version: 0.0.53");
+	log("version: 0.0.54");
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./dist folder");
@@ -257,16 +257,31 @@ function listComponents()
 function productionBuild()
 {
 	log("building for production");
+	onchange("change",".ts");
+	deleteFolderRecursive("./build");
+	FS.mkdirSync("./build");	
 
-	// implement minifying later
-	// var UGLIFYJS = require("uglify-js");
-	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(FS.readFileSync("./dist/index.html"));
-	
-	var name = randomString(16);
-	$("link[href$='dev.css']").attr("href" , name + ".css");
-	$("script[src$='dev.js']").attr("src" , name + ".js");
-	log($.html());
+	setTimeout(function(){
+		// implement minifying later
+		// var UGLIFYJS = require("uglify-js");
+		var CHEERIO = require('cheerio');
+		var $ = CHEERIO.load(FS.readFileSync("./dist/index.html"));
+
+		var name = uid(8);
+		$("link[href$='dev.css']").attr("href" , name + ".css");
+		$("script[src$='dev.js']").attr("src" , name + ".js");
+
+		var h = $.html();
+		h = h.replace('"dev.json"', '"'+name+'.json"');
+		
+		FS.writeFileSync("./build/index.html" , h);
+
+		// these will be replaced with minifier calls
+		FS.copyFileSync("./dist/dev.css", "./build/" + name + ".css");
+		FS.copyFileSync("./dist/dev.js", "./build/" + name + ".js");
+		FS.copyFileSync("./dist/dev.json", "./build/" + name + ".json");
+		log("production build completed with seed " + name);
+	}, 5000);
 }
 
 function createComponentFiles(name)
@@ -527,5 +542,32 @@ function randomString(length)
 	for (var i=0;i<length;i++)
 		r += alphabet[Math.floor(Math.random() * alphabet.length)];
 	
+	return r;
+}
+
+function uid(length)
+{
+	if (typeof length == 'undefined')
+		length = 16;
+	if (length < 8)
+		throw "provide a bigger length"
+
+	var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUWVXYZabcdefghijklmnoprqstuwvxyz';
+	function int2Base62(i)
+	{
+		var r = "";
+		while(i > 61)
+		{
+			r = alphabet[i % 62] + r;
+			i = Math.floor(i / 62);
+		}
+		r = alphabet[i] + r;
+		return r;
+	}
+	
+	var r = int2Base62(Math.floor(Date.now()/1000));
+	for (var i=r.length;i<length;i++)
+		r += alphabet[Math.floor(Math.random() * alphabet.length)];
+
 	return r;
 }
