@@ -17,11 +17,6 @@ install typescript and wk CLI
 
 ## usage
 
-create an empty folder and navigate to it
-
-	mkdir your-project
-	cd your-project
-
 run **init** command to generate boilerplate files
 	
 	wk init
@@ -59,4 +54,4 @@ which populates the **root** element with the markup writen in .html file of tha
 1. class, namespace and interface names are PascalCase
 2. file, folder, html attributes are kebap-case
 3. method and variables are camelCase
-4. braces are in Allman Style
+4. braces are in allman style
