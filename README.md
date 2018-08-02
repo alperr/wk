@@ -1,10 +1,10 @@
 # wk
 
-wk is a lightweight web framework for typescript with an almost-zero overhead.
+wk is a lightweight web framework for typescript with zero overhead.
 
-Unlike all other major frameworks , wk appreciates imperative programming
+unlike all other major frameworks , wk appreciates imperative programming
 
-## Installing
+## installing
 
 visit [nodejs website](https://nodejs.org) to download & install nodejs
 
@@ -15,7 +15,7 @@ install typescript and wk CLI
 	npm i -g wk
 
 
-## Usage
+## usage
 
 create an empty folder and navigate to it
 
@@ -26,7 +26,7 @@ run **init** command to generate boilerplate files
 	
 	wk init
 
-run **start** command to start a web server and file watcher that compiles your files on file change
+run **start** command to start a web server and file watcher that compiles your ts files on file change
 
 	wk start
 
@@ -41,7 +41,10 @@ run **build** command to make an optimized production build
 
 	wk build
 
-### Components
+
+*run **wk** to see list of commands*
+
+### components
 
 Components are the bare bones of the wk. Every component has its own ts,html and css file 
 and  starts with a call to base class contructor.
@@ -51,11 +54,7 @@ and  starts with a call to base class contructor.
 which populates the **root** element with the markup writen in .html file of that component.
 
 
-### Router
-
-	not documented yet
-
-### Conventions
+### conventions
 
 1. class, namespace and interface names are PascalCase
 2. file, folder, html attributes are kebap-case
