@@ -478,7 +478,7 @@ function findTemplateFiles(path, componentName)
 
 		if (file == componentName + ".html")
 			return;
-			
+
 		htmlFiles.push(file);
 	});
 

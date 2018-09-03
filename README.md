@@ -1,19 +1,15 @@
 # wk
 
-wk is a lightweight web framework for typescript with zero overhead.
-
-unlike all other major frameworks , wk appreciates imperative programming
+wk is a CLI tool for writing web applications with typescript
 
 ## installing
 
 visit [nodejs website](https://nodejs.org) to download & install nodejs
 
-
 install typescript and wk CLI
 
 	npm i -g typescript
-	npm i -g wk
-
+	npm i -g wk-toolkit
 
 ## usage
 
