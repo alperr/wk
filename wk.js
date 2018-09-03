@@ -6,16 +6,19 @@ const FG_RED = "\x1b[31m";
 const FG_DIM = "\x1b[2m";
 const BG_GREEN = "\x1b[42m";
 const RESET = "\x1b[0m";
-const SOURCE_ELEMENT = 'Y2xhc3MgQ29tcG9uZW50CnsKCXB1YmxpYyByb290OiBIVE1MRWxlbWVudDsKCWNvbnN0cnVjdG9yKHJvb3Q6IEVsZW1lbnQsIG1hcmt1cDogbnVtYmVyKQoJewoJCXRoaXMucm9vdCA9IDxIVE1MRWxlbWVudD5yb290OwoJCXRoaXMubG9hZE1hcmt1cChtYXJrdXApOwoJfQoKCXB1YmxpYyBmaW5kID0gKHF1ZXJ5OiBzdHJpbmcpOiBhbnkgPT4KCXsKCQlxdWVyeSA9ICcuJyArIHF1ZXJ5OwoJCXJldHVybiB0aGlzLnJvb3QucXVlcnlTZWxlY3RvckFsbChxdWVyeSlbMF07Cgl9CgoJcHJpdmF0ZSBsb2FkTWFya3VwID0gKGtleTogbnVtYmVyKSA9PgoJewoJCXZhciB3OiBhbnkgPSB3aW5kb3c7CgkJaWYgKCF3Ll9fbWFya3VwX2RhdGFba2V5XSkKCQkJdGhyb3cgInRoZXJlIGlzIG5vIG1hcmt1cCBmb3IgIiArIGtleTsKCgkJdGhpcy5yb290LmlubmVySFRNTCA9IGF0b2Iody5fX21hcmt1cF9kYXRhW2tleV0pOwoJfQp9';
+
+const SOURCE_COMPONENT = 'Y2xhc3MgQ29tcG9uZW50CnsKCXB1YmxpYyByb290OiBIVE1MRWxlbWVudDsKCWNvbnN0cnVjdG9yKHJvb3Q6IEVsZW1lbnQsIG1hcmt1cDogbnVtYmVyKQoJewoJCXRoaXMucm9vdCA9IDxIVE1MRWxlbWVudD5yb290OwoJCXRoaXMubG9hZE1hcmt1cChtYXJrdXApOwoJfQoKCXB1YmxpYyBmaW5kID0gKHF1ZXJ5OiBzdHJpbmcpOiBhbnkgPT4KCXsKCQlxdWVyeSA9ICcuJyArIHF1ZXJ5OwoJCXJldHVybiB0aGlzLnJvb3QucXVlcnlTZWxlY3RvckFsbChxdWVyeSlbMF07Cgl9CgoJcHJpdmF0ZSBsb2FkTWFya3VwID0gKGtleTogbnVtYmVyKSA9PgoJewoJCXZhciB3OiBhbnkgPSB3aW5kb3c7CgkJaWYgKCF3Ll9fbWFya3VwX2RhdGFba2V5XSkKCQkJdGhyb3cgInRoZXJlIGlzIG5vIG1hcmt1cCBmb3IgIiArIGtleTsKCgkJdGhpcy5yb290LmlubmVySFRNTCA9IGF0b2Iody5fX21hcmt1cF9kYXRhW2tleV0pOwoJfQp9';
 const SOURCE_INDEX = 'PGh0bWwgbGFuZz0iZW4iPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgiPgoJCTx0aXRsZT53azwvdGl0bGU+CgkJPHN0eWxlPgoJCQkjcm9vdHsKCQkJCXdpZHRoOiAxMDAlOwoJCQkJaGVpZ2h0OiAxMDAlOwoJCQkJb3ZlcmZsb3c6IG5vbmU7CgkJCQlwb3NpdGlvbjogcmVsYXRpdmU7CgkJCX0KCQk8L3N0eWxlPgoJCTxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iZGV2LmNzcyI+CgkJPHNjcmlwdCBzcmM9J2Rldi5qcyc+PC9zY3JpcHQ+Cgk8L2hlYWQ+CgkKCTxib2R5PgoJCTxkaXYgaWQ9J3Jvb3QnPjwvZGl2PgoJPC9ib2R5PgoJPHNjcmlwdD4KCXdpbmRvdy5vbmxvYWQgPSBmdW5jdGlvbiAoKQoJewoJCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCQl4aHIub3BlbigiR0VUIiwiZGV2Lmpzb24iKTsKCQl4aHIuc2VuZCgpOwoJCXhoci5vbmxvYWQgPSBmdW5jdGlvbigpCgkJewoJCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJCW5ldyBBcHBsaWNhdGlvbihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKTsKCQl9Cgl9Cgk8L3NjcmlwdD4KPC9odG1sPg==';
 const SOURCE_SAMPLE = 'Ly8vIDxyZWZlcmVuY2UgcGF0aD0iLi4vLi4vY2xhc3Nlcy9jb21wb25lbnQudHMiIC8+CgpjbGFzcyBTYW1wbGVDb21wb25lbnQgZXh0ZW5kcyBDb21wb25lbnQKewoJY29uc3RydWN0b3Iocm9vdDogRWxlbWVudCwgb3B0aW9ucz86IE9iamVjdCkKCXsKCQlzdXBlcihyb290LCAic2FtcGxlLWNvbXBvbmVudCIpOwoKCX0KfQ==';
 const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwbGljYXRpb24nPgoJPGgxPmJhc2ljIHdrIHByb2plY3Q8L2gxPgoJPHA+dGhpcyBwYWdlIGlzIGdlbmVyYXRlZCBieSBhcHBsaWNhdGlvbiBjb21wb25lbnQ8L3A+Cgk8cD5pdCBjYW4gYmUgZm91bmQgdW5kZXIgPHN0cm9uZz4vY29tcG9uZW50czwvc3Ryb25nPiBmb2xkZXI8L3A+Cgk8cCBjbGFzcz0nYWNjZW50Jz55b3UgY2FuIHR3ZWFrIHRoaXMgY29tcG9uZW50J3Mgc3R5bGUgYnkgZWRpdGluZyA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uY3NzPC9zdHJvbmc+IGZpbGU8L3A+Cgk8cD5hbGwgdGhpcyBjb21wb25lbnQgbWFya3VwIGlzIHdyaXR0ZW4gaW50byA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uaHRtbDwvc3Ryb25nPjwvcD4KPC9kaXY+';
 const SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAnU2Vnb2UgVUknLCBSb2JvdG8sICdIZWx2ZXRpY2EgTmV1ZScsIEFyaWFsLCBzYW5zLXNlcmlmOwp9CgouYXBwbGljYXRpb24gLmFjY2VudHsKCWNvbG9yOiAjYzBhOwp9';
+
 const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./dist/dev";
 
-var commands = {
+var commands =
+{
 	"init"  : init,
 	"deinit"  : deinit,
 	"start" : start,
@@ -66,7 +69,7 @@ function init()
 	if (!FS.existsSync("./components")){FS.mkdirSync("./components");}
 	log("- folders created");
 
-	FS.writeFileSync("./classes/component.ts",Buffer.from(SOURCE_ELEMENT, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./classes/component.ts",Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii'),"utf8");
 	FS.writeFileSync("./dist/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
 	log("- classes created");
 
@@ -111,8 +114,7 @@ function start()
 	}
 	log("starting file server and auto-builder");
 	
-	updateComponentEnums();
-
+	updateMarkupEnums();
 	FS.watch(COMPONENT_BASE_PATH, { "recursive" : true } , onchange);
 	FS.watch(CLASS_BASE_PATH, { "recursive" : true } , onchange);
 	onchange("change",".ts");
@@ -190,7 +192,7 @@ function newComponent(a)
 	}
 
 	createComponentFiles(a[0]);
-	updateComponentEnums();
+	updateMarkupEnums();
 }
 
 function deleteComponent(a)
@@ -214,7 +216,7 @@ function deleteComponent(a)
 	}
 
 	deleteFolderRecursive("./components/" + a[0]);
-	updateComponentEnums();
+	updateMarkupEnums();
 	log("deleted component -> " + a[0])
 }
 
@@ -230,7 +232,7 @@ function listComponents()
 		if (!components[i].startsWith("."))
 			log("	" + components[i]);
 	}
-		
+
 	var classes = FS.readdirSync("./classes/")
 	log("Classes:");
 	for (var i in classes)
@@ -240,8 +242,6 @@ function listComponents()
 	}
 }
 
-// TODO 
-// not completed yet
 function productionBuild()
 {
 	log("building for production");
@@ -312,7 +312,7 @@ function createComponentFiles(name)
 	log("created a new component named " + name);
 }
 
-function updateComponentEnums()
+function updateMarkupEnums()
 {
 	var counter = 0;
 	var components = FS.readdirSync("./components/");
@@ -328,7 +328,7 @@ function updateComponentEnums()
 	}
 
 	// remove this 
-	s = Buffer.from(SOURCE_ELEMENT, 'base64').toString('ascii') + s;
+	s = Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii') + s;
 	FS.writeFileSync("./classes/component.ts", s, "utf8");
 }
 
@@ -384,13 +384,14 @@ function onchange(event, changeFileName)
 		if (isHtmlChanged) msg.push("html");
 		msg = "[" + msg.join(", ") + "]";
 			
-		minorLog(counter + " save action captured, started compiling " + msg);
+		minorLog(counter + " save action captured, transpiling " + msg);
 		counter = 0;
 		changedFiles = [];
 		console.time('\x1b[32m transpiled\x1b[0m');
 
 		var css = '';
 		var markupMap = [];
+		var templateMap = [];
 		var tsFiles = [];
 		var names = [];
 		
@@ -415,6 +416,7 @@ function onchange(event, changeFileName)
 		for (var i=0;i<names.length;i++)
 		{
 			var input = COMPONENT_BASE_PATH + names[i] + '/' + names[i];
+			findTemplateFiles(COMPONENT_BASE_PATH + names[i] + '/', names[i]);
 
 			if (!FS.existsSync(input + '.html')) 
 			{
@@ -433,6 +435,7 @@ function onchange(event, changeFileName)
 				error('duplicate markup file ->' + names[i] + '.html  build cancelled');
 				return;
 			}
+
 			var markup = FS.readFileSync(input + ".html","utf8");
 			markupMap.push(new Buffer(markup).toString('base64'));
 			tsFiles.push(input + ".ts");
@@ -445,8 +448,6 @@ function onchange(event, changeFileName)
 		{
 			command = "tsc --out ./dist/dev.js --lib 'es6','dom' ";
 			command += tsFiles.join(" ");
-			// console.log(tsFiles);
-			// console.log(command);
 			try{
 				EXEC(command);
 			}catch(e)
@@ -463,9 +464,30 @@ function onchange(event, changeFileName)
 		try { FS.unlinkSync( OUTPUT_PATH + ".json" ); } catch (e) { }
 		FS.writeFileSync( OUTPUT_PATH + ".json" , JSON.stringify(markupMap) , 'utf8');
 		console.timeEnd('\x1b[32m transpiled\x1b[0m');
-	},250);
+	}, 250);
 }
 
+function findTemplateFiles(path, componentName)
+{
+	var htmlFiles = []; 
+	var files = FS.readdirSync(path);
+	files.forEach(function(file)
+	{
+		if (!file.endsWith(".html"))
+			return;
+
+		if (file == componentName + ".html")
+			return;
+			
+		htmlFiles.push(file);
+	});
+
+	if (htmlFiles.length != 0)
+	{
+		console.log(componentName);
+		console.log(htmlFiles);
+	}
+}
 
 function printNotValidProjectMessage(path)
 {
@@ -476,7 +498,6 @@ function printNotValidProjectMessage(path)
 		log("	wk init   | initializes a new project with boilerplate code");
 		return  false;
 	}
-
 	return true;
 }
 
