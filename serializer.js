@@ -6,13 +6,11 @@ var wk = FS.readFileSync("./wk.js","utf8");
 var lines = wk.split("\n");
 
 var map = {
-	"var SOURCE_UTIL = " 				: "util.ts",
-	"var SOURCE_ELEMENT = " 			: "component.ts",
+	"var SOURCE_COMPONENT = " 			: "component.ts",
 	"var SOURCE_INDEX = " 				: "index.html",
 	"var SOURCE_SAMPLE = " 				: "sample.ts",
 	"var SOURCE_BASIC_HTML = " 			: "basic-template.html",
 	"var SOURCE_BASIC_CSS = " 			: "basic-template.css",
-	"var SOURCE_ROUTER = " 				: "router.ts"
 }
 for (var i in lines)
 {

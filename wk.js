@@ -312,6 +312,30 @@ function createComponentFiles(name)
 	log("created a new component named " + name);
 }
 
+function findTemplateFiles(path, componentName)
+{
+	var htmlFiles = []; 
+	var files = FS.readdirSync(path);
+	files.forEach(function(file)
+	{
+		if (!file.endsWith(".html"))
+			return;
+
+		if (file == componentName + ".html")
+			return;
+
+		htmlFiles.push(file.substr(0,file.length-5));
+	});
+
+	if (htmlFiles.length != 0)
+	{
+		console.log(componentName);
+		console.log(htmlFiles);
+	}
+
+	return htmlFiles;
+}
+
 function updateMarkupEnums()
 {
 	var counter = 0;
@@ -325,6 +349,22 @@ function updateMarkupEnums()
 		var name = "MARKUP_" + dash2UpperCase(components[i]);
 		s += "\nconst " + name + " = " + counter + ";";
 		counter++;
+	}
+
+	for (var i in components)
+	{
+		if (components[i].startsWith("."))
+			continue;
+		
+
+		var templates = findTemplateFiles(COMPONENT_BASE_PATH + components[i] + '/', components[i]);
+		for (var t in templates)
+		{
+			templates[t];
+			var name = "TEMPLATE_" + dash2UpperCase(components[i]) + "__" + dash2UpperCase(templates[t]);
+			s += "\nconst " + name + " = " + counter + ";";
+			counter++;
+		}
 	}
 
 	// remove this 
@@ -341,6 +381,7 @@ function log(m)
 {
 	console.log(RESET, m, RESET);
 }
+
 function highlight(m)
 {
 	console.log(BG_GREEN, m, RESET);
@@ -350,7 +391,6 @@ function minorLog(m)
 {
 	console.log(FG_DIM, m, RESET);
 }
-
 
 function onchange(event, changeFileName)
 {
@@ -416,7 +456,6 @@ function onchange(event, changeFileName)
 		for (var i=0;i<names.length;i++)
 		{
 			var input = COMPONENT_BASE_PATH + names[i] + '/' + names[i];
-			findTemplateFiles(COMPONENT_BASE_PATH + names[i] + '/', names[i]);
 
 			if (!FS.existsSync(input + '.html')) 
 			{
@@ -465,28 +504,6 @@ function onchange(event, changeFileName)
 		FS.writeFileSync( OUTPUT_PATH + ".json" , JSON.stringify(markupMap) , 'utf8');
 		console.timeEnd('\x1b[32m transpiled\x1b[0m');
 	}, 250);
-}
-
-function findTemplateFiles(path, componentName)
-{
-	var htmlFiles = []; 
-	var files = FS.readdirSync(path);
-	files.forEach(function(file)
-	{
-		if (!file.endsWith(".html"))
-			return;
-
-		if (file == componentName + ".html")
-			return;
-
-		htmlFiles.push(file);
-	});
-
-	if (htmlFiles.length != 0)
-	{
-		console.log(componentName);
-		console.log(htmlFiles);
-	}
 }
 
 function printNotValidProjectMessage(path)
