@@ -7,6 +7,12 @@ class Component
 		this.loadMarkup(markup);
 	}
 
+	public find = (query: string): Element =>
+	{
+		query = "." + query;
+		return this.root.querySelector(query);
+	}
+
 	public querySelector = (query: string): Element =>
 	{
 		return this.root.querySelector(query);
