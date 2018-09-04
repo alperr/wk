@@ -12,6 +12,7 @@ var map =
 	"const SOURCE_BASIC_HTML = " 	: "basic-template.html",
 	"const SOURCE_BASIC_CSS = " 	: "basic-template.css",
 }
+
 for (var i in lines)
 {
 	var l = lines[i];
