@@ -1,16 +1,16 @@
 // run this when assets are changed
 
-var FS = require("fs");
-
-var wk = FS.readFileSync("./wk.js","utf8");
+const FS = require("fs");
+var wk = FS.readFileSync("./wk.js", "utf8");
 var lines = wk.split("\n");
 
-var map = {
-	"var SOURCE_COMPONENT = " 			: "component.ts",
-	"var SOURCE_INDEX = " 				: "index.html",
-	"var SOURCE_SAMPLE = " 				: "sample.ts",
-	"var SOURCE_BASIC_HTML = " 			: "basic-template.html",
-	"var SOURCE_BASIC_CSS = " 			: "basic-template.css",
+var map =
+{
+	"const SOURCE_COMPONENT = " 	: "component.ts",
+	"const SOURCE_INDEX = " 	: "index.html",
+	"const SOURCE_SAMPLE = " 	: "sample.ts",
+	"const SOURCE_BASIC_HTML = " 	: "basic-template.html",
+	"const SOURCE_BASIC_CSS = " 	: "basic-template.css",
 }
 for (var i in lines)
 {
@@ -18,9 +18,12 @@ for (var i in lines)
 	for (m in map)
 	{
 		if (l.indexOf(m) == 0)
+		{
 			lines[i] =  m + "'" + new Buffer(FS.readFileSync("./asset/" + map[m], "utf8")).toString('base64') + "';";
+			console.log("serialized " + map[m]);
+		}
 	}
 }
 
 var out = lines.join("\n");
-FS.writeFileSync("wk.js",out,"utf8");
+FS.writeFileSync("wk.js", out, "utf8");
