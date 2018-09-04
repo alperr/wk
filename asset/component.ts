@@ -7,10 +7,10 @@ class Component
 		this.loadMarkup(markup);
 	}
 
-	public find = (query: string): Element =>
+	public find = (query: string): HTMLElement =>
 	{
 		query = "." + query;
-		return this.root.querySelector(query);
+		return <HTMLElement>this.root.querySelector(query);
 	}
 
 	public querySelector = (query: string): Element =>
