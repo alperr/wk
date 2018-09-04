@@ -45,7 +45,7 @@ function printSmallHelp(c)
 {
 	if (typeof c != 'undefined')
 		error("invalid command: " + c);
-	log("version: 0.0.57");
+	log("version: 0.0.58");
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./dist folder");
@@ -359,7 +359,6 @@ function updateMarkupEnums()
 		var templates = findTemplateFiles(COMPONENT_BASE_PATH + components[i] + '/', components[i]);
 		for (var t in templates)
 		{
-			templates[t];
 			var name = "TEMPLATE_" + dash2UpperCase(components[i]) + "__" + dash2UpperCase(templates[t]);
 			s += "\nconst " + name + " = " + counter + ";";
 			counter++;
@@ -430,7 +429,6 @@ function onchange(event, changeFileName)
 
 		var css = '';
 		var markupMap = [];
-		var templateMap = [];
 		var tsFiles = [];
 		var names = [];
 		
@@ -480,6 +478,16 @@ function onchange(event, changeFileName)
 
 			if (FS.existsSync(input + '.css')) 
 				css += FS.readFileSync(input + ".css","utf8") + '\n';
+		}
+
+		for (var i=0;i<names.length;i++)
+		{
+			var templates = findTemplateFiles(COMPONENT_BASE_PATH + names[i] + '/', names[i]);
+			for (var t in templates)
+			{
+				var markup = FS.readFileSync(COMPONENT_BASE_PATH + names[i] + "/" + templates[t] + ".html","utf8");
+				markupMap.push(new Buffer(markup).toString('base64'));
+			}
 		}
 
 		if (isTypescriptChanged)
