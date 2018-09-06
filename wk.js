@@ -45,7 +45,7 @@ function printSmallHelp(c)
 {
 	if (typeof c != 'undefined')
 		error("invalid command: " + c);
-	log("version: 0.0.62");
+	log("version: 0.0.63");
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./dist folder");
@@ -359,7 +359,6 @@ function updateMarkupEnums()
 		}
 	}
 
-	// remove this 
 	s = Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii') + s;
 	FS.writeFileSync("./classes/component.ts", s, "utf8");
 }
@@ -415,7 +414,7 @@ function onchange(event, changeFileName)
 		if (isCssChanged) msg.push("css");
 		if (isHtmlChanged) msg.push("html");
 		msg = "[" + msg.join(", ") + "]";
-			
+
 		minorLog(counter + " save action captured, transpiling " + msg);
 		counter = 0;
 		changedFiles = [];
@@ -425,7 +424,7 @@ function onchange(event, changeFileName)
 		var markupMap = [];
 		var tsFiles = [];
 		var names = [];
-		
+
 		var files = FS.readdirSync(CLASS_BASE_PATH);
 		files.forEach(function(file)
 		{
