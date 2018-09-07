@@ -15,7 +15,7 @@ const SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3
 
 const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
-const OUTPUT_PATH = "./dist/dev";
+const OUTPUT_PATH = "./static-files/dev";
 
 var commands =
 {
@@ -45,10 +45,11 @@ function printSmallHelp(c)
 {
 	if (typeof c != 'undefined')
 		error("invalid command: " + c);
-	log("version: 0.0.64");
+
+	log("version: 0.0.65");
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
-	log("	wk start  | auto-builds components and serves them under ./dist folder");
+	log("	wk start  | auto-builds components and serves them under ./static-files folder");
 	log("	wk new    | creates a new component under ./components folder");
 	log("	wk del    | deletes a component, this command is not reversible");
 	log("	wk list   | lists all components in the project");
@@ -64,13 +65,13 @@ function init()
 	}
 	
 	log("initializing a new project");
-	if (!FS.existsSync("./dist")){FS.mkdirSync("./dist");}
+	if (!FS.existsSync("./static-files")){FS.mkdirSync("./static-files");}
 	if (!FS.existsSync("./classes")){FS.mkdirSync("./classes");}
 	if (!FS.existsSync("./components")){FS.mkdirSync("./components");}
 	log("- folders created");
 
 	FS.writeFileSync("./classes/component.ts",Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii'),"utf8");
-	FS.writeFileSync("./dist/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./static-files/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
 	log("- classes created");
 
 	newComponent(["application"]);
@@ -79,12 +80,12 @@ function init()
 
 	highlight("project initialized successfully");
 	log("you can run **start** command now")
-	log("wk start  | auto-builds components and serves them under ./dist folder");
+	log("wk start  | auto-builds components and serves them under ./static-files folder");
 }
 
 function deinit()
 {
-	deleteFolderRecursive("./dist");
+	deleteFolderRecursive("./static-files");
 	deleteFolderRecursive("./classes");
 	deleteFolderRecursive("./components");
 	log("- de initialized project and deleted all files");
@@ -124,7 +125,7 @@ function start()
 	var serveStatic = require('serve-static');
 	var opn = require("opn");
 	
-	var serve = serveStatic('./dist', {'index': ['index.html', 'index.htm']});
+	var serve = serveStatic('./static-files', {'index': ['index.html', 'index.htm']});
 	
 	var server = http.createServer(
 	function onRequest (req, res)
@@ -252,7 +253,7 @@ function productionBuild()
 	{
 		var UGLIFYJS = require("uglify-js");
 		var CHEERIO = require('cheerio');
-		var $ = CHEERIO.load(FS.readFileSync("./dist/index.html"));
+		var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
 
 		var name = uid(8);
 		$("link[href$='dev.css']").attr("href" , name + ".css");
@@ -261,7 +262,7 @@ function productionBuild()
 		var h = $.html();
 		h = h.replace('"dev.json"', '"'+name+'.json"');
 		
-		var jsContent =  FS.readFileSync("./dist/dev.js", "utf8");
+		var jsContent =  FS.readFileSync("./static-files/dev.js", "utf8");
 		var options = 
 		{
 			"mangle" :
@@ -280,8 +281,8 @@ function productionBuild()
 
 		FS.writeFileSync( "./build/" + name + ".js", minifiedJSCode.code)
 		FS.writeFileSync("./build/index.html" , h);
-		FS.copyFileSync("./dist/dev.css", "./build/" + name + ".css");
-		FS.copyFileSync("./dist/dev.json", "./build/" + name + ".json");
+		FS.copyFileSync("./static-files/dev.css", "./build/" + name + ".css");
+		FS.copyFileSync("./static-files/dev.json", "./build/" + name + ".json");
 		log("production build completed with seed " + name);
 	}, 5000);
 }
@@ -348,7 +349,6 @@ function updateMarkupEnums()
 	{
 		if (components[i].startsWith("."))
 			continue;
-		
 
 		var templates = findTemplateFiles(COMPONENT_BASE_PATH + components[i] + '/', components[i]);
 		for (var t in templates)
@@ -485,7 +485,7 @@ function onchange(event, changeFileName)
 
 		if (isTypescriptChanged)
 		{
-			command = "tsc --out ./dist/dev.js --lib 'es6','dom' ";
+			command = "tsc --out ./static-files/dev.js --lib 'es6','dom' ";
 			command += tsFiles.join(" ");
 			try{
 				EXEC(command);
@@ -520,7 +520,7 @@ function printNotValidProjectMessage(path)
 
 function isProjectValid(path)
 {
-	if (!FS.existsSync(path + "dist"))
+	if (!FS.existsSync(path + "static-files"))
 	{
 		return false;
 	}
