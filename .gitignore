@@ -3,7 +3,7 @@ node_modules
 **/.DS_Store
 .env
 .sublime-project
-dist/*
+static-files/*
 components/*
 classes/*
 build/*
