@@ -25,7 +25,10 @@ var commands =
 	"new" : newComponent,
 	"build" : productionBuild,
 	"del" : deleteComponent,
-	"list" : listComponents
+	"list" : listComponents,
+	"stats" : stats,
+	"lint" : lint,
+	"format" : format
 }
 
 var timer;
@@ -46,7 +49,7 @@ function printSmallHelp(c)
 	if (typeof c != 'undefined')
 		error("invalid command: " + c);
 
-	log("version: 0.0.66");
+	log("version: 0.1.0");
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./static-files folder");
@@ -54,6 +57,9 @@ function printSmallHelp(c)
 	log("	wk del    | deletes a component, this command is not reversible");
 	log("	wk list   | lists all components in the project");
 	log("	wk build  | makes a production build under ./build folder (minifies js&css)");
+	log("	wk stats  | show statistics about project");
+	log("	wk lint   | makes a static analysis for your ts files, requires tslint");
+	log("	wk format | formats your ts files, requires tsfmt");
 }
 
 function init()
@@ -218,6 +224,21 @@ function deleteComponent(a)
 	deleteFolderRecursive("./components/" + a[0]);
 	updateMarkupEnums();
 	log("deleted component -> " + a[0])
+}
+
+function stats()
+{
+
+}
+
+function lint()
+{
+	
+}
+
+function format()
+{
+	
 }
 
 function listComponents()

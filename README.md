@@ -41,7 +41,7 @@ run **build** command to make an optimized production build
 components are the bare bones of the wk. every component has its own ts,html and css file 
 and starts with a call to base class contructor.
 
-	super(root,MARKUP_COMPONENT_ENUM);
+	super(root, MARKUP_COMPONENT_ENUM);
 
 which populates the **root** element with the markup writen in .html file of that component.
 
