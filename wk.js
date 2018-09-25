@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const FS = require('fs');
+const PATH = require('path');
 const EXEC = require('child_process').execSync;
 const FG_RED = "\x1b[31m";
 const FG_DIM = "\x1b[2m";
@@ -17,6 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
+const VERSION = "0.1.0";
 var commands =
 {
 	"init"  : init,
@@ -49,7 +51,7 @@ function printSmallHelp(c)
 	if (typeof c != 'undefined')
 		error("invalid command: " + c);
 
-	log("version: 0.1.0");
+	log("version: " + VERSION);
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./static-files folder");
@@ -241,6 +243,27 @@ function format()
 	
 }
 
+function checkVersion()
+{
+	const http = require('http');
+	http.get('http://alpercinar.com/wk/version.txt',
+	(resp) =>
+	{
+		var data = '';
+		resp.on('data', (chunk) => { data += chunk; });
+		resp.on('end', () => {
+			var mostRecent = Number(data);
+			var p = VERSION.split(".");
+			var current = Number(p[0]) * 10000 + Number(p[1]) * 100 + Number(p[2]);
+	
+			if (mostRecent > current)
+			{
+				// outdated message
+			}
+		});
+	}).on("error", (err) => {});
+}
+
 function listComponents()
 {
 	if (!printNotValidProjectMessage("./"))
@@ -268,7 +291,13 @@ function productionBuild()
 	log("building for production");
 	onchange("change",".ts");
 	deleteFolderRecursive("./build");
-	FS.mkdirSync("./build");
+	copyRecursiveSync("./static-files", "./build");
+
+	FS.unlinkSync("./build/dev.css");
+	FS.unlinkSync("./build/dev.json");
+	FS.unlinkSync("./build/dev.js");
+	FS.unlinkSync("./build/index.html");
+	// FS.mkdirSync("./build");
 
 	setTimeout(function()
 	{
@@ -288,7 +317,7 @@ function productionBuild()
 		{
 			"mangle" :
 			{
-				"toplevel" : true
+				"toplevel" : false // make this true later
 			}
 		}
 
@@ -574,6 +603,21 @@ function isProjectValid(path)
 		FS.rmdirSync(path);
 	}
 }
+
+function copyRecursiveSync(src, dest) {
+  var exists = FS.existsSync(src);
+  var stats = exists && FS.statSync(src);
+  var isDirectory = exists && stats.isDirectory();
+  if (exists && isDirectory) {
+    FS.mkdirSync(dest);
+    FS.readdirSync(src).forEach(function(childItemName) {
+      copyRecursiveSync(PATH.join(src, childItemName),
+                        PATH.join(dest, childItemName));
+    });
+  } else {
+    FS.linkSync(src, dest);
+  }
+};
 
 function dash2PascalCase(s)
 {
