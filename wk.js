@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.1";
 var commands =
 {
 	"init"  : init,
@@ -297,7 +297,6 @@ function productionBuild()
 	FS.unlinkSync("./build/dev.json");
 	FS.unlinkSync("./build/dev.js");
 	FS.unlinkSync("./build/index.html");
-	// FS.mkdirSync("./build");
 
 	setTimeout(function()
 	{
@@ -317,7 +316,8 @@ function productionBuild()
 		{
 			"mangle" :
 			{
-				"toplevel" : false // make this true later
+				"toplevel" : true,
+				"reserved": ['Application']
 			}
 		}
 
