@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.1";
+const VERSION = "0.1.3";
 var commands =
 {
 	"init"  : init,
@@ -304,7 +304,7 @@ function productionBuild()
 		var CHEERIO = require('cheerio');
 		var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
 
-		var name = uid(8);
+		var name = uid();
 		$("link[href$='dev.css']").attr("href" , name + ".css");
 		$("script[src$='dev.js']").attr("src" , name + ".js");
 
@@ -653,6 +653,9 @@ function uid()
 		r = alphabet[i] + r;
 		return r;
 	}
-
-	return int2Base62(Math.floor(Date.now()/1000));
+	
+	// return int2Base62(Math.floor((Date.now()) / 1000));
+	var id = int2Base62(Math.floor((Date.now()) / 60000));
+	id = id.substr(id.length-3, 3);
+	return id;
 }
