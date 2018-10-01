@@ -257,9 +257,8 @@ function lint()
 			"interface-name": false,
 			"jsdoc-format": true,
 			"label-position": true,
-			"label-undefined": true,
-			"max-line-length": [true, 120],
-			"member-ordering": [false,
+			"max-line-length": [true, 140],
+			"member-ordering": [true,
 				 "public-before-private",
 				 "static-before-instance",
 				 "variables-before-functions"
@@ -268,6 +267,7 @@ function lint()
 			"no-arg": true,
 			"no-bitwise": false,
 			"no-console": [true,
+				"log",
 				"debug",
 				"info",
 				"time",
@@ -277,7 +277,6 @@ function lint()
 			"no-construct": true,
 			"no-constructor-vars": false,
 			"no-debugger": true,
-			"no-duplicate-key": true,
 			"no-shadowed-variable": false,
 			"no-duplicate-variable": true,
 			"no-empty": false,
@@ -285,12 +284,10 @@ function lint()
 			"no-require-imports": true,
 			"no-string-literal": false,
 			"no-switch-case-fall-through": false,
-			"no-trailing-comma": true,
-			"no-trailing-whitespace": true,
-			"no-unreachable": true,
+			"no-trailing-whitespace": false,
 			"no-unused-expression": false,
-			"no-unused-variable": true,
-			"no-use-before-declare": true,
+			"no-unused-variable": false,
+			"no-use-before-declare": false,
 			"no-var-keyword": false,
 			"no-var-requires": false,
 			"one-line": [true,
@@ -299,7 +296,7 @@ function lint()
 			],
 			"quotemark": [false, "double"],
 			"radix": false,
-			"semicolon": true,
+			"semicolon": false,
 			"triple-equals": [true, "allow-null-check"],
 			"typedef": [false,
 				"callSignature",
@@ -316,10 +313,6 @@ function lint()
 				"property-declaration": "nospace",
 				"variable-declaration": "nospace"
 			}],
-			"use-strict": [true,
-				"check-module",
-				"check-function"
-			],
 			"variable-name": [true, "allow-leading-underscore"],
 			"whitespace": [false,
 				"check-branch",
@@ -329,7 +322,7 @@ function lint()
 				"check-type"
 			]
 		}
-	};
+	}
 
 	
 	FS.writeFileSync("./tslint.json", JSON.stringify(rules));
