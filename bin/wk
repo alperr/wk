@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.7";
+const VERSION = "0.1.8";
 var commands =
 {
 	"init"  : init,
@@ -314,8 +314,7 @@ function lint()
 				"variable-declaration": "nospace"
 			}],
 			"variable-name": [true, "allow-leading-underscore"],
-			"whitespace": [false,
-				"check-branch",
+			"whitespace": [true,
 				"check-decl",
 				"check-operator",
 				"check-separator",
@@ -327,15 +326,27 @@ function lint()
 	
 	FS.writeFileSync("./tslint.json", JSON.stringify(rules));
 	
+	var hasError = false;
 	try{
 		EXEC("tslint */**/*.ts");
-		EXEC("tslint */*.ts");
-		highlight("no error found")
 	}catch(e)
 	{
-		error(e.stdout.toString('utf8'));
-		error('linter failed')
+		hasError = true;
+		warn(e.stdout.toString('utf8'));
 	}
+
+	try{
+		EXEC("tslint */*.ts");
+	}catch(e)
+	{
+		hasError = true;
+		warn(e.stdout.toString('utf8'));
+	}
+	
+	if (hasError)
+		error('linter failed')
+	else
+		log("analysis successful!");
 
 	FS.unlinkSync("./tslint.json");
 }
