@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.3";
+const VERSION = "0.1.4";
 var commands =
 {
 	"init"  : init,
@@ -235,7 +235,120 @@ function stats()
 
 function lint()
 {
+	var rules = 
+	{
+		"rules": {
+			"align": [false,
+				"parameters",
+				"arguments",
+				"statements"],
+			"ban": [true,
+				["angular", "forEach"]
+			],
+			
+			"comment-format": [false,
+				"check-space",
+				"check-lowercase"
+			],
+			"curly": false,
+			"eofline": false,
+			"forin": false,
+			"indent": [true, "tabs"],
+			"interface-name": false,
+			"jsdoc-format": true,
+			"label-position": true,
+			"label-undefined": true,
+			"max-line-length": [true, 120],
+			"member-ordering": [false,
+				 "public-before-private",
+				 "static-before-instance",
+				 "variables-before-functions"
+			],
+			"no-any": false,
+			"no-arg": true,
+			"no-bitwise": false,
+			"no-console": [true,
+				"debug",
+				"info",
+				"time",
+				"timeEnd",
+				"trace"
+			],
+			"no-construct": true,
+			"no-constructor-vars": false,
+			"no-debugger": true,
+			"no-duplicate-key": true,
+			"no-shadowed-variable": false,
+			"no-duplicate-variable": true,
+			"no-empty": false,
+			"no-eval": true,
+			"no-require-imports": true,
+			"no-string-literal": false,
+			"no-switch-case-fall-through": false,
+			"no-trailing-comma": true,
+			"no-trailing-whitespace": true,
+			"no-unreachable": true,
+			"no-unused-expression": false,
+			"no-unused-variable": true,
+			"no-use-before-declare": true,
+			"no-var-keyword": false,
+			"no-var-requires": false,
+			"one-line": [true,
+				"check-catch",
+				"check-whitespace"
+			],
+			"quotemark": [false, "double"],
+			"radix": false,
+			"semicolon": true,
+			"triple-equals": [true, "allow-null-check"],
+			"typedef": [false,
+				"callSignature",
+				"catchClause",
+				"indexSignature",
+				"parameter",
+				"propertySignature",
+				"variableDeclarator"
+			],
+			"typedef-whitespace": [true, {
+				"call-signature": "nospace",
+				"index-signature": "nospace",
+				"parameter": "nospace",
+				"property-declaration": "nospace",
+				"variable-declaration": "nospace"
+			}],
+			"use-strict": [true,
+				"check-module",
+				"check-function"
+			],
+			"variable-name": [true, "allow-leading-underscore"],
+			"whitespace": [false,
+				"check-branch",
+				"check-decl",
+				"check-operator",
+				"check-separator",
+				"check-type"
+			]
+		}
+	};
+
 	
+	FS.writeFileSync("./tslint.json", JSON.stringify(rules));
+	
+	command = "tslint */**/*.ts";
+	try{
+		EXEC(command);
+	}catch(e)
+	{
+		error(e.stdout.toString('utf8'));
+		error('linting failed')
+	}
+
+	FS.unlinkSync("./tslint.json");
+}
+
+function checkLinter()
+{
+
 }
 
 function format()
