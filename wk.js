@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.8";
+const VERSION = "0.1.9";
 var commands =
 {
 	"init"  : init,
@@ -332,7 +332,7 @@ function lint()
 	}catch(e)
 	{
 		hasError = true;
-		warn(e.stdout.toString('utf8'));
+		error(e.stdout.toString('utf8'));
 	}
 
 	try{
@@ -340,7 +340,7 @@ function lint()
 	}catch(e)
 	{
 		hasError = true;
-		warn(e.stdout.toString('utf8'));
+		error(e.stdout.toString('utf8'));
 	}
 	
 	if (hasError)
