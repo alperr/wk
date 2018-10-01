@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.4";
+const VERSION = "0.1.5";
 var commands =
 {
 	"init"  : init,
@@ -327,9 +327,9 @@ function lint()
 	
 	FS.writeFileSync("./tslint.json", JSON.stringify(rules));
 	
-	command = "tslint */**/*.ts";
 	try{
-		EXEC(command);
+		EXEC("tslint */**/*.ts");
+		EXEC("tslint */*.ts");
 	}catch(e)
 	{
 		error(e.stdout.toString('utf8'));
