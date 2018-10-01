@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.5";
+const VERSION = "0.1.7";
 var commands =
 {
 	"init"  : init,
@@ -257,7 +257,7 @@ function lint()
 			"interface-name": false,
 			"jsdoc-format": true,
 			"label-position": true,
-			"max-line-length": [true, 140],
+			"max-line-length": [false, 140],
 			"member-ordering": [true,
 				 "public-before-private",
 				 "static-before-instance",
@@ -330,10 +330,11 @@ function lint()
 	try{
 		EXEC("tslint */**/*.ts");
 		EXEC("tslint */*.ts");
+		highlight("no error found")
 	}catch(e)
 	{
 		error(e.stdout.toString('utf8'));
-		error('linting failed')
+		error('linter failed')
 	}
 
 	FS.unlinkSync("./tslint.json");
