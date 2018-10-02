@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.13";
+const VERSION = "0.1.14";
 var commands =
 {
 	"init"  : init,
@@ -445,13 +445,14 @@ function productionBuild()
 	FS.unlinkSync("./build/dev.js");
 	FS.unlinkSync("./build/index.html");
 
+	var name;
 	setTimeout(function()
 	{
 		var UGLIFYJS = require("uglify-js");
 		var CHEERIO = require('cheerio');
 		var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
 
-		var name = uid();
+		name = uid();
 		$("link[href$='dev.css']").attr("href" , name + ".css");
 		$("script[src$='dev.js']").attr("src" , name + ".js");
 
