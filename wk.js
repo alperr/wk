@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.12";
+const VERSION = "0.1.13";
 var commands =
 {
 	"init"  : init,
@@ -230,6 +230,35 @@ function deleteComponent(a)
 
 function stats()
 {
+	var compCount = 0;
+	var tempCount = 0;
+	var components = FS.readdirSync("./components/");
+	for (var i in components)
+	{
+		if (components[i].startsWith("."))
+			continue;
+
+		compCount++;
+	}
+
+	for (var i in components)
+	{
+		if (components[i].startsWith("."))
+			continue;
+
+		var templates = findTemplateFiles(COMPONENT_BASE_PATH + components[i] + '/', components[i]);
+		for (var t in templates)
+			tempCount++;
+	}
+
+	log("Project stats:")
+	log("Number of components: " + compCount);
+	log("Number of templates: " + tempCount);
+	
+	var seed = productionBuild();
+	// var stats = fs.statSync(filename)
+	// var fileSizeInBytes = stats["size"]
+	// return fileSizeInBytes
 
 }
 
@@ -453,6 +482,8 @@ function productionBuild()
 		FS.copyFileSync("./static-files/dev.json", "./build/" + name + ".json");
 		log("production build completed with seed " + name);
 	}, 5000);
+
+	return name;
 }
 
 function createComponentFiles(name)
