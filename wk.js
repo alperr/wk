@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.9";
+const VERSION = "0.1.12";
 var commands =
 {
 	"init"  : init,
@@ -314,7 +314,7 @@ function lint()
 				"variable-declaration": "nospace"
 			}],
 			"variable-name": [true, "allow-leading-underscore"],
-			"whitespace": [true,
+			"whitespace": [false,
 				"check-decl",
 				"check-operator",
 				"check-separator",
