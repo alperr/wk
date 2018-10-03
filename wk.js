@@ -18,14 +18,14 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.14";
+const VERSION = "0.1.15";
 var commands =
 {
 	"init"  : init,
 	"deinit"  : deinit,
 	"start" : start,
 	"new" : newComponent,
-	"build" : productionBuild,
+	"build" : build,
 	"del" : deleteComponent,
 	"list" : listComponents,
 	"stats" : stats,
@@ -255,7 +255,7 @@ function stats()
 	log("Number of components: " + compCount);
 	log("Number of templates: " + tempCount);
 	
-	var seed = productionBuild();
+	var seed = build();
 	// var stats = fs.statSync(filename)
 	// var fileSizeInBytes = stats["size"]
 	// return fileSizeInBytes
@@ -433,10 +433,11 @@ function listComponents()
 	}
 }
 
-function productionBuild()
+function build()
 {
 	log("building for production");
-	onchange("change",".ts");
+	changedFiles.push(".ts");
+	transpileAll(1);
 	deleteFolderRecursive("./build");
 	copyRecursiveSync("./static-files", "./build");
 
@@ -446,44 +447,42 @@ function productionBuild()
 	FS.unlinkSync("./build/index.html");
 
 	var name;
-	setTimeout(function()
+	var UGLIFYJS = require("uglify-js");
+	var CHEERIO = require('cheerio');
+	var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
+
+	name = uid();
+	$("link[href$='dev.css']").attr("href" , name + ".css");
+	$("script[src$='dev.js']").attr("src" , name + ".js");
+
+	var h = $.html();
+	h = h.replace('"dev.json"', '"'+name+'.json"');
+	
+	var jsContent =  FS.readFileSync("./static-files/dev.js", "utf8");
+	var options = 
 	{
-		var UGLIFYJS = require("uglify-js");
-		var CHEERIO = require('cheerio');
-		var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
-
-		name = uid();
-		$("link[href$='dev.css']").attr("href" , name + ".css");
-		$("script[src$='dev.js']").attr("src" , name + ".js");
-
-		var h = $.html();
-		h = h.replace('"dev.json"', '"'+name+'.json"');
-		
-		var jsContent =  FS.readFileSync("./static-files/dev.js", "utf8");
-		var options = 
+		"mangle" :
 		{
-			"mangle" :
-			{
-				"toplevel" : true,
-				"reserved": ['Application']
-			}
+			"toplevel" : true,
+			"reserved": ['Application']
 		}
+	}
+	console.time('\x1b[32m minification\x1b[0m');
+	var minifiedJSCode = UGLIFYJS.minify(jsContent, options);
+	if(minifiedJSCode.error)
+	{
+		console.log(minifiedJSCode.error);
+		error("unable to minify javascript file");
+		return;
+	}
 
-		var minifiedJSCode = UGLIFYJS.minify(jsContent, options);
-		if(minifiedJSCode.error)
-		{
-			console.log(minifiedJSCode.error);
-			error("unable to minify javascript file");
-			return;
-		}
+	FS.writeFileSync( "./build/" + name + ".js", minifiedJSCode.code)
+	FS.writeFileSync("./build/index.html" , h);
+	FS.copyFileSync("./static-files/dev.css", "./build/" + name + ".css");
+	FS.copyFileSync("./static-files/dev.json", "./build/" + name + ".json");
 
-		FS.writeFileSync( "./build/" + name + ".js", minifiedJSCode.code)
-		FS.writeFileSync("./build/index.html" , h);
-		FS.copyFileSync("./static-files/dev.css", "./build/" + name + ".css");
-		FS.copyFileSync("./static-files/dev.json", "./build/" + name + ".json");
-		log("production build completed with seed " + name);
-	}, 5000);
-
+	console.timeEnd('\x1b[32m minification\x1b[0m');
+	log("production build completed with seed " + name);
 	return name;
 }
 
@@ -583,6 +582,120 @@ function minorLog(m)
 	console.log(FG_DIM, m, RESET);
 }
 
+
+function transpileAll(counter)
+{
+	var isHtmlChanged = false;
+	var isCssChanged = false;
+	var isTypescriptChanged = false;
+
+	for (var i in changedFiles)
+	{
+		if (changedFiles[i].endsWith(".ts"))
+			isTypescriptChanged = true;
+
+		if (changedFiles[i].endsWith(".css"))
+			isCssChanged = true;
+
+		if (changedFiles[i].endsWith(".html"))
+			isHtmlChanged = true;
+	}
+
+	var msg = [];
+	if (isTypescriptChanged) msg.push("ts");
+	if (isCssChanged) msg.push("css");
+	if (isHtmlChanged) msg.push("html");
+	msg = "[" + msg.join(", ") + "]";
+
+	minorLog(counter + " save action captured, transpiling " + msg);
+	changedFiles = [];
+	console.time('\x1b[32m transpile\x1b[0m');
+
+	var css = '';
+	var markupMap = [];
+	var tsFiles = [];
+	var names = [];
+
+	var files = FS.readdirSync(CLASS_BASE_PATH);
+	files.forEach(function(file)
+	{
+		if (!file.endsWith(".ts"))
+			return;
+
+		tsFiles.push(CLASS_BASE_PATH + file);
+	});
+
+	files = FS.readdirSync(COMPONENT_BASE_PATH);
+	files.forEach(function(file)
+	{
+		if (file.indexOf('.') == 0)
+			return;	
+
+		names.push(file);
+	});
+
+	for (var i=0;i<names.length;i++)
+	{
+		var input = COMPONENT_BASE_PATH + names[i] + '/' + names[i];
+
+		if (!FS.existsSync(input + '.html')) 
+		{
+			error('missing file ->' + input + '.html  build cancelled');
+			return;
+		}
+
+		if (!FS.existsSync(input + '.ts')) 
+		{
+			error('missing file ->' + input + '.ts  build cancelled');
+			return;
+		}
+
+		if (markupMap[names[i]])
+		{
+			error('duplicate markup file ->' + names[i] + '.html  build cancelled');
+			return;
+		}
+
+		var markup = FS.readFileSync(input + ".html","utf8");
+		markupMap.push(new Buffer(markup).toString('base64'));
+		tsFiles.push(input + ".ts");
+
+		if (FS.existsSync(input + '.css')) 
+			css += FS.readFileSync(input + ".css","utf8") + '\n';
+	}
+
+	for (var i=0;i<names.length;i++)
+	{
+		var templates = findTemplateFiles(COMPONENT_BASE_PATH + names[i] + '/', names[i]);
+		for (var t in templates)
+		{
+			var markup = FS.readFileSync(COMPONENT_BASE_PATH + names[i] + "/" + templates[t] + ".html","utf8");
+			markupMap.push(new Buffer(markup).toString('base64'));
+		}
+	}
+
+	if (isTypescriptChanged)
+	{
+		command = "tsc --out ./static-files/dev.js --lib 'es6','dom' ";
+		command += tsFiles.join(" ");
+		try{
+			EXEC(command);
+		}catch(e)
+		{
+			error('typescript build failed');
+			error(e.stdout.toString('utf8'));
+			return;
+		}
+	}
+
+	try { FS.unlinkSync( OUTPUT_PATH + ".css" ); } catch (e) { }
+	FS.writeFileSync( OUTPUT_PATH + ".css" , css , 'utf8');
+
+	try { FS.unlinkSync( OUTPUT_PATH + ".json" ); } catch (e) { }
+	FS.writeFileSync( OUTPUT_PATH + ".json" , JSON.stringify(markupMap) , 'utf8');
+	console.timeEnd('\x1b[32m transpile\x1b[0m');
+}
+
 function onchange(event, changeFileName)
 {
 	if ( !changeFileName.endsWith(".ts") && !changeFileName.endsWith(".css") && !changeFileName.endsWith(".html"))
@@ -593,116 +706,8 @@ function onchange(event, changeFileName)
 	changedFiles.push(changeFileName);
 	timer = setTimeout(function()
 	{
-		var isHtmlChanged = false;
-		var isCssChanged = false;
-		var isTypescriptChanged = false;
-
-		for (var i in changedFiles)
-		{
-			if (changedFiles[i].endsWith(".ts"))
-				isTypescriptChanged = true;
-
-			if (changedFiles[i].endsWith(".css"))
-				isCssChanged = true;
-
-			if (changedFiles[i].endsWith(".html"))
-				isHtmlChanged = true;
-		}
-
-		var msg = [];
-		if (isTypescriptChanged) msg.push("ts");
-		if (isCssChanged) msg.push("css");
-		if (isHtmlChanged) msg.push("html");
-		msg = "[" + msg.join(", ") + "]";
-
-		minorLog(counter + " save action captured, transpiling " + msg);
+		transpileAll(counter)
 		counter = 0;
-		changedFiles = [];
-		console.time('\x1b[32m transpiled\x1b[0m');
-
-		var css = '';
-		var markupMap = [];
-		var tsFiles = [];
-		var names = [];
-
-		var files = FS.readdirSync(CLASS_BASE_PATH);
-		files.forEach(function(file)
-		{
-			if (!file.endsWith(".ts"))
-				return;
-
-			tsFiles.push(CLASS_BASE_PATH + file);
-		});
-
-		files = FS.readdirSync(COMPONENT_BASE_PATH);
-		files.forEach(function(file)
-		{
-			if (file.indexOf('.') == 0)
-				return;	
-
-			names.push(file);
-		});
-
-		for (var i=0;i<names.length;i++)
-		{
-			var input = COMPONENT_BASE_PATH + names[i] + '/' + names[i];
-
-			if (!FS.existsSync(input + '.html')) 
-			{
-				error('missing file ->' + input + '.html  build cancelled');
-				return;
-			}
-
-			if (!FS.existsSync(input + '.ts')) 
-			{
-				error('missing file ->' + input + '.ts  build cancelled');
-				return;
-			}
-
-			if (markupMap[names[i]])
-			{
-				error('duplicate markup file ->' + names[i] + '.html  build cancelled');
-				return;
-			}
-
-			var markup = FS.readFileSync(input + ".html","utf8");
-			markupMap.push(new Buffer(markup).toString('base64'));
-			tsFiles.push(input + ".ts");
-
-			if (FS.existsSync(input + '.css')) 
-				css += FS.readFileSync(input + ".css","utf8") + '\n';
-		}
-
-		for (var i=0;i<names.length;i++)
-		{
-			var templates = findTemplateFiles(COMPONENT_BASE_PATH + names[i] + '/', names[i]);
-			for (var t in templates)
-			{
-				var markup = FS.readFileSync(COMPONENT_BASE_PATH + names[i] + "/" + templates[t] + ".html","utf8");
-				markupMap.push(new Buffer(markup).toString('base64'));
-			}
-		}
-
-		if (isTypescriptChanged)
-		{
-			command = "tsc --out ./static-files/dev.js --lib 'es6','dom' ";
-			command += tsFiles.join(" ");
-			try{
-				EXEC(command);
-			}catch(e)
-			{
-				error('typescript build failed');
-				error(e.stdout.toString('utf8'));
-				return;
-			}
-		}
-
-		try { FS.unlinkSync( OUTPUT_PATH + ".css" ); } catch (e) { }
-		FS.writeFileSync( OUTPUT_PATH + ".css" , css , 'utf8');
-
-		try { FS.unlinkSync( OUTPUT_PATH + ".json" ); } catch (e) { }
-		FS.writeFileSync( OUTPUT_PATH + ".json" , JSON.stringify(markupMap) , 'utf8');
-		console.timeEnd('\x1b[32m transpiled\x1b[0m');
 	}, 250);
 }
 
