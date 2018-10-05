@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.15";
+const VERSION = "0.1.16";
 var commands =
 {
 	"init"  : init,
@@ -30,7 +30,9 @@ var commands =
 	"list" : listComponents,
 	"stats" : stats,
 	"lint" : lint,
-	"format" : format
+	"format" : format,
+	"-v" : version,
+	"--v" : version
 }
 
 var timer;
@@ -51,7 +53,7 @@ function printSmallHelp(c)
 	if (typeof c != 'undefined')
 		error("invalid command: " + c);
 
-	log("version: " + VERSION);
+	version();
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./static-files folder");
@@ -123,10 +125,7 @@ function start()
 	}
 	log("starting file server and auto-builder");
 	
-	updateMarkupEnums();
-	FS.watch(COMPONENT_BASE_PATH, { "recursive" : true } , onchange);
-	FS.watch(CLASS_BASE_PATH, { "recursive" : true } , onchange);
-	onchange("change",".ts");
+	startWatcher();
 
 	var finalhandler = require('finalhandler');
 	var http = require('http');
@@ -156,6 +155,17 @@ function start()
 			opn('http://localhost:' + port);
 		}, 3000);
 	});
+}
+
+function startWatcher()
+{
+	updateMarkupEnums();
+	const CHOKIDAR = require("chokidar");
+	CHOKIDAR.watch(COMPONENT_BASE_PATH, {ignored: /(^|[\/\\])\../}).on("all", onchange);
+	CHOKIDAR.watch(CLASS_BASE_PATH, {ignored: /(^|[\/\\])\../}).on("all", onchange);
+	// FS.watch(COMPONENT_BASE_PATH, { "recursive" : true }, onchange);
+	// FS.watch(CLASS_BASE_PATH, { "recursive" : true }, onchange);
+	onchange("change",".ts");
 }
 
 function newComponent(a)
@@ -226,6 +236,11 @@ function deleteComponent(a)
 	deleteFolderRecursive("./components/" + a[0]);
 	updateMarkupEnums();
 	log("deleted component -> " + a[0])
+}
+
+function version()
+{
+	log("version: " + VERSION);
 }
 
 function stats()
@@ -387,6 +402,48 @@ function checkLinter()
 
 function format()
 {
+	var rules =
+	{
+		"indentSize": 8,
+		"tabSize": 8,
+		"newLineCharacter": "\r\n",
+		"convertTabsToSpaces": false,
+		"insertSpaceAfterCommaDelimiter": true,
+		"insertSpaceAfterSemicolonInForStatements": true,
+		"insertSpaceBeforeAndAfterBinaryOperators": true,
+		"insertSpaceAfterKeywordsInControlFlowStatements": true,
+		"insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+		"insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+		"insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+		"placeOpenBraceOnNewLineForFunctions": true,
+		"placeOpenBraceOnNewLineForControlBlocks": true
+	}
+	
+	FS.writeFileSync("./tsfmt.json", JSON.stringify(rules));
+	
+	var hasError = false;
+	try{
+		EXEC("tsfmt */**/*.ts");
+	}catch(e)
+	{
+		hasError = true;
+		error(e.stdout.toString('utf8'));
+	}
+
+	try{
+		EXEC("tsfmt */*.ts");
+	}catch(e)
+	{
+		hasError = true;
+		error(e.stdout.toString('utf8'));
+	}
+	
+	if (hasError)
+		error('linter failed')
+	else
+		log("formatting completed!");
+
+	FS.unlinkSync("./tsfmt.json");	
 	
 }
 
