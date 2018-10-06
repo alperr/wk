@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.16";
+const VERSION = "0.1.17";
 var commands =
 {
 	"init"  : init,
@@ -161,8 +161,9 @@ function startWatcher()
 {
 	updateMarkupEnums();
 	const CHOKIDAR = require("chokidar");
-	CHOKIDAR.watch(COMPONENT_BASE_PATH, {ignored: /(^|[\/\\])\../}).on("all", onchange);
-	CHOKIDAR.watch(CLASS_BASE_PATH, {ignored: /(^|[\/\\])\../}).on("all", onchange);
+	usePolling: true
+	CHOKIDAR.watch(COMPONENT_BASE_PATH, {usePolling: true, ignored: /(^|[\/\\])\../}).on("all", onchange);
+	CHOKIDAR.watch(CLASS_BASE_PATH, {usePolling: true, ignored: /(^|[\/\\])\../}).on("all", onchange);
 	// FS.watch(COMPONENT_BASE_PATH, { "recursive" : true }, onchange);
 	// FS.watch(CLASS_BASE_PATH, { "recursive" : true }, onchange);
 	onchange("change",".ts");
