@@ -1,6 +1,6 @@
 {
   "name": "wk-toolkit",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "bin": {
     "wk": "./bin/wk"
   },
@@ -12,7 +12,8 @@
     "uglify-js": "3.3.18",
     "uglifycss": "0.0.29",
     "cheerio": "1.0.0-rc.2",
-    "chokidar": "2.0.4"
+    "chokidar": "2.0.4",
+    "node-watch": "0.5.8"
   },
   "scripts": {
     "pub": "cp wk.js ./bin/wk && git add -A && git commit -m 'npm release' && git push && npm publish"
