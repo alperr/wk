@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.17";
+const VERSION = "0.1.18";
 var commands =
 {
 	"init"  : init,
@@ -152,7 +152,7 @@ function start()
 		log("listening localhost:" + port);
 		
 		setTimeout(function(){
-			opn('http://localhost:' + port);
+			// opn('http://localhost:' + port);
 		}, 3000);
 	});
 }
