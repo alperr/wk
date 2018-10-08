@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.21";
+const VERSION = "0.1.22";
 var commands =
 {
 	"init"  : init,
@@ -414,10 +414,10 @@ function format()
 		"newLineCharacter": "\r\n",
 		"convertTabsToSpaces": false,
 		"insertSpaceAfterCommaDelimiter": true,
-		"insertSpaceAfterSemicolonInForStatements": true,
+		"insertSpaceAfterSemicolonInForStatements": false,
 		"insertSpaceBeforeAndAfterBinaryOperators": true,
 		"insertSpaceAfterKeywordsInControlFlowStatements": true,
-		"insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+		"insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
 		"insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
 		"insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
 		"placeOpenBraceOnNewLineForFunctions": true,
@@ -428,7 +428,7 @@ function format()
 	
 	var hasError = false;
 	try{
-		EXEC("tsfmt */**/*.ts");
+		EXEC("tsfmt -r */**/*.ts");
 	}catch(e)
 	{
 		hasError = true;
