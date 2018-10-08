@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.20";
+const VERSION = "0.1.21";
 var commands =
 {
 	"init"  : init,
@@ -436,7 +436,7 @@ function format()
 	}
 
 	try{
-		EXEC("tsfmt */*.ts");
+		EXEC("tsfmt -r */*.ts");
 	}catch(e)
 	{
 		hasError = true;
@@ -444,7 +444,7 @@ function format()
 	}
 	
 	if (hasError)
-		error('linter failed')
+		error('formatting failed')
 	else
 		log("formatting completed!");
 
