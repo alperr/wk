@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.22";
+const VERSION = "0.1.23";
 var commands =
 {
 	"init"  : init,
@@ -411,7 +411,7 @@ function format()
 	{
 		"indentSize": 8,
 		"tabSize": 8,
-		"newLineCharacter": "\r\n",
+		"newLineCharacter": "\n",
 		"convertTabsToSpaces": false,
 		"insertSpaceAfterCommaDelimiter": true,
 		"insertSpaceAfterSemicolonInForStatements": false,
