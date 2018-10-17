@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.25";
+const VERSION = "0.1.26";
 var commands =
 {
 	"init"  : init,
@@ -30,6 +30,7 @@ var commands =
 	"list" : listComponents,
 	"stats" : stats,
 	"lint" : lint,
+	"deploy": deploy,
 	"format" : format,
 	"-v" : version,
 	"--v" : version
@@ -101,7 +102,7 @@ function deinit()
 	log("- de initialized project and deleted all files");
 }
 
-function start()
+function start(port)
 {
 	if (!isProjectValid("./"))
 	{
@@ -398,6 +399,15 @@ function lint()
 function checkLinter()
 {
 
+}
+
+function deploy()
+{
+	build();
+	EXEC("git add -A;");
+	EXEC("git commit -m 'release';");
+	EXEC("git push;");
+	log("deployed");
 }
 
 function format()
