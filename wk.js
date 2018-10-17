@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.26";
+const VERSION = "0.1.27";
 var commands =
 {
 	"init"  : init,
@@ -58,6 +58,7 @@ function printSmallHelp(c)
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./static-files folder");
+	log("	wk deploy | builds and pushes to git");
 	log("	wk new    | creates a new component under ./components folder");
 	log("	wk del    | deletes a component, this command is not reversible");
 	log("	wk list   | lists all components in the project");
