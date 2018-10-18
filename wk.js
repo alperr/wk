@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.27";
+const VERSION = "0.1.28";
 var commands =
 {
 	"init"  : init,
@@ -881,7 +881,7 @@ function uid()
 	}
 	
 	// return int2Base62(Math.floor((Date.now()) / 1000));
-	var id = int2Base62(Math.floor((Date.now()) / 60000));
-	id = id.substr(id.length-3, 3);
+	var id = int2Base62(Math.floor((Date.now()) / 6000));
+	id = id.substr(id.length-4, 4);
 	return id;
 }
