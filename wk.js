@@ -18,12 +18,14 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.28";
+const VERSION = "0.1.30";
 var commands =
 {
 	"init"  : init,
 	"deinit"  : deinit,
 	"start" : start,
+	"develop" : start,
+	"burn" : burn,
 	"new" : newComponent,
 	"build" : build,
 	"del" : deleteComponent,
@@ -63,6 +65,7 @@ function printSmallHelp(c)
 	log("	wk del    | deletes a component, this command is not reversible");
 	log("	wk list   | lists all components in the project");
 	log("	wk build  | makes a production build under ./build folder (minifies js&css)");
+	log("	wk burn   | makes a webview build under ./build folder (minifies js&css)");
 	log("	wk stats  | show statistics about project");
 	log("	wk lint   | makes a static analysis for your ts files, requires tslint");
 	log("	wk format | formats your ts files, requires tsfmt");
@@ -554,6 +557,11 @@ function build()
 	return name;
 }
 
+function burn()
+{
+
+}
+
 function createComponentFiles(name)
 {
 	if (FS.existsSync("./components/" + name))
@@ -827,7 +835,8 @@ function isProjectValid(path)
 	}
 }
 
-function copyRecursiveSync(src, dest) {
+function copyRecursiveSync(src, dest)
+{
 	var exists = FS.existsSync(src);
 	var stats = exists && FS.statSync(src);
 	var isDirectory = exists && stats.isDirectory();
@@ -879,7 +888,7 @@ function uid()
 		r = alphabet[i] + r;
 		return r;
 	}
-	
+
 	// return int2Base62(Math.floor((Date.now()) / 1000));
 	var id = int2Base62(Math.floor((Date.now()) / 6000));
 	id = id.substr(id.length-4, 4);
