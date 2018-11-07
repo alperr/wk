@@ -9,7 +9,7 @@ const BG_GREEN = "\x1b[42m";
 const RESET = "\x1b[0m";
 
 const SOURCE_COMPONENT = 'Ly8gVEhJUyBGSUxFIElTIEFVVE8gR0VORVJBVEVEICwgRE8gTk9UIEVESVQNCmNsYXNzIENvbXBvbmVudA0Kew0KCXB1YmxpYyByb290OiBIVE1MRWxlbWVudDsNCgljb25zdHJ1Y3Rvcihyb290OiBFbGVtZW50LCBtYXJrdXA6IG51bWJlcikNCgl7DQoJCXRoaXMucm9vdCA9IDxIVE1MRWxlbWVudD5yb290Ow0KCQl0aGlzLmxvYWRNYXJrdXAobWFya3VwKTsNCgl9DQoNCglwdWJsaWMgZmluZCA9IChxdWVyeTogc3RyaW5nKTogSFRNTEVsZW1lbnQgPT4NCgl7DQoJCXF1ZXJ5ID0gIi4iICsgcXVlcnk7DQoJCXJldHVybiA8SFRNTEVsZW1lbnQ+dGhpcy5yb290LnF1ZXJ5U2VsZWN0b3IocXVlcnkpOw0KCX0NCg0KCXB1YmxpYyBxdWVyeVNlbGVjdG9yID0gKHF1ZXJ5OiBzdHJpbmcpOiBFbGVtZW50ID0+DQoJew0KCQlyZXR1cm4gdGhpcy5yb290LnF1ZXJ5U2VsZWN0b3IocXVlcnkpOw0KCX0NCg0KCXB1YmxpYyBxdWVyeVNlbGVjdG9yQWxsID0gKHF1ZXJ5OiBzdHJpbmcpOiBOb2RlTGlzdCA9Pg0KCXsNCgkJcmV0dXJuIHRoaXMucm9vdC5xdWVyeVNlbGVjdG9yQWxsKHF1ZXJ5KTsNCgl9DQoNCglwcml2YXRlIGxvYWRNYXJrdXAgPSAoa2V5OiBudW1iZXIpID0+DQoJew0KCQl2YXIgdzogYW55ID0gd2luZG93Ow0KCQlpZiAoIXcuX19tYXJrdXBfZGF0YVtrZXldKQ0KCQkJdGhyb3cgInRoZXJlIGlzIG5vIG1hcmt1cCBmb3IgIiArIGtleTsNCg0KCQl0aGlzLnJvb3QuaW5uZXJIVE1MID0gYXRvYih3Ll9fbWFya3VwX2RhdGFba2V5XSk7DQoJfQ0KfQ0KZnVuY3Rpb24gbG9hZFRlbXBsYXRlKGtleTogbnVtYmVyKTogSFRNTEVsZW1lbnQNCnsNCgl2YXIgdzogYW55ID0gd2luZG93Ow0KCWlmICghdy5fX21hcmt1cF9kYXRhW2tleV0pDQoJCXRocm93ICJ0aGVyZSBpcyBubyBtYXJrdXAgZm9yICIgKyBrZXk7DQoNCglmdW5jdGlvbiBodG1sVG9FbGVtZW50KGh0bWwpDQoJew0KCQl2YXIgdGVtcGxhdGUgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCd0ZW1wbGF0ZScpOw0KCQlodG1sID0gaHRtbC50cmltKCk7DQoJCXRlbXBsYXRlLmlubmVySFRNTCA9IGh0bWw7DQoJCXJldHVybiB0ZW1wbGF0ZS5jb250ZW50LmZpcnN0Q2hpbGQ7DQoJfQ0KCXJldHVybiA8SFRNTEVsZW1lbnQ+aHRtbFRvRWxlbWVudChhdG9iKHcuX19tYXJrdXBfZGF0YVtrZXldKSk7DQp9';
-const SOURCE_INDEX = 'PGh0bWwgbGFuZz0iZW4iPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgiPgoJCTx0aXRsZT53azwvdGl0bGU+CgkJPHN0eWxlPgoJCQkjcm9vdHsKCQkJCXdpZHRoOiAxMDAlOwoJCQkJaGVpZ2h0OiAxMDAlOwoJCQkJb3ZlcmZsb3c6IG5vbmU7CgkJCQlwb3NpdGlvbjogcmVsYXRpdmU7CgkJCX0KCQk8L3N0eWxlPgoJCTxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iZGV2LmNzcyI+CgkJPHNjcmlwdCBzcmM9J2Rldi5qcyc+PC9zY3JpcHQ+Cgk8L2hlYWQ+CgkKCTxib2R5PgoJCTxkaXYgaWQ9J3Jvb3QnPjwvZGl2PgoJPC9ib2R5PgoJPHNjcmlwdD4KCXdpbmRvdy5vbmxvYWQgPSBmdW5jdGlvbiAoKQoJewoJCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCQl4aHIub3BlbigiR0VUIiwiZGV2Lmpzb24iKTsKCQl4aHIuc2VuZCgpOwoJCXhoci5vbmxvYWQgPSBmdW5jdGlvbigpCgkJewoJCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJCW5ldyBBcHBsaWNhdGlvbihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKTsKCQl9Cgl9Cgk8L3NjcmlwdD4KPC9odG1sPg==';
+const SOURCE_INDEX = 'PGh0bWwgbGFuZz0iZW4iPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgiPgoJCTx0aXRsZT53azwvdGl0bGU+CgkJPHN0eWxlPgoJCQkjcm9vdHsKCQkJCXdpZHRoOiAxMDAlOwoJCQkJaGVpZ2h0OiAxMDAlOwoJCQkJb3ZlcmZsb3c6IG5vbmU7CgkJCQlwb3NpdGlvbjogcmVsYXRpdmU7CgkJCX0KCQk8L3N0eWxlPgoJCTxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iZGV2LmNzcyI+CgkJPHNjcmlwdCBzcmM9J2Rldi5qcyc+PC9zY3JpcHQ+Cgk8L2hlYWQ+CgkKCTxib2R5PgoJCTxkaXYgaWQ9J3Jvb3QnPjwvZGl2PgoJPC9ib2R5PgoJPHNjcmlwdCBpZD0id2stc2NyaXB0Ij4KCXdpbmRvdy5vbmxvYWQgPSBmdW5jdGlvbiAoKQoJewoJCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCQl4aHIub3BlbigiR0VUIiwiZGV2Lmpzb24iKTsKCQl4aHIuc2VuZCgpOwoJCXhoci5vbmxvYWQgPSBmdW5jdGlvbigpCgkJewoJCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJCW5ldyBBcHBsaWNhdGlvbihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncm9vdCcpKTsKCQl9Cgl9Cgk8L3NjcmlwdD4KPC9odG1sPg==';
 const SOURCE_SAMPLE = 'Ly8vIDxyZWZlcmVuY2UgcGF0aD0iLi4vLi4vY2xhc3Nlcy9jb21wb25lbnQudHMiIC8+DQoNCmNsYXNzIFNhbXBsZUNvbXBvbmVudCBleHRlbmRzIENvbXBvbmVudA0Kew0KCWNvbnN0cnVjdG9yKHJvb3Q6IEVsZW1lbnQsIG9wdGlvbnM/OiBPYmplY3QpDQoJew0KCQlzdXBlcihyb290LCAic2FtcGxlLWNvbXBvbmVudCIpOw0KCX0NCn0=';
 const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwbGljYXRpb24nPgoJPGgxPmJhc2ljIHdrIHByb2plY3Q8L2gxPgoJPHA+dGhpcyBwYWdlIGlzIGdlbmVyYXRlZCBieSBhcHBsaWNhdGlvbiBjb21wb25lbnQ8L3A+Cgk8cD5pdCBjYW4gYmUgZm91bmQgdW5kZXIgPHN0cm9uZz4vY29tcG9uZW50czwvc3Ryb25nPiBmb2xkZXI8L3A+Cgk8cCBjbGFzcz0nYWNjZW50Jz55b3UgY2FuIHR3ZWFrIHRoaXMgY29tcG9uZW50J3Mgc3R5bGUgYnkgZWRpdGluZyA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uY3NzPC9zdHJvbmc+IGZpbGU8L3A+Cgk8cD5hbGwgdGhpcyBjb21wb25lbnQgbWFya3VwIGlzIHdyaXR0ZW4gaW50byA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uaHRtbDwvc3Ryb25nPjwvcD4KPC9kaXY+';
 const SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAnU2Vnb2UgVUknLCBSb2JvdG8sICdIZWx2ZXRpY2EgTmV1ZScsIEFyaWFsLCBzYW5zLXNlcmlmOwp9CgouYXBwbGljYXRpb24gLmFjY2VudHsKCWNvbG9yOiAjYzBhOwp9';
@@ -18,12 +18,14 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.28";
+const VERSION = "0.1.30";
 var commands =
 {
 	"init"  : init,
 	"deinit"  : deinit,
 	"start" : start,
+	"develop" : start,
+	"burn" : burn,
 	"new" : newComponent,
 	"build" : build,
 	"del" : deleteComponent,
@@ -63,6 +65,7 @@ function printSmallHelp(c)
 	log("	wk del    | deletes a component, this command is not reversible");
 	log("	wk list   | lists all components in the project");
 	log("	wk build  | makes a production build under ./build folder (minifies js&css)");
+	log("	wk burn   | makes a webview build under ./build folder (minifies js&css)");
 	log("	wk stats  | show statistics about project");
 	log("	wk lint   | makes a static analysis for your ts files, requires tslint");
 	log("	wk format | formats your ts files, requires tsfmt");
@@ -554,6 +557,65 @@ function build()
 	return name;
 }
 
+function burn()
+{
+	log("building for mobile webviews");
+	changedFiles.push(".ts");
+	transpileAll(1);
+	deleteFolderRecursive("./build");
+	copyRecursiveSync("./static-files", "./build");
+
+	var markup = FS.readFileSync("./build/dev.json");
+	FS.unlinkSync("./build/dev.css");
+	FS.unlinkSync("./build/dev.json");
+	FS.unlinkSync("./build/dev.js");
+	FS.unlinkSync("./build/index.html");
+
+	var name;
+	var UGLIFYJS = require("uglify-js");
+	var CHEERIO = require('cheerio');
+	var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
+
+	name = uid();
+	$("link[href$='dev.css']").attr("href" , name + ".css");
+	$("script[src$='dev.js']").attr("src" , name + ".js");
+
+	var embedScript = "";
+	embedScript += "		window.onload = function () { window.__markup_data = " + markup +";";
+	embedScript += "		new Application(document.getElementById('root')); }"
+	$("#wk-script").html(embedScript);
+
+	var h = $.html();
+
+	var jsContent =  FS.readFileSync("./static-files/dev.js", "utf8");
+	var options = 
+	{
+		"mangle" :
+		{
+			"toplevel" : true,
+			"reserved": ['Application']
+		}
+	}
+	console.time('\x1b[32m minification\x1b[0m');
+	var minifiedJSCode = UGLIFYJS.minify(jsContent, options);
+	if(minifiedJSCode.error)
+	{
+		console.log(minifiedJSCode.error);
+		error("unable to minify javascript file");
+		return;
+	}
+
+	FS.writeFileSync( "./build/" + name + ".js", minifiedJSCode.code)
+	FS.writeFileSync("./build/index.html" , h);
+	FS.copyFileSync("./static-files/dev.css", "./build/" + name + ".css");
+	// FS.copyFileSync("./static-files/dev.json", "./build/" + name + ".json");
+
+	console.timeEnd('\x1b[32m minification\x1b[0m');
+	log("mobile webview build completed with seed " + name);
+	return name;
+}
+
+
 function createComponentFiles(name)
 {
 	if (FS.existsSync("./components/" + name))
@@ -827,7 +889,8 @@ function isProjectValid(path)
 	}
 }
 
-function copyRecursiveSync(src, dest) {
+function copyRecursiveSync(src, dest)
+{
 	var exists = FS.existsSync(src);
 	var stats = exists && FS.statSync(src);
 	var isDirectory = exists && stats.isDirectory();
@@ -879,7 +942,7 @@ function uid()
 		r = alphabet[i] + r;
 		return r;
 	}
-	
+
 	// return int2Base62(Math.floor((Date.now()) / 1000));
 	var id = int2Base62(Math.floor((Date.now()) / 6000));
 	id = id.substr(id.length-4, 4);
