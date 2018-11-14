@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.30";
+const VERSION = "0.1.32";
 var commands =
 {
 	"init"  : init,
@@ -132,19 +132,36 @@ function start(port)
 	
 	startWatcher();
 
-	var finalhandler = require('finalhandler');
-	var http = require('http');
-	var serveStatic = require('serve-static');
-	var opn = require("opn");
+	// var finalhandler = require('finalhandler');
+	// var http = require('http');
+	// var serveStatic = require('serve-static');
+
+	var OPN = require("opn");
+	// var serve = serveStatic('./static-files', {
+	// 	'index': ['index.html', 'index.htm'],
+	// 	"fallthrough" : true
+	// });
 	
-	var serve = serveStatic('./static-files', {'index': ['index.html', 'index.htm']});
+	// var server = http.createServer( function onRequest (req, res)
+	// {
+	// 	serve(req, res, finalhandler(req, res)).next(function(){
+	// 	});
+	// })
+
+	const EXPRESS = require('express');
+	const PATH = require('path');
+	const EXPRESS_APP = EXPRESS();
 	
-	var server = http.createServer(
-	function onRequest (req, res)
-	{
-		serve(req, res, finalhandler(req, res))
-	})
+	// serve static assets normally
+	EXPRESS_APP.use(EXPRESS.static('./static-files'));
+	EXPRESS_APP.get('*', function (request, response) {
+		response.sendFile(PATH.resolve("./static-files", 'index.html'));
+	});
 	
+	
+	console.log("server started on port " + port);	
+	
+
 	var pf = require("portfinder");
 	pf.basePort = 8040;
 	pf.getPort(function (err, port)
@@ -153,11 +170,12 @@ function start(port)
 		{
 			error("no port available for http server");
 		}
-		server.listen(port);
+		EXPRESS_APP.listen(port);
+		// server.listen(port);
 		log("listening localhost:" + port);
 		
 		setTimeout(function(){
-			opn('http://localhost:' + port);
+			OPN('http://localhost:' + port);
 		}, 3000);
 	});
 }
