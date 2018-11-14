@@ -1,6 +1,6 @@
 {
   "name": "wk-toolkit",
-  "version": "0.1.32",
+  "version": "0.1.33",
   "bin": {
     "wk": "./bin/wk"
   },
