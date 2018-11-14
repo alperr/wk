@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.34";
+const VERSION = "0.1.35";
 var commands =
 {
 	"init"  : init,
@@ -34,6 +34,7 @@ var commands =
 	"lint" : lint,
 	"deploy": deploy,
 	"format" : format,
+	"commit" : commit,
 	"-v" : version,
 	"--v" : version
 }
@@ -430,6 +431,17 @@ function deploy()
 	EXEC("git commit -m 'release';");
 	EXEC("git push;");
 	log("deployed");
+}
+
+
+function commit(message)
+{
+	if (typeof message === "undefined")
+		message = "auto release";
+
+	EXEC("git add -A;");
+	EXEC("git commit -m '"+message+"';");
+	EXEC("git push;");
 }
 
 function format()
