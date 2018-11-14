@@ -1,10 +1,11 @@
 {
   "name": "wk-toolkit",
-  "version": "0.1.30",
+  "version": "0.1.32",
   "bin": {
     "wk": "./bin/wk"
   },
   "dependencies": {
+    "express": "4.16.0",
     "serve-static": "1.13.2",
     "finalhandler": "1.1.1",
     "opn": "5.2.0",
