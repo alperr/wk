@@ -607,8 +607,8 @@ function burn()
 	var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
 
 	name = uid();
-	$("link[href$='dev.css']").attr("href" , "/" + name + ".css");
-	$("script[src$='dev.js']").attr("src" , "/" + name + ".js");
+	$("link[href$='dev.css']").attr("href" , name + ".css");
+	$("script[src$='dev.js']").attr("src" , name + ".js");
 
 	var embedScript = "";
 	embedScript += "		window.onload = function () { window.__markup_data = " + markup +";";
