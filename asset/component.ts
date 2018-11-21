@@ -30,7 +30,8 @@ class Component
 		if (!w.__markup_data[key])
 			throw "there is no markup for " + key;
 
-		this.root.innerHTML = atob(w.__markup_data[key]);
+			
+		this.root.innerHTML = decodeURIComponent(atob(w.__markup_data[key]));
 	}
 }
 function loadTemplate(key: number): HTMLElement
@@ -46,5 +47,5 @@ function loadTemplate(key: number): HTMLElement
 		template.innerHTML = html;
 		return template.content.firstChild;
 	}
-	return <HTMLElement>htmlToElement(atob(w.__markup_data[key]));
+	return <HTMLElement>htmlToElement(decodeURIComponent(atob(w.__markup_data[key])));
 }
