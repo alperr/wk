@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./components/";
 const CLASS_BASE_PATH = "./classes/";
 const OUTPUT_PATH = "./static-files/dev";
 
-const VERSION = "0.1.39";
+const VERSION = "0.1.40";
 var commands =
 {
 	"init"  : init,
@@ -553,8 +553,8 @@ function build()
 	var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
 
 	name = uid();
-	$("link[href$='dev.css']").attr("href" , "/" + name + ".css");
-	$("script[src$='dev.js']").attr("src" , "/" + name + ".js");
+	$("link[href$='./dev.css']").attr("href" , "./" + name + ".css");
+	$("script[src$='./dev.js']").attr("src" , "./" + name + ".js");
 
 	var h = $.html();
 	h = h.replace('"./dev.json"', '"./'+name+'.json"');
