@@ -11,10 +11,9 @@
 				position: relative;
 			}
 		</style>
-		<link rel="stylesheet" href="/dev.css">
-		<script src='/dev.js'></script>
+		<link rel="stylesheet" href="./dev.css">
+		<script src='./dev.js'></script>
 	</head>
-	
 	<body>
 		<div id='root'></div>
 	</body>
@@ -22,7 +21,7 @@
 	window.onload = function ()
 	{
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET","/dev.json");
+		xhr.open("GET","./dev.json");
 		xhr.send();
 		xhr.onload = function()
 		{
