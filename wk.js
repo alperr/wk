@@ -837,7 +837,7 @@ function transpileAll(counter)
 
 	if (isTypescriptChanged)
 	{
-		command = "tsc --out ./static-files/dev.js ";
+		command = "tsc --out ./static-files/dev.js";
 		command += tsFiles.join(" ");
 		try{
 			EXEC(command);
