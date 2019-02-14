@@ -14,11 +14,11 @@ const SOURCE_SAMPLE = 'Ly8vIDxyZWZlcmVuY2UgcGF0aD0iLi4vLi4vY2xhc3Nlcy9jb21wb25lb
 const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwbGljYXRpb24nPgoJPGgxPmJhc2ljIHdrIHByb2plY3Q8L2gxPgoJPHA+dGhpcyBwYWdlIGlzIGdlbmVyYXRlZCBieSBhcHBsaWNhdGlvbiBjb21wb25lbnQ8L3A+Cgk8cD5pdCBjYW4gYmUgZm91bmQgdW5kZXIgPHN0cm9uZz4vY29tcG9uZW50czwvc3Ryb25nPiBmb2xkZXI8L3A+Cgk8cCBjbGFzcz0nYWNjZW50Jz55b3UgY2FuIHR3ZWFrIHRoaXMgY29tcG9uZW50J3Mgc3R5bGUgYnkgZWRpdGluZyA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uY3NzPC9zdHJvbmc+IGZpbGU8L3A+Cgk8cD5hbGwgdGhpcyBjb21wb25lbnQgbWFya3VwIGlzIHdyaXR0ZW4gaW50byA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uaHRtbDwvc3Ryb25nPjwvcD4KPC9kaXY+';
 const SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAnU2Vnb2UgVUknLCBSb2JvdG8sICdIZWx2ZXRpY2EgTmV1ZScsIEFyaWFsLCBzYW5zLXNlcmlmOwp9CgouYXBwbGljYXRpb24gLmFjY2VudHsKCWNvbG9yOiAjYzBhOwp9';
 
-const COMPONENT_BASE_PATH = "./components/";
-const CLASS_BASE_PATH = "./classes/";
-const OUTPUT_PATH = "./static-files/dev";
+const COMPONENT_BASE_PATH = "./com/";
+const CLASS_BASE_PATH = "./src/";
+const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.1.41";
+const VERSION = "0.2.0";
 var commands =
 {
 	"init"  : init,
@@ -31,6 +31,7 @@ var commands =
 	"del" : deleteComponent,
 	"list" : listComponents,
 	"stats" : stats,
+	"lib" : buildLibrary,
 	"lint" : lint,
 	"deploy": deploy,
 	"format" : format,
@@ -60,9 +61,9 @@ function printSmallHelp(c)
 	version();
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
-	log("	wk start  | auto-builds components and serves them under ./static-files folder");
+	log("	wk start  | auto-builds components and serves them under ./www folder");
 	log("	wk deploy | builds and pushes to git");
-	log("	wk new    | creates a new component under ./components folder");
+	log("	wk new    | creates a new component under ./com folder");
 	log("	wk del    | deletes a component, this command is not reversible");
 	log("	wk list   | lists all components in the project");
 	log("	wk build  | makes a production build under ./build folder (minifies js&css)");
@@ -81,29 +82,29 @@ function init()
 	}
 	
 	log("initializing a new project");
-	if (!FS.existsSync("./static-files")){FS.mkdirSync("./static-files");}
-	if (!FS.existsSync("./classes")){FS.mkdirSync("./classes");}
-	if (!FS.existsSync("./components")){FS.mkdirSync("./components");}
+	if (!FS.existsSync("./www")){FS.mkdirSync("./www");}
+	if (!FS.existsSync("./src")){FS.mkdirSync("./src");}
+	if (!FS.existsSync("./com")){FS.mkdirSync("./com");}
 	log("- folders created");
 
-	FS.writeFileSync("./classes/component.ts",Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii'),"utf8");
-	FS.writeFileSync("./static-files/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./src/component.ts",Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./www/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
 	log("- classes created");
 
 	newComponent(["application"]);
-	FS.writeFileSync("./components/application/application.css",Buffer.from(SOURCE_BASIC_CSS, 'base64').toString('ascii'),"utf8");
-	FS.writeFileSync("./components/application/application.html",Buffer.from(SOURCE_BASIC_HTML, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./com/application/application.css",Buffer.from(SOURCE_BASIC_CSS, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./com/application/application.html",Buffer.from(SOURCE_BASIC_HTML, 'base64').toString('ascii'),"utf8");
 
 	highlight("project initialized successfully");
 	log("you can run **start** command now")
-	log("wk start  | auto-builds components and serves them under ./static-files folder");
+	log("wk start  | auto-builds components and serves them under ./www folder");
 }
 
 function deinit()
 {
-	deleteFolderRecursive("./static-files");
-	deleteFolderRecursive("./classes");
-	deleteFolderRecursive("./components");
+	deleteFolderRecursive("./www");
+	deleteFolderRecursive("./src");
+	deleteFolderRecursive("./com");
 	log("- de initialized project and deleted all files");
 }
 
@@ -138,7 +139,7 @@ function start(port)
 	// var serveStatic = require('serve-static');
 
 	var OPN = require("opn");
-	// var serve = serveStatic('./static-files', {
+	// var serve = serveStatic('./www', {
 	// 	'index': ['index.html', 'index.htm'],
 	// 	"fallthrough" : true
 	// });
@@ -154,9 +155,9 @@ function start(port)
 	const EXPRESS_APP = EXPRESS();
 	
 	// serve static assets normally
-	EXPRESS_APP.use(EXPRESS.static('./static-files'));
+	EXPRESS_APP.use(EXPRESS.static('./www'));
 	EXPRESS_APP.get('*', function (request, response) {
-		response.sendFile(PATH.resolve("./static-files", 'index.html'));
+		response.sendFile(PATH.resolve("./www", 'index.html'));
 	});
 	
 	
@@ -203,7 +204,7 @@ function newComponent(a)
 	if (a.length == 0)
 	{
 		log("usage:")
-		log("	wk new component-name | creates a new component under ./components folder with given component-name");
+		log("	wk new component-name | creates a new component under ./com folder with given component-name");
 		return;
 	}
 
@@ -249,7 +250,7 @@ function deleteComponent(a)
 	if (!printNotValidProjectMessage("./"))
 		return;
 
-	var input = "./components/" + a[0] + '/' + a[0];
+	var input = "./com/" + a[0] + '/' + a[0];
 
 	if (!FS.existsSync(input + '.html') || !FS.existsSync(input + '.ts') || !FS.existsSync(input + '.css'))
 	{
@@ -257,7 +258,7 @@ function deleteComponent(a)
 		return;
 	}
 
-	deleteFolderRecursive("./components/" + a[0]);
+	deleteFolderRecursive("./com/" + a[0]);
 	updateMarkupEnums();
 	log("deleted component -> " + a[0])
 }
@@ -271,7 +272,7 @@ function stats()
 {
 	var compCount = 0;
 	var tempCount = 0;
-	var components = FS.readdirSync("./components/");
+	var components = FS.readdirSync("./com/");
 	for (var i in components)
 	{
 		if (components[i].startsWith("."))
@@ -517,7 +518,7 @@ function listComponents()
 	if (!printNotValidProjectMessage("./"))
 		return;
 
-	var components = FS.readdirSync("./components/")
+	var components = FS.readdirSync("./com/")
 	log("Components:");
 	for (var i in components)
 	{
@@ -525,7 +526,7 @@ function listComponents()
 			log("	" + components[i]);
 	}
 
-	var classes = FS.readdirSync("./classes/")
+	var classes = FS.readdirSync("./src/")
 	log("Classes:");
 	for (var i in classes)
 	{
@@ -534,13 +535,19 @@ function listComponents()
 	}
 }
 
+function buildLibrary()
+{
+	log("building a library");
+	
+}
+
 function build()
 {
 	log("building for production");
 	changedFiles.push(".ts");
 	transpileAll(1);
 	deleteFolderRecursive("./build");
-	copyRecursiveSync("./static-files", "./build");
+	copyRecursiveSync("./www", "./build");
 
 	FS.unlinkSync("./build/dev.css");
 	FS.unlinkSync("./build/dev.json");
@@ -550,7 +557,7 @@ function build()
 	var name;
 	var UGLIFYJS = require("uglify-js");
 	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
+	var $ = CHEERIO.load(FS.readFileSync("./www/index.html"));
 
 	name = uid();
 	$("link[href$='./dev.css']").attr("href" , "./" + name + ".css");
@@ -559,7 +566,7 @@ function build()
 	var h = $.html();
 	h = h.replace('"./dev.json"', '"./'+name+'.json"');
 	
-	var jsContent =  FS.readFileSync("./static-files/dev.js", "utf8");
+	var jsContent =  FS.readFileSync("./www/dev.js", "utf8");
 	var options = 
 	{
 		"mangle" :
@@ -579,8 +586,8 @@ function build()
 
 	FS.writeFileSync( "./build/" + name + ".js", minifiedJSCode.code)
 	FS.writeFileSync("./build/index.html" , h);
-	FS.copyFileSync("./static-files/dev.css", "./build/" + name + ".css");
-	FS.copyFileSync("./static-files/dev.json", "./build/" + name + ".json");
+	FS.copyFileSync("./www/dev.css", "./build/" + name + ".css");
+	FS.copyFileSync("./www/dev.json", "./build/" + name + ".json");
 
 	console.timeEnd('\x1b[32m minification\x1b[0m');
 	log("production build completed with seed " + name);
@@ -593,7 +600,7 @@ function burn()
 	changedFiles.push(".ts");
 	transpileAll(1);
 	deleteFolderRecursive("./build");
-	copyRecursiveSync("./static-files", "./build");
+	copyRecursiveSync("./www", "./build");
 
 	var markup = FS.readFileSync("./build/dev.json");
 	FS.unlinkSync("./build/dev.css");
@@ -604,7 +611,7 @@ function burn()
 	var name;
 	var UGLIFYJS = require("uglify-js");
 	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(FS.readFileSync("./static-files/index.html"));
+	var $ = CHEERIO.load(FS.readFileSync("./www/index.html"));
 
 	name = uid();
 	$("link[href$='dev.css']").attr("href" , name + ".css");
@@ -617,7 +624,7 @@ function burn()
 
 	var h = $.html();
 
-	var jsContent =  FS.readFileSync("./static-files/dev.js", "utf8");
+	var jsContent =  FS.readFileSync("./www/dev.js", "utf8");
 	var options = 
 	{
 		"mangle" :
@@ -637,8 +644,8 @@ function burn()
 
 	FS.writeFileSync( "./build/" + name + ".js", minifiedJSCode.code)
 	FS.writeFileSync("./build/index.html" , h);
-	FS.copyFileSync("./static-files/dev.css", "./build/" + name + ".css");
-	// FS.copyFileSync("./static-files/dev.json", "./build/" + name + ".json");
+	FS.copyFileSync("./www/dev.css", "./build/" + name + ".css");
+	// FS.copyFileSync("./www/dev.json", "./build/" + name + ".json");
 
 	console.timeEnd('\x1b[32m minification\x1b[0m');
 	log("mobile webview build completed with seed " + name);
@@ -648,7 +655,7 @@ function burn()
 
 function createComponentFiles(name)
 {
-	if (FS.existsSync("./components/" + name))
+	if (FS.existsSync("./com/" + name))
 	{
 		error("a component with a name " + name + " already exists");
 		return;
@@ -663,10 +670,10 @@ function createComponentFiles(name)
 	var html = '<div class="'+name+'"></div>';
 	var css = '.'+name+'{}';
 
-	FS.mkdirSync("./components/" + name);
-	FS.writeFileSync("./components/" + name + "/" + name + ".html" , html, "utf8");
-	FS.writeFileSync("./components/" + name + "/" + name + ".css" , css, "utf8");
-	FS.writeFileSync("./components/" + name + "/" + name + ".ts" , ts, "utf8");
+	FS.mkdirSync("./com/" + name);
+	FS.writeFileSync("./com/" + name + "/" + name + ".html" , html, "utf8");
+	FS.writeFileSync("./com/" + name + "/" + name + ".css" , css, "utf8");
+	FS.writeFileSync("./com/" + name + "/" + name + ".ts" , ts, "utf8");
 
 	log("created a new component named " + name);
 }
@@ -692,7 +699,7 @@ function findTemplateFiles(path, componentName)
 function updateMarkupEnums()
 {
 	var counter = 0;
-	var components = FS.readdirSync("./components/");
+	var components = FS.readdirSync("./com/");
 	var s = "";
 	for (var i in components)
 	{
@@ -719,7 +726,7 @@ function updateMarkupEnums()
 	}
 
 	s = Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii') + s;
-	FS.writeFileSync("./classes/component.ts", s, "utf8");
+	FS.writeFileSync("./src/component.ts", s, "utf8");
 }
 
 function error(m)
@@ -837,7 +844,7 @@ function transpileAll(counter)
 
 	if (isTypescriptChanged)
 	{
-		command = "tsc --out ./static-files/dev.js --lib 'es6','dom' ";
+		command = "tsc --out ./www/dev.js --lib 'es6','dom' ";
 		command += tsFiles.join(" ");
 		try{
 			EXEC(command);
