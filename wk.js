@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.1";
+const VERSION = "0.2.2";
 var commands =
 {
 	"init"  : init,
@@ -893,17 +893,17 @@ function printNotValidProjectMessage(path)
 
 function isProjectValid(path)
 {
-	if (!FS.existsSync(path + "static-files"))
+	if (!FS.existsSync(path + "www"))
 	{
 		return false;
 	}
 
-	if (!FS.existsSync(path + "components"))
+	if (!FS.existsSync(path + "com"))
 	{
 		return false;
 	}
 
-	if (!FS.existsSync(path + "classes"))
+	if (!FS.existsSync(path + "src"))
 	{
 		return false;
 	}
