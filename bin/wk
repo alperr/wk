@@ -18,7 +18,11 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
+<<<<<<< HEAD
 const VERSION = "0.2.0";
+=======
+const VERSION = "0.1.44";
+>>>>>>> d5097747d2b44244f7a8029b6c6170f7f56e2f0e
 var commands =
 {
 	"init"  : init,
@@ -844,7 +848,11 @@ function transpileAll(counter)
 
 	if (isTypescriptChanged)
 	{
+<<<<<<< HEAD
 		command = "tsc --out ./www/dev.js --lib 'es6','dom' ";
+=======
+		command = "tsc --lib 'es6,dom' --out ./static-files/dev.js ";
+>>>>>>> d5097747d2b44244f7a8029b6c6170f7f56e2f0e
 		command += tsFiles.join(" ");
 		try{
 			EXEC(command);
