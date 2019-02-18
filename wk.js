@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.3";
+const VERSION = "0.2.4";
 var commands =
 {
 	"init"  : init,
@@ -28,6 +28,7 @@ var commands =
 	"s" : start,
 	"burn" : burn,
 	"new" : newComponent,
+	"n" : newComponent,
 	"build" : build,
 	"b" : build,
 	"del" : deleteComponent,
@@ -522,7 +523,6 @@ function listComponents()
 function buildLibrary()
 {
 	log("building a library");
-	
 }
 
 function build()
