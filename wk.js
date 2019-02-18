@@ -25,9 +25,11 @@ var commands =
 	"deinit"  : deinit,
 	"start" : start,
 	"develop" : start,
+	"s" : start,
 	"burn" : burn,
 	"new" : newComponent,
 	"build" : build,
+	"b" : build,
 	"del" : deleteComponent,
 	"list" : listComponents,
 	"stats" : stats,
@@ -133,22 +135,7 @@ function start(port)
 	log("starting file server and auto-builder");
 	
 	startWatcher();
-
-	// var finalhandler = require('finalhandler');
-	// var http = require('http');
-	// var serveStatic = require('serve-static');
-
 	var OPN = require("opn");
-	// var serve = serveStatic('./www', {
-	// 	'index': ['index.html', 'index.htm'],
-	// 	"fallthrough" : true
-	// });
-	
-	// var server = http.createServer( function onRequest (req, res)
-	// {
-	// 	serve(req, res, finalhandler(req, res)).next(function(){
-	// 	});
-	// })
 
 	const EXPRESS = require('express');
 	const PATH = require('path');
@@ -162,7 +149,6 @@ function start(port)
 	
 	
 	console.log("server started on port " + port);	
-	
 
 	var pf = require("portfinder");
 	pf.basePort = 8040;
@@ -188,8 +174,6 @@ function startWatcher()
 	var watch = require('node-watch');
 	watch(COMPONENT_BASE_PATH, { recursive: true }, onchange);
 	watch(CLASS_BASE_PATH, { recursive: true }, onchange);
-	// FS.watch(COMPONENT_BASE_PATH, { "recursive" : true }, onchange);
-	// FS.watch(CLASS_BASE_PATH, { "recursive" : true }, onchange);
 	onchange("change",".ts");
 }
 
