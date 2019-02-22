@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.6";
+const VERSION = "0.2.7";
 var commands =
 {
 	"init"  : init,
@@ -622,9 +622,9 @@ function burn()
 	}
 	
 	var css = FS.readFileSync("./www/dev.css");
-	css = $("style").html() + "\n" + css;
-	$("style").html(css);
-	$("#wk-script").html(minifiedJSCode.code + "\n" + embedScript);
+	css = $("style").text() + "\n" + css;
+	$("style").text(css);
+	$("#wk-script").text(minifiedJSCode.code + "\n" + embedScript);
 
 	FS.writeFileSync("./build/index.html" , $.html());
 	console.timeEnd('\x1b[32m minification\x1b[0m');
