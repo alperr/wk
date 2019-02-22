@@ -918,7 +918,6 @@ function uid()
 		return r;
 	}
 
-	// return int2Base62(Math.floor((Date.now()) / 1000));
 	var id = int2Base62(Math.floor((Date.now()) / 6000));
 	id = id.substr(id.length-4, 4);
 	return id;
