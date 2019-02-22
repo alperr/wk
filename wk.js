@@ -35,8 +35,8 @@ var commands =
 	"list" : listComponents,
 	"lib" : buildLibrary,
 	"lint" : lint,
-	"deploy": deploy,
 	"format" : format,
+	"deploy": deploy,
 	"commit" : commit,
 	"-v" : version,
 	"--v" : version
@@ -64,11 +64,10 @@ function printSmallHelp(c)
 	log("usage:");
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./www folder");
-	log("	wk deploy | builds and pushes to git");
-	log("	wk new    | creates a new component under ./com folder");
-	log("	wk del    | deletes a component, this command is not reversible");
 	log("	wk build  | makes a production build under ./build folder (minifies js&css)");
 	log("	wk burn   | builds all ts files, minifies js&css and embeds them into build/index.html");
+	log("	wk new    | creates a new component under ./com folder");
+	log("	wk del    | deletes a component, this command is not reversible");
 	log("	wk lint   | makes a static analysis for your ts files, requires tslint");
 	log("	wk format | formats your ts files, requires tsfmt");
 }
@@ -509,9 +508,12 @@ function build()
 		return;
 	}
 
+	var UGLIFYCSS = require('uglifycss');
+	var minifiedCSS = UGLIFYCSS.processFiles([ './www/dev.css' ], {});
+
 	FS.writeFileSync( "./build/" + name + ".js", minifiedJSCode.code)
 	FS.writeFileSync("./build/index.html" , h);
-	FS.copyFileSync("./www/dev.css", "./build/" + name + ".css");
+	FS.writeFileSync( "./build/" + name + ".css", minifiedCSS)
 	FS.copyFileSync("./www/dev.json", "./build/" + name + ".json");
 
 	console.timeEnd('\x1b[32m minification\x1b[0m');
