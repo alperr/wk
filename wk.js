@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.7";
+const VERSION = "0.2.8";
 var commands =
 {
 	"init"  : init,
@@ -620,11 +620,11 @@ function burn()
 		error("unable to minify javascript file");
 		return;
 	}
-	
-	var css = FS.readFileSync("./www/dev.css");
-	css = $("style").text() + "\n" + css;
+	$("#wk-script").text(minifiedJSCode.code + "\n" + embedScript+ "\n");
+	var UGLIFYCSS = require('uglifycss');
+	var minifiedCSS = UGLIFYCSS.processFiles([ './www/dev.css' ], {});
+	var css = $("style").html() + "\n" + minifiedCSS+ "\n";
 	$("style").text(css);
-	$("#wk-script").text(minifiedJSCode.code + "\n" + embedScript);
 
 	FS.writeFileSync("./build/index.html" , $.html());
 	console.timeEnd('\x1b[32m minification\x1b[0m');
