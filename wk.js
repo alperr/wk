@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.9";
+const VERSION = "0.2.10";
 var commands =
 {
 	"init"  : init,
