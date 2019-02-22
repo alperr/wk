@@ -4,7 +4,7 @@ package-lock.json
 **/.DS_Store
 .env
 .sublime-project
-static-files/*
-components/*
-classes/*
+com/*
+src/*
+www/*
 build/*
