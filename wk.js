@@ -32,7 +32,6 @@ var commands =
 	"build" : build,
 	"b" : build,
 	"del" : deleteComponent,
-	"list" : listComponents,
 	"lib" : buildLibrary,
 	"lint" : lint,
 	"format" : format,
@@ -129,6 +128,7 @@ function start(port)
 		}
 		return;
 	}
+	checkVersion();
 	log("starting file server and auto-builder");
 	
 	startWatcher();
@@ -441,20 +441,35 @@ function format()
 
 function checkVersion()
 {
-	const http = require('http');
-	http.get('http://alpercinar.com/wk/version.txt',
+	const https = require('https');
+	
+	https.get('https://raw.githubusercontent.com/alperr/wk/master/package.json',
 	(resp) =>
 	{
 		var data = '';
 		resp.on('data', (chunk) => { data += chunk; });
-		resp.on('end', () => {
-			var mostRecent = Number(data);
+		resp.on('end', () =>
+		{
+			// log(data);
+			try
+			{
+				var l = JSON.parse(data)["version"];
+				var latest = Number(l[0]) * 10000 + Number(l[1]) * 100 + Number(l[2]);
+			}
+			catch(e){ return; }
+			
 			var p = VERSION.split(".");
 			var current = Number(p[0]) * 10000 + Number(p[1]) * 100 + Number(p[2]);
-	
-			if (mostRecent > current)
+			
+			if (latest > current)
 			{
-				// outdated message
+				var msg = "there is a newer version of wk -> " + l + " (your version is "+VERSION+")";
+				error(msg);
+				log("to update:")
+				msg = "";
+				msg += "npm un -g wk-toolkit\n";
+				msg += " npm i -g wk-toolkit\n";
+				minorLog(msg);
 			}
 		});
 	}).on("error", (err) => {});
