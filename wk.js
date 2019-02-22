@@ -33,7 +33,6 @@ var commands =
 	"b" : build,
 	"del" : deleteComponent,
 	"list" : listComponents,
-	"stats" : stats,
 	"lib" : buildLibrary,
 	"lint" : lint,
 	"deploy": deploy,
@@ -68,10 +67,8 @@ function printSmallHelp(c)
 	log("	wk deploy | builds and pushes to git");
 	log("	wk new    | creates a new component under ./com folder");
 	log("	wk del    | deletes a component, this command is not reversible");
-	log("	wk list   | lists all components in the project");
 	log("	wk build  | makes a production build under ./build folder (minifies js&css)");
-	log("	wk burn   | makes a webview build under ./build folder (minifies js&css)");
-	log("	wk stats  | show statistics about project");
+	log("	wk burn   | builds all ts files, minifies js&css and embeds them into build/index.html");
 	log("	wk lint   | makes a static analysis for your ts files, requires tslint");
 	log("	wk format | formats your ts files, requires tsfmt");
 }
@@ -253,39 +250,6 @@ function version()
 	log("version: " + VERSION);
 }
 
-function stats()
-{
-	var compCount = 0;
-	var tempCount = 0;
-	var components = FS.readdirSync("./com/");
-	for (var i in components)
-	{
-		if (components[i].startsWith("."))
-			continue;
-
-		compCount++;
-	}
-
-	for (var i in components)
-	{
-		if (components[i].startsWith("."))
-			continue;
-
-		var templates = findTemplateFiles(COMPONENT_BASE_PATH + components[i] + '/', components[i]);
-		for (var t in templates)
-			tempCount++;
-	}
-
-	log("Project stats:")
-	log("Number of components: " + compCount);
-	log("Number of templates: " + tempCount);
-	
-	var seed = build();
-	// var stats = fs.statSync(filename)
-	// var fileSizeInBytes = stats["size"]
-	// return fileSizeInBytes
-
-}
 
 function lint()
 {
@@ -474,7 +438,6 @@ function format()
 		log("formatting completed!");
 
 	FS.unlinkSync("./tsfmt.json");	
-	
 }
 
 function checkVersion()
@@ -496,28 +459,6 @@ function checkVersion()
 			}
 		});
 	}).on("error", (err) => {});
-}
-
-function listComponents()
-{
-	if (!printNotValidProjectMessage("./"))
-		return;
-
-	var components = FS.readdirSync("./com/")
-	log("Components:");
-	for (var i in components)
-	{
-		if (!components[i].startsWith("."))
-			log("	" + components[i]);
-	}
-
-	var classes = FS.readdirSync("./src/")
-	log("Classes:");
-	for (var i in classes)
-	{
-		if (!classes[i].startsWith("."))
-			log("	" + classes[i]);
-	}
 }
 
 function buildLibrary()
@@ -580,7 +521,7 @@ function build()
 
 function burn()
 {
-	log("building for mobile webviews");
+	log("building&embedding into build/index.html");
 	changedFiles.push(".ts");
 	transpileAll(1);
 	deleteFolderRecursive("./build");
@@ -628,7 +569,7 @@ function burn()
 
 	FS.writeFileSync("./build/index.html" , $.html());
 	console.timeEnd('\x1b[32m minification\x1b[0m');
-	log("mobile webview build completed ");
+	log("burn completed");
 }
 
 
