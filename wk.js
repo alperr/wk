@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.5";
+const VERSION = "0.2.6";
 var commands =
 {
 	"init"  : init,
@@ -592,25 +592,16 @@ function burn()
 	FS.unlinkSync("./build/dev.js");
 	FS.unlinkSync("./build/index.html");
 
-	var name;
 	var UGLIFYJS = require("uglify-js");
 	var CHEERIO = require('cheerio');
 	var $ = CHEERIO.load(FS.readFileSync("./www/index.html"));
 
-	name = uid();
-	// $("link[href$='dev.css']").attr("href" , name + ".css");
-	// $("script[src$='dev.js']").attr("src" , name + ".js");
-
+	$("script[src$='dev.js']").remove();
 	$("link[href$='dev.css']").remove();
-	
-	
 
 	var embedScript = "";
 	embedScript += "		window.onload = function () { window.__markup_data = " + markup +";";
 	embedScript += "		new Application(document.getElementById('root')); }"
-	$("#wk-script").html(embedScript);
-
-	
 
 	var jsContent =  FS.readFileSync("./www/dev.js", "utf8");
 	var options = 
@@ -631,20 +622,13 @@ function burn()
 	}
 	
 	var css = FS.readFileSync("./www/dev.css");
+	css = $("style").html() + "\n" + css;
 	$("style").html(css);
+	$("#wk-script").html(minifiedJSCode.code + "\n" + embedScript);
 
-	$("script[src$='dev.js']").html(minifiedJSCode.code);
-	$("script[src$='dev.js']").removeAttr("src");
-
-	// FS.writeFileSync( "./build/" + name + ".js", minifiedJSCode.code)
-	var h = $.html();
-	FS.writeFileSync("./build/index.html" , h);
-	// FS.copyFileSync("./www/dev.css", "./build/" + name + ".css");
-
-
+	FS.writeFileSync("./build/index.html" , $.html());
 	console.timeEnd('\x1b[32m minification\x1b[0m');
-	log("mobile webview build completed with seed " + name);
-	return name;
+	log("mobile webview build completed ");
 }
 
 
