@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.10";
+const VERSION = "0.2.11";
 var commands =
 {
 	"init"  : init,
@@ -450,10 +450,10 @@ function checkVersion()
 		resp.on('data', (chunk) => { data += chunk; });
 		resp.on('end', () =>
 		{
-			// log(data);
 			try
 			{
-				var l = JSON.parse(data)["version"];
+				var latestVersion = JSON.parse(data)["version"];
+				var l = latestVersion.split(".");
 				var latest = Number(l[0]) * 10000 + Number(l[1]) * 100 + Number(l[2]);
 			}
 			catch(e){ return; }
@@ -463,7 +463,7 @@ function checkVersion()
 			
 			if (latest > current)
 			{
-				var msg = "there is a newer version of wk -> " + l + " (your version is "+VERSION+")";
+				var msg = "there is a newer version of wk -> " + latestVersion + " (your version is "+VERSION+")";
 				error(msg);
 				log("to update:")
 				msg = "";
