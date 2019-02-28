@@ -781,12 +781,8 @@ function transpileAll(counter)
 
 	if (isTypescriptChanged)
 	{
-		command = "tsc --out ./www/dev.js --lib 'es6','dom' ";
+		command = "tsc --out ./www/dev.js --target ES6";
 
-		// this is a terrible fix
-		if (process.platform == "win32")
-			command = "tsc --out ./www/dev.js ";
-			
 		command += tsFiles.join(" ");
 		try{
 			EXEC(command);
