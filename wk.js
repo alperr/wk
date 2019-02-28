@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.12";
+const VERSION = "0.2.13";
 var commands =
 {
 	"init"  : init,
@@ -782,6 +782,11 @@ function transpileAll(counter)
 	if (isTypescriptChanged)
 	{
 		command = "tsc --out ./www/dev.js --lib 'es6','dom' ";
+
+		// this is a terrible fix
+		if (process.platform == "win32")
+			command = "tsc --out ./www/dev.js ";
+			
 		command += tsFiles.join(" ");
 		try{
 			EXEC(command);
