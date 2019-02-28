@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.13";
+const VERSION = "0.2.14";
 var commands =
 {
 	"init"  : init,
@@ -781,7 +781,7 @@ function transpileAll(counter)
 
 	if (isTypescriptChanged)
 	{
-		command = "tsc --out ./www/dev.js --target ES6";
+		command = "tsc --out ./www/dev.js --target 'es6' ";
 
 		command += tsFiles.join(" ");
 		try{
