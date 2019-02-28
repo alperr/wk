@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.14";
+const VERSION = "0.2.15";
 var commands =
 {
 	"init"  : init,
@@ -494,7 +494,7 @@ function build()
 	FS.unlinkSync("./build/index.html");
 
 	var name;
-	var UGLIFYJS = require("uglify-js");
+	var UGLIFYJS = require("uglify-es");
 	var CHEERIO = require('cheerio');
 	var $ = CHEERIO.load(FS.readFileSync("./www/index.html"));
 
@@ -550,7 +550,7 @@ function burn()
 	FS.unlinkSync("./build/dev.js");
 	FS.unlinkSync("./build/index.html");
 
-	var UGLIFYJS = require("uglify-js");
+	var UGLIFYJS = require("uglify-es");
 	var CHEERIO = require('cheerio');
 	var $ = CHEERIO.load(FS.readFileSync("./www/index.html"));
 

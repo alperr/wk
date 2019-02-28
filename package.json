@@ -1,6 +1,6 @@
 {
   "name": "wk-toolkit",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "bin": {
     "wk": "./bin/wk"
   },
@@ -8,7 +8,7 @@
     "express": "4.16.0",
     "opn": "5.2.0",
     "portfinder": "1.0.13",
-    "uglify-js": "3.3.18",
+    "uglify-es": "3.3.9",
     "uglifycss": "0.0.29",
     "cheerio": "1.0.0-rc.2",
     "node-watch": "0.5.8"
