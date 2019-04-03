@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.16";
+const VERSION = "0.2.17";
 var commands =
 {
 	"init"  : init,
@@ -581,6 +581,10 @@ function burn()
 	$("#wk-script").text(minifiedJSCode.code + "\n" + embedScript+ "\n");
 	var UGLIFYCSS = require('uglifycss');
 	var minifiedCSS = UGLIFYCSS.processFiles([ './www/dev.css' ], {});
+
+	if (typeof $("style")[0] == "undefined")
+		$("head").append($("<style></style>")); 
+
 	var css = $("style").html() + "\n" + minifiedCSS+ "\n";
 	$("style").text(css);
 
