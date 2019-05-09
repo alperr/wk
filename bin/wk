@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.17";
+const VERSION = "0.2.18";
 var commands =
 {
 	"init"  : init,
@@ -140,15 +140,20 @@ function start(port)
 	
 	// serve static assets normally
 	EXPRESS_APP.use(EXPRESS.static('./www'));
-	EXPRESS_APP.get('*', function (request, response) {
+	EXPRESS_APP.get('*', function (request, response)
+	{
 		response.sendFile(PATH.resolve("./www", 'index.html'));
 	});
 	
-	
-	console.log("server started on port " + port);	
+	if (typeof port[0] == "undefined")
+		port = 6040;
+	else
+		port = port[0];
+
+	log("trying localhost:" + port);
 
 	var pf = require("portfinder");
-	pf.basePort = 8040;
+	pf.basePort = port;
 	pf.getPort(function (err, port)
 	{
 		if (err)
@@ -156,7 +161,6 @@ function start(port)
 			error("no port available for http server");
 		}
 		EXPRESS_APP.listen(port);
-		// server.listen(port);
 		log("listening localhost:" + port);
 		
 		setTimeout(function(){
