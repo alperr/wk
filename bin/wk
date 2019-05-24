@@ -18,14 +18,16 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.20";
+const VERSION = "0.2.21";
 var commands =
 {
 	"init"  : init,
 	"deinit"  : deinit,
 	"start" : start,
+	"fast-start": fastStart,
 	"develop" : start,
 	"s" : start,
+	"fs" : fastStart,
 	"burn" : burn,
 	"new" : newComponent,
 	"n" : newComponent,
@@ -41,6 +43,7 @@ var commands =
 	"--v" : version
 }
 
+var tsCompiler;
 var timer;
 var counter = 0;
 var changedFiles = [];
@@ -104,6 +107,13 @@ function deinit()
 	deleteFolderRecursive("./src");
 	deleteFolderRecursive("./com");
 	log("- de initialized project and deleted all files");
+}
+
+function fastStart(port)
+{
+	log("starting experimental compiler: sucrase");
+	tsCompiler = "sucrase";
+	start(port);
 }
 
 function start(port)
@@ -789,16 +799,66 @@ function transpileAll(counter)
 
 	if (isTypescriptChanged)
 	{
-		command = 'tsc --out ./www/dev.js --target "es6" ';
-
-		command += tsFiles.join(" ");
-		try{
-			EXEC(command);
-		}catch(e)
+		if (tsCompiler === "sucrase")
 		{
-			error('typescript build failed');
-			error(e.stdout.toString('utf8'));
-			return;
+			FS.mkdirSync("./_temp");
+			FS.mkdirSync("./_temp2");
+			
+			for (var i in tsFiles)
+			{
+				var p = tsFiles[i].split("/");
+				var f = p[p.length - 1];
+				FS.copyFileSync(tsFiles[i], "./_temp/" + f);
+			}
+
+			var c = FS.readFileSync("./_temp/component.ts", "utf8");
+			FS.unlinkSync("./_temp/component.ts");
+			var z = require('child_process').execSync('cat ./_temp/*').toString('UTF-8');
+			z = c + z;
+
+			deleteFolderRecursive("./_temp");
+			FS.mkdirSync("./_temp");
+			
+			FS.writeFileSync("./_temp/dev.ts", z, "utf8");
+
+			command = "sucrase ./_temp/ -d ./www/ --transforms typescript";
+
+			try
+			{
+				EXEC(command);
+				// console.log(FS.readFileSync("./www/dev.js","utf8"));
+			}
+			catch(e)
+			{
+				error('sucrase build failed');
+				error(e.stdout.toString('utf8'));
+				deleteFolderRecursive("./_temp");
+				return;
+			}
+
+			// var z = require('child_process').execSync('cat ./_temp2/*').toString('UTF-8')
+			// FS.writeFileSync("./www/dev.js", z, "utf8");
+			deleteFolderRecursive("./_temp");
+			deleteFolderRecursive("./_temp2");
+
+			// FS.rmdirSync("./_temp");
+			// FS.copyFileSync
+		}
+		else
+		{
+			command = 'tsc --out ./www/dev.js --target "es6" ';
+			command += tsFiles.join(" ");
+		
+			try
+			{
+				EXEC(command);
+			}
+			catch(e)
+			{
+				error('typescript build failed');
+				error(e.stdout.toString('utf8'));
+				return;
+			}
 		}
 	}
 
