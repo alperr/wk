@@ -18,7 +18,7 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.21";
+const VERSION = "0.2.22";
 var commands =
 {
 	"init"  : init,
@@ -826,23 +826,18 @@ function transpileAll(counter)
 			try
 			{
 				EXEC(command);
-				// console.log(FS.readFileSync("./www/dev.js","utf8"));
 			}
 			catch(e)
 			{
 				error('sucrase build failed');
 				error(e.stdout.toString('utf8'));
 				deleteFolderRecursive("./_temp");
+				deleteFolderRecursive("./_temp2");
 				return;
 			}
 
-			// var z = require('child_process').execSync('cat ./_temp2/*').toString('UTF-8')
-			// FS.writeFileSync("./www/dev.js", z, "utf8");
 			deleteFolderRecursive("./_temp");
 			deleteFolderRecursive("./_temp2");
-
-			// FS.rmdirSync("./_temp");
-			// FS.copyFileSync
 		}
 		else
 		{
