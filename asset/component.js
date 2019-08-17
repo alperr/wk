@@ -1,32 +1,31 @@
 // THIS FILE IS AUTO GENERATED , DO NOT EDIT
 class Component
 {
-	public root: HTMLElement;
-	constructor(root: Element, markup: number)
+	constructor(root, markup)
 	{
-		this.root = <HTMLElement>root;
+		this.root = root;
 		this.loadMarkup(markup);
 	}
 
-	public find = (query: string): HTMLElement =>
+	find = (query) =>
 	{
 		query = "." + query;
-		return <HTMLElement>this.root.querySelector(query);
+		return this.root.querySelector(query);
 	}
 
-	public querySelector = (query: string): Element =>
+	querySelector = (query) =>
 	{
 		return this.root.querySelector(query);
 	}
 
-	public querySelectorAll = (query: string): NodeList =>
+	querySelectorAll = (query) =>
 	{
 		return this.root.querySelectorAll(query);
 	}
 
-	private loadMarkup = (key: number) =>
+	loadMarkup = (key) =>
 	{
-		var w: any = window;
+		var w = window;
 		if (!w.__markup_data[key])
 			throw "there is no markup for " + key;
 
@@ -34,9 +33,10 @@ class Component
 		this.root.innerHTML = decodeURIComponent(atob(w.__markup_data[key]));
 	}
 }
-function loadTemplate(key: number): HTMLElement
+
+function loadTemplate(key)
 {
-	var w: any = window;
+	var w = window;
 	if (!w.__markup_data[key])
 		throw "there is no markup for " + key;
 
@@ -47,5 +47,5 @@ function loadTemplate(key: number): HTMLElement
 		template.innerHTML = html;
 		return template.content.firstChild;
 	}
-	return <HTMLElement>htmlToElement(decodeURIComponent(atob(w.__markup_data[key])));
+	return htmlToElement(decodeURIComponent(atob(w.__markup_data[key])));
 }

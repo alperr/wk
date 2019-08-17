@@ -6,9 +6,9 @@ var lines = wk.split("\n");
 
 var map =
 {
-	"const SOURCE_COMPONENT = " 	: "component.ts",
+	"const SOURCE_COMPONENT = " 	: "component.js",
 	"const SOURCE_INDEX = " 	: "index.html",
-	"const SOURCE_SAMPLE = " 	: "sample.ts",
+	"const SOURCE_SAMPLE = " 	: "sample.js",
 	"const SOURCE_BASIC_HTML = " 	: "basic-template.html",
 	"const SOURCE_BASIC_CSS = " 	: "basic-template.css",
 }

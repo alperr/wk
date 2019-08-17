@@ -18,32 +18,26 @@ const COMPONENT_BASE_PATH = "./com/";
 const CLASS_BASE_PATH = "./src/";
 const OUTPUT_PATH = "./www/dev";
 
-const VERSION = "0.2.22";
+const VERSION = "0.3.0";
 var commands =
 {
 	"init"  : init,
 	"deinit"  : deinit,
 	"start" : start,
-	"fast-start": fastStart,
 	"develop" : start,
 	"s" : start,
-	"fs" : fastStart,
 	"burn" : burn,
 	"new" : newComponent,
 	"n" : newComponent,
 	"build" : build,
 	"b" : build,
 	"del" : deleteComponent,
-	"lib" : buildLibrary,
-	"lint" : lint,
-	"format" : format,
 	"deploy": deploy,
 	"commit" : commit,
 	"-v" : version,
 	"--v" : version
 }
 
-var tsCompiler;
 var timer;
 var counter = 0;
 var changedFiles = [];
@@ -67,11 +61,9 @@ function printSmallHelp(c)
 	log("	wk init   | initializes a new project with boilerplate code");
 	log("	wk start  | auto-builds components and serves them under ./www folder");
 	log("	wk build  | makes a production build under ./build folder (minifies js&css)");
-	log("	wk burn   | builds all ts files, minifies js&css and embeds them into build/index.html");
+	log("	wk burn   | minifies js&css and embeds them into build/index.html");
 	log("	wk new    | creates a new component under ./com folder");
 	log("	wk del    | deletes a component, this command is not reversible");
-	log("	wk lint   | makes a static analysis for your ts files, requires tslint");
-	log("	wk format | formats your ts files, requires tsfmt");
 }
 
 function init()
@@ -88,7 +80,7 @@ function init()
 	if (!FS.existsSync("./com")){FS.mkdirSync("./com");}
 	log("- folders created");
 
-	FS.writeFileSync("./src/component.ts",Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii'),"utf8");
+	FS.writeFileSync("./src/component.js",Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii'),"utf8");
 	FS.writeFileSync("./www/index.html",Buffer.from(SOURCE_INDEX, 'base64').toString('ascii'),"utf8");
 	log("- classes created");
 
@@ -107,13 +99,6 @@ function deinit()
 	deleteFolderRecursive("./src");
 	deleteFolderRecursive("./com");
 	log("- de initialized project and deleted all files");
-}
-
-function fastStart(port)
-{
-	log("starting experimental compiler: sucrase");
-	tsCompiler = "sucrase";
-	start(port);
 }
 
 function start(port)
@@ -264,129 +249,6 @@ function version()
 }
 
 
-function lint()
-{
-	var rules = 
-	{
-		"rules": {
-			"align": [false,
-				"parameters",
-				"arguments",
-				"statements"],
-			"ban": [true,
-				["angular", "forEach"]
-			],
-			
-			"comment-format": [false,
-				"check-space",
-				"check-lowercase"
-			],
-			"curly": false,
-			"eofline": false,
-			"forin": false,
-			"indent": [true, "tabs"],
-			"interface-name": false,
-			"jsdoc-format": true,
-			"label-position": true,
-			"max-line-length": [false, 140],
-			"member-ordering": [true,
-				 "public-before-private",
-				 "static-before-instance",
-				 "variables-before-functions"
-			],
-			"no-any": false,
-			"no-arg": true,
-			"no-bitwise": false,
-			"no-console": [true,
-				"log",
-				"debug",
-				"info",
-				"time",
-				"timeEnd",
-				"trace"
-			],
-			"no-construct": true,
-			"no-constructor-vars": false,
-			"no-debugger": true,
-			"no-shadowed-variable": false,
-			"no-duplicate-variable": true,
-			"no-empty": false,
-			"no-eval": true,
-			"no-require-imports": true,
-			"no-string-literal": false,
-			"no-switch-case-fall-through": false,
-			"no-trailing-whitespace": false,
-			"no-unused-expression": false,
-			"no-unused-variable": false,
-			"no-use-before-declare": false,
-			"no-var-keyword": false,
-			"no-var-requires": false,
-			"one-line": [true,
-				"check-catch",
-				"check-whitespace"
-			],
-			"quotemark": [false, "double"],
-			"radix": false,
-			"semicolon": false,
-			"triple-equals": [true, "allow-null-check"],
-			"typedef": [false,
-				"callSignature",
-				"catchClause",
-				"indexSignature",
-				"parameter",
-				"propertySignature",
-				"variableDeclarator"
-			],
-			"typedef-whitespace": [true, {
-				"call-signature": "nospace",
-				"index-signature": "nospace",
-				"parameter": "nospace",
-				"property-declaration": "nospace",
-				"variable-declaration": "nospace"
-			}],
-			"variable-name": [true, "allow-leading-underscore"],
-			"whitespace": [false,
-				"check-decl",
-				"check-operator",
-				"check-separator",
-				"check-type"
-			]
-		}
-	}
-
-	
-	FS.writeFileSync("./tslint.json", JSON.stringify(rules));
-	
-	var hasError = false;
-	try{
-		EXEC("tslint */**/*.ts");
-	}catch(e)
-	{
-		hasError = true;
-		error(e.stdout.toString('utf8'));
-	}
-
-	try{
-		EXEC("tslint */*.ts");
-	}catch(e)
-	{
-		hasError = true;
-		error(e.stdout.toString('utf8'));
-	}
-	
-	if (hasError)
-		error('linter failed')
-	else
-		log("analysis successful!");
-
-	FS.unlinkSync("./tslint.json");
-}
-
-function checkLinter()
-{
-
-}
-
 function deploy()
 {
 	build();
@@ -405,52 +267,6 @@ function commit(message)
 	EXEC("git add -A;");
 	EXEC("git commit -m '"+message+"';");
 	EXEC("git push;");
-}
-
-function format()
-{
-	var rules =
-	{
-		"indentSize": 8,
-		"tabSize": 8,
-		"newLineCharacter": "\n",
-		"convertTabsToSpaces": false,
-		"insertSpaceAfterCommaDelimiter": true,
-		"insertSpaceAfterSemicolonInForStatements": false,
-		"insertSpaceBeforeAndAfterBinaryOperators": true,
-		"insertSpaceAfterKeywordsInControlFlowStatements": true,
-		"insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-		"insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-		"insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
-		"placeOpenBraceOnNewLineForFunctions": true,
-		"placeOpenBraceOnNewLineForControlBlocks": true
-	}
-	
-	FS.writeFileSync("./tsfmt.json", JSON.stringify(rules));
-	
-	var hasError = false;
-	try{
-		EXEC("tsfmt -r */**/*.ts");
-	}catch(e)
-	{
-		hasError = true;
-		error(e.stdout.toString('utf8'));
-	}
-
-	try{
-		EXEC("tsfmt -r */*.ts");
-	}catch(e)
-	{
-		hasError = true;
-		error(e.stdout.toString('utf8'));
-	}
-	
-	if (hasError)
-		error('formatting failed')
-	else
-		log("formatting completed!");
-
-	FS.unlinkSync("./tsfmt.json");	
 }
 
 function checkVersion()
@@ -487,11 +303,6 @@ function checkVersion()
 			}
 		});
 	}).on("error", (err) => {});
-}
-
-function buildLibrary()
-{
-	log("building a library");
 }
 
 function build()
@@ -794,66 +605,6 @@ function transpileAll(counter)
 		{
 			var markup = FS.readFileSync(COMPONENT_BASE_PATH + names[i] + "/" + templates[t] + ".html","utf8");
 			markupMap.push(new Buffer(markup).toString('base64'));
-		}
-	}
-
-	if (isTypescriptChanged)
-	{
-		if (tsCompiler === "sucrase")
-		{
-			FS.mkdirSync("./_temp");
-			FS.mkdirSync("./_temp2");
-			
-			for (var i in tsFiles)
-			{
-				var p = tsFiles[i].split("/");
-				var f = p[p.length - 1];
-				FS.copyFileSync(tsFiles[i], "./_temp/" + f);
-			}
-
-			var c = FS.readFileSync("./_temp/component.ts", "utf8");
-			FS.unlinkSync("./_temp/component.ts");
-			var z = require('child_process').execSync('cat ./_temp/*').toString('UTF-8');
-			z = c + z;
-
-			deleteFolderRecursive("./_temp");
-			FS.mkdirSync("./_temp");
-			
-			FS.writeFileSync("./_temp/dev.ts", z, "utf8");
-
-			command = "sucrase ./_temp/ -d ./www/ --transforms typescript";
-
-			try
-			{
-				EXEC(command);
-			}
-			catch(e)
-			{
-				error('sucrase build failed');
-				error(e.stdout.toString('utf8'));
-				deleteFolderRecursive("./_temp");
-				deleteFolderRecursive("./_temp2");
-				return;
-			}
-
-			deleteFolderRecursive("./_temp");
-			deleteFolderRecursive("./_temp2");
-		}
-		else
-		{
-			command = 'tsc --out ./www/dev.js --target "es6" ';
-			command += tsFiles.join(" ");
-		
-			try
-			{
-				EXEC(command);
-			}
-			catch(e)
-			{
-				error('typescript build failed');
-				error(e.stdout.toString('utf8'));
-				return;
-			}
 		}
 	}
 
