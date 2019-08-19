@@ -28,9 +28,10 @@ var commands =
 	"burn" : burn,
 	"new" : new_component,
 	"build" : build,
+	"help" : print_large_help,
 	"del" : delete_component,
-	"deploy": deploy,
-	"commit" : commit,
+	"deploy": deploy,	// remove
+	"commit" : commit,	// remove
 	"extras": add_extras,
 	"-v" : version,
 	"--v" : version,
@@ -39,7 +40,9 @@ var commands =
 	"s" : start,
 	"b" : build,
 	"d" : delete_component,
-	"v" : version
+	"v" : version,
+	"h" : print_large_help,
+	"x" : add_extras
 }
 
 var g_timer;
@@ -64,8 +67,50 @@ function print_small_help(c)
 	log("	wk init  | initializes a new project");
 	log("	wk start | starts development server");
 	log("	wk build | creates a production build");
-	log("	wk new   | creates a new component");
-	log("	wk del   | deletes a component");
+	log("	wk help  | docs");	
+}
+
+function print_large_help()
+{
+	version();
+	var msg = `
+wk has following 8 commands
+
+  wk init                            (i)
+initializes a new project
+creates 3 required folders; com, src, www
+creates application component
+
+  wk start <port?>                   (s)
+starts development server on 
+http://localhost:6040
+takes an optional argument for http port
+
+  wk build                           (b)
+creates a production build
+minifies javascript and css, puts them
+under build/ folder with a time seed
+
+  wk new <component-name>            (n)
+generates component folder
+generates necessary js,css and html files
+adds markup enum to src/component.js
+
+  wk del <component-name>            (d)
+deletes component folder recursively
+removes markup enum in src/component.js
+
+  wk extras                          (x)
+generates extra utility javascript files
+
+  wk help                            (h)
+prints this help text
+
+  wk version                         (v)
+prints version
+	`;
+
+	log(msg);
 }
 
 function init()
@@ -424,8 +469,14 @@ function burn()
 
 function add_extras()
 {
-	if (!FS.existsSync("./src/http.js"))
-		b64_to_file("./src/http.js", SOURCE_HTTP);
+	var path;
+
+	path = "./src/http.js"
+	if (!FS.existsSync(path))
+	{
+		b64_to_file(path, SOURCE_HTTP);
+		log("written " + path);
+	}
 }
 
 
