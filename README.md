@@ -1,5 +1,4 @@
-CLI for writing web applications with typescript
+CLI for writing web applications
 
-	npm i -g typescript
 	npm i -g wk-toolkit
 	wk

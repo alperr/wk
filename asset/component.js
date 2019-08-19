@@ -4,48 +4,39 @@ class Component
 	constructor(root, markup)
 	{
 		this.root = root;
-		this.loadMarkup(markup);
+		var element = Component.load_markup(markup);
+		this.root.appendChild(element);
 	}
 
-	find = (query) =>
+	find(query) // alias for querySelector, inspired from jQuery 
 	{
-		query = "." + query;
+		return this.querySelector(query);
+	}
+
+	querySelector(query)
+	{
 		return this.root.querySelector(query);
 	}
 
-	querySelector = (query) =>
-	{
-		return this.root.querySelector(query);
-	}
-
-	querySelectorAll = (query) =>
+	querySelectorAll(query)
 	{
 		return this.root.querySelectorAll(query);
 	}
 
-	loadMarkup = (key) =>
+	static load_markup(key) // also used for template loading
 	{
 		var w = window;
 		if (!w.__markup_data[key])
 			throw "there is no markup for " + key;
-
-			
-		this.root.innerHTML = decodeURIComponent(atob(w.__markup_data[key]));
+	
+		function html_to_element(html)
+		{
+			var template = document.createElement('template');
+			html = html.trim();
+			template.innerHTML = html;
+			return template.content.firstChild;
+		}
+		var html = decodeURIComponent(atob(w.__markup_data[key]));
+		return html_to_element(html);
 	}
-}
-
-function loadTemplate(key)
-{
-	var w = window;
-	if (!w.__markup_data[key])
-		throw "there is no markup for " + key;
-
-	function htmlToElement(html)
-	{
-		var template = document.createElement('template');
-		html = html.trim();
-		template.innerHTML = html;
-		return template.content.firstChild;
-	}
-	return htmlToElement(decodeURIComponent(atob(w.__markup_data[key])));
 }

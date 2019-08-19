@@ -11,6 +11,7 @@ var map =
 	"const SOURCE_SAMPLE = " 	: "sample.js",
 	"const SOURCE_BASIC_HTML = " 	: "basic-template.html",
 	"const SOURCE_BASIC_CSS = " 	: "basic-template.css",
+	"const SOURCE_HTTP = " 		: "http.js",
 }
 
 for (var i in lines)
@@ -20,7 +21,7 @@ for (var i in lines)
 	{
 		if (l.indexOf(m) == 0)
 		{
-			lines[i] =  m + "'" + new Buffer(FS.readFileSync("./asset/" + map[m], "utf8")).toString('base64') + "';";
+			lines[i] =  m + "'" + Buffer.from(FS.readFileSync("./asset/" + map[m], "utf8")).toString('base64') + "';";
 			console.log("serialized " + map[m]);
 		}
 	}

@@ -6,7 +6,7 @@ i have decided to make a breaking change to wk and dropped typescript support
 even though i love typescript and typed languages for programming, 
 i had some negative experiences with 'typescript' so far 
 
-- typescript transpiler is slow and getting slower with each release
+- typescript transpiler is slow and getting slower with each release.
 i have tried lots of things but there is no way for me to solve this problem
 (i have even experimented alternative compiler 'sucrase')
 - typescript language is growing very rapidly and wk uses outdated typescript
@@ -14,7 +14,7 @@ features like triple-slash-reference-directives and namespace keyword.wk already
 encourages to use a small subset of typescript language, the statement 
 'wk is a toolkit for developing web apps with typescript' is getting less true
 with each typescript release (which is too frequent for my taste)
-- even it is very easy to understand how it works, typescript is still 
+- even it is very easy to understand how it works, typescript is 
 complexifying wk for new learners, new wk users are always asking typescript
 related questions instead of wk architecture to understand a project written
 with wk
@@ -25,9 +25,9 @@ major browsers, which makes one of the transpilation reasons fade away
 
 ## what is gained by dropping typescript
 
-- faster build times (5-10 seconds to 50-100 milliseconds)
+- faster build times (5-10 seconds to 10-50 milliseconds)
 - less things to learn for new wk users
-- smaller codebase to maintain wk development itself
+- smaller codebase for maintaining wk development itself
 
 ## what is lost by dropping typescript
 
