@@ -9,7 +9,7 @@ const BG_GREEN = "\x1b[42m";
 const RESET = "\x1b[0m";
 
 const SOURCE_COMPONENT = 'Ly8gVEhJUyBGSUxFIElTIEFVVE8gR0VORVJBVEVEICwgRE8gTk9UIEVESVQNCmNsYXNzIENvbXBvbmVudA0Kew0KCWNvbnN0cnVjdG9yKHJvb3QsIG1hcmt1cCkNCgl7DQoJCXRoaXMucm9vdCA9IHJvb3Q7DQoJCXZhciBlbGVtZW50ID0gQ29tcG9uZW50LmxvYWRfbWFya3VwKG1hcmt1cCk7DQoJCXRoaXMucm9vdC5hcHBlbmRDaGlsZChlbGVtZW50KTsNCgl9DQoNCglmaW5kKHF1ZXJ5KSAvLyBhbGlhcyBmb3IgcXVlcnlTZWxlY3RvciwgaW5zcGlyZWQgZnJvbSBqUXVlcnkgDQoJew0KCQlyZXR1cm4gdGhpcy5xdWVyeVNlbGVjdG9yKHF1ZXJ5KTsNCgl9DQoNCglxdWVyeVNlbGVjdG9yKHF1ZXJ5KQ0KCXsNCgkJcmV0dXJuIHRoaXMucm9vdC5xdWVyeVNlbGVjdG9yKHF1ZXJ5KTsNCgl9DQoNCglxdWVyeVNlbGVjdG9yQWxsKHF1ZXJ5KQ0KCXsNCgkJcmV0dXJuIHRoaXMucm9vdC5xdWVyeVNlbGVjdG9yQWxsKHF1ZXJ5KTsNCgl9DQoNCglzdGF0aWMgbG9hZF9tYXJrdXAoa2V5KSAvLyBhbHNvIHVzZWQgZm9yIHRlbXBsYXRlIGxvYWRpbmcNCgl7DQoJCXZhciB3ID0gd2luZG93Ow0KCQlpZiAoIXcuX19tYXJrdXBfZGF0YVtrZXldKQ0KCQkJdGhyb3cgInRoZXJlIGlzIG5vIG1hcmt1cCBmb3IgIiArIGtleTsNCgkNCgkJZnVuY3Rpb24gaHRtbF90b19lbGVtZW50KGh0bWwpDQoJCXsNCgkJCXZhciB0ZW1wbGF0ZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3RlbXBsYXRlJyk7DQoJCQlodG1sID0gaHRtbC50cmltKCk7DQoJCQl0ZW1wbGF0ZS5pbm5lckhUTUwgPSBodG1sOw0KCQkJcmV0dXJuIHRlbXBsYXRlLmNvbnRlbnQuZmlyc3RDaGlsZDsNCgkJfQ0KCQl2YXIgaHRtbCA9IGRlY29kZVVSSUNvbXBvbmVudChhdG9iKHcuX19tYXJrdXBfZGF0YVtrZXldKSk7DQoJCXJldHVybiBodG1sX3RvX2VsZW1lbnQoaHRtbCk7DQoJfQ0KfQ==';
-const SOURCE_INDEX = 'PCFkb2N0eXBlIGh0bWw+CjxtZXRhIGNoYXJzZXQ9InV0Zi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCI+Cjx0aXRsZT53azwvdGl0bGU+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iLi9kZXYuY3NzIj4KPHNjcmlwdCBzcmM9Jy4vZGV2LmpzJz48L3NjcmlwdD4KPHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJbmV3IEFwcGxpY2F0aW9uKGRvY3VtZW50LmJvZHkpOwoJfQp9Cjwvc2NyaXB0Pg==';
+const SOURCE_INDEX = 'PCFkb2N0eXBlIGh0bWw+CjxtZXRhIGNoYXJzZXQ9InV0Zi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCI+Cjx0aXRsZT53azwvdGl0bGU+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iLi9kZXYuY3NzIj4KPHNjcmlwdCBzcmM9Jy4vZGV2LmpzJz48L3NjcmlwdD4KPHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJbmV3IEFwcChkb2N1bWVudC5ib2R5KTsKCX0KfQo8L3NjcmlwdD4=';
 const SOURCE_SAMPLE = 'Y2xhc3MgU2FtcGxlQ29tcG9uZW50IGV4dGVuZHMgQ29tcG9uZW50DQp7DQoJY29uc3RydWN0b3Iocm9vdCwgb3B0aW9ucykNCgl7DQoJCXN1cGVyKHJvb3QsICJzYW1wbGUtY29tcG9uZW50Iik7DQoJfQ0KfQ==';
 const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwbGljYXRpb24nPgoJPGgxPmJhc2ljIHdrIHByb2plY3Q8L2gxPgoJPHA+dGhpcyBwYWdlIGlzIGdlbmVyYXRlZCBieSBhcHBsaWNhdGlvbiBjb21wb25lbnQ8L3A+Cgk8cD5pdCBjYW4gYmUgZm91bmQgdW5kZXIgPHN0cm9uZz4vY29tcG9uZW50czwvc3Ryb25nPiBmb2xkZXI8L3A+Cgk8cCBjbGFzcz0nYWNjZW50Jz55b3UgY2FuIHR3ZWFrIHRoaXMgY29tcG9uZW50J3Mgc3R5bGUgYnkgZWRpdGluZyA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uY3NzPC9zdHJvbmc+IGZpbGU8L3A+Cgk8cD5hbGwgdGhpcyBjb21wb25lbnQgbWFya3VwIGlzIHdyaXR0ZW4gaW50byA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uaHRtbDwvc3Ryb25nPjwvcD4KPC9kaXY+';
 const SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAnU2Vnb2UgVUknLCBSb2JvdG8sICdIZWx2ZXRpY2EgTmV1ZScsIEFyaWFsLCBzYW5zLXNlcmlmOwp9CgouYXBwbGljYXRpb24gLmFjY2VudHsKCWNvbG9yOiAjYzBhOwp9';
@@ -133,10 +133,10 @@ function init()
 	b64_to_file("./public/index.html", SOURCE_INDEX);
 	log("- classes created");
 
-	new_component(["application"]);
+	new_component(["app"]);
 	
-	b64_to_file(BASE_PATH_COMPONENT + "application/application.css", SOURCE_BASIC_CSS);
-	b64_to_file(BASE_PATH_COMPONENT + "application/application.html", SOURCE_BASIC_HTML);
+	b64_to_file(BASE_PATH_COMPONENT + "app/app.css", SOURCE_BASIC_CSS);
+	b64_to_file(BASE_PATH_COMPONENT + "app/app.html", SOURCE_BASIC_HTML);
 
 	highlight("project initialized successfully");
 	log("you can run **start** command now")
@@ -387,7 +387,7 @@ function build()
 		"mangle" :
 		{
 			"toplevel" : true,
-			"reserved": ['Application', 'Component']
+			"reserved": ['App', 'Component']
 		}
 	}
 	var msg = '\x1b[32m minification\x1b[0m';
@@ -436,7 +436,7 @@ function burn()
 
 	var embed_script = "";
 	embed_script += "		window.onload = function () { window.__markup_data = " + markup +";";
-	embed_script += "		new Application(document.getElementById('root')); }"
+	embed_script += "		new App(document.getElementById('root')); }"
 
 	var js_content =  FS.readFileSync("./public/dev.js", "utf8");
 	var options = 
@@ -444,7 +444,7 @@ function burn()
 		"mangle" :
 		{
 			"toplevel" : true,
-			"reserved": ['Application']
+			"reserved": ['App']
 		}
 	}
 	console.time('\x1b[32m minification\x1b[0m');

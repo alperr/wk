@@ -13,7 +13,7 @@ window.onload = function ()
 	xhr.onload = function()
 	{
 		window.__markup_data = JSON.parse(xhr.responseText);
-		new Application(document.body);
+		new App(document.body);
 	}
 }
 </script>
