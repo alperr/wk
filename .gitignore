@@ -7,4 +7,5 @@ package-lock.json
 com/*
 src/*
 www/*
+public/*
 build/*

@@ -134,8 +134,9 @@ function init()
 	log("- classes created");
 
 	new_component(["application"]);
-	b64_to_file("./com/application/application.css", SOURCE_BASIC_CSS);
-	b64_to_file("./com/application/application.html", SOURCE_BASIC_HTML);
+	
+	b64_to_file(BASE_PATH_COMPONENT + "application/application.css", SOURCE_BASIC_CSS);
+	b64_to_file(BASE_PATH_COMPONENT + "application/application.html", SOURCE_BASIC_HTML);
 
 	highlight("project initialized successfully");
 	log("you can run **start** command now")
@@ -186,7 +187,7 @@ function start(port)
 	EXPRESS_APP.use(EXPRESS.static('./public'));
 	EXPRESS_APP.get('*', function (request, response)
 	{
-		console.log(request);
+		console.log(request.originalUrl);
 		response.sendFile(PATH.resolve("./public", 'index.html'));
 	});
 
@@ -281,7 +282,7 @@ function delete_component(a)
 	if (!print_invalid_project_msg("./"))
 		return;
 
-	var input = "./com/" + a[0] + '/' + a[0];
+	var input = BASE_PATH_COMPONENT + a[0] + '/' + a[0];
 
 	if (!FS.existsSync(input + '.html') || !FS.existsSync(input + '.js') || !FS.existsSync(input + '.css'))
 	{
@@ -289,7 +290,7 @@ function delete_component(a)
 		return;
 	}
 
-	delete_folder_recursive("./com/" + a[0]);
+	delete_folder_recursive(BASE_PATH_COMPONENT + a[0]);
 	update_markup_enums();
 	log("deleted component -> " + a[0])
 }
@@ -484,7 +485,7 @@ function add_extras()
 
 function create_component_files(name)
 {
-	if (FS.existsSync("./com/" + name))
+	if (FS.existsSync(BASE_PATH_COMPONENT + name))
 	{
 		error("a component with a name " + name + " already exists");
 		return;
@@ -500,10 +501,11 @@ function create_component_files(name)
 	var html = '<div class="'+name+'"></div>';
 	var css = '.'+name+'{}';
 
-	FS.mkdirSync("./com/" + name);
-	FS.writeFileSync("./com/" + name + "/" + name + ".html" , html, "utf8");
-	FS.writeFileSync("./com/" + name + "/" + name + ".css" , css, "utf8");
-	FS.writeFileSync("./com/" + name + "/" + name + ".js" , js, "utf8");
+
+	FS.mkdirSync(BASE_PATH_COMPONENT + name);
+	FS.writeFileSync(BASE_PATH_COMPONENT + name + "/" + name + ".html" , html, "utf8");
+	FS.writeFileSync(BASE_PATH_COMPONENT + name + "/" + name + ".css" , css, "utf8");
+	FS.writeFileSync(BASE_PATH_COMPONENT + name + "/" + name + ".js" , js, "utf8");
 
 	log("created a new component named " + name);
 }
@@ -529,7 +531,7 @@ function find_template_files(path, componentName)
 function update_markup_enums()
 {
 	var counter = 0;
-	var components = FS.readdirSync("./com/");
+	var components = FS.readdirSync(BASE_PATH_COMPONENT);
 	var s = "";
 	for (var i in components)
 	{
@@ -715,12 +717,12 @@ function is_project_valid(path)
 		return false;
 	}
 
-	if (!FS.existsSync(path + "com"))
+	if (!FS.existsSync(path + "src"))
 	{
 		return false;
 	}
 
-	if (!FS.existsSync(path + "src"))
+	if (!FS.existsSync(path + "src/components"))
 	{
 		return false;
 	}
@@ -864,7 +866,6 @@ function time_seed_v2()
 }
 
 /*
-
 handle process exit and remove jsconfig.json
 
 process.stdin.resume();//so the program will not close instantly
