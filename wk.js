@@ -15,10 +15,12 @@ const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwbGljYXRpb24nPgoJPGgxPmJhc2ljIHdrI
 const SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAnU2Vnb2UgVUknLCBSb2JvdG8sICdIZWx2ZXRpY2EgTmV1ZScsIEFyaWFsLCBzYW5zLXNlcmlmOwp9CgouYXBwbGljYXRpb24gLmFjY2VudHsKCWNvbG9yOiAjYzBhOwp9';
 const SOURCE_HTTP = 'dmFyIGh0dHBfYmFzZSA9ICJodHRwOi8vbG9jYWxob3N0OjgwNjAvIjsKCmZ1bmN0aW9uIGh0dHBfZ2V0X2ZvbyhpZCwgb25sb2FkKSAvLyBzYW1wbGUgZ2V0IHJlcXVlc3QKewoJaHR0cF94aHIoIkdFVCIsICJmb28/aWQ9IiArIGlkLCBvbmxvYWQpOwp9CgpmdW5jdGlvbiBodHRwX3Bvc3RfYmFyKGRhdGExLCBkYXRhMiwgb25sb2FkKSAvLyBzYW1wbGUgcG9zdCByZXF1ZXN0CnsKCXZhciBib2R5ID0KCXsKCQkiZGF0YTEiOiBkYXRhMSwKCQkiZGF0YTIiOiBkYXRhMgoJfTsKCglodHRwX3hocigiUE9TVCIsICJiYXIiLCBvbmxvYWQsIGJvZHkpOwp9CgpmdW5jdGlvbiBodHRwX3hocihtZXRob2QsIHVybCwgb25sb2FkLCBib2R5KQp7Cgl2YXIgeCA9IG5ldyBYTUxIdHRwUmVxdWVzdCgpOwoJeC5vcGVuKG1ldGhvZCwgaHR0cF9iYXNlICsgdXJsKTsKCXguc2V0UmVxdWVzdEhlYWRlcigiQ29udGVudC1UeXBlIiwgImFwcGxpY2F0aW9uL2pzb24iKTsKCXgub25sb2FkID0gZnVuY3Rpb24oKQoJewoJCWlmICh4LnN0YXR1cyAhPSAyMDApCgkJewoJCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCQkJcmV0dXJuOwoJCX0KCQl0cnkKCQl7CgkJCXZhciByID0geC5yZXNwb25zZVRleHQ7CgkJCW9ubG9hZChyLCBmYWxzZSk7CgkJfQoJCWNhdGNoKGUpCgkJewoJCQlvbmxvYWQociwgdHJ1ZSk7CgkJfQoJfQoKCXgub25lcnJvciA9IGZ1bmN0aW9uKCkKCXsKCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCX0KCglpZiAobWV0aG9kLnRvVXBwZXJDYXNlKCkgPT0gIlBPU1QiKQoJewoJCWlmICh0eXBlb2YgYm9keSA9PSAib2JqZWN0IikKCQkJYm9keSA9IEpTT04uc3RyaW5naWZ5KGJvZHkpOwoKCQl4LnNlbmQoYm9keSk7Cgl9CgllbHNlCgl7CgkJeC5zZW5kKCk7Cgl9Cn0=';
 
-const COMPONENT_BASE_PATH = "./com/";
-const CLASS_BASE_PATH = "./src/";
-const OUTPUT_PATH = "./www/dev";
-const VERSION = "0.3.0";
+const BASE_PATH_COMPONENT = "./src/components/";
+const BASE_PATH_SRC = "./src/";
+const BASE_PATH_PUBLIC = "./public/";
+
+const OUTPUT_PATH = "./public/dev";
+const VERSION = "0.3.1";
 
 var commands =
 {
@@ -78,8 +80,8 @@ wk has following 8 commands
 
   wk init                            (i)
 initializes a new project
-creates 3 required folders; com, src, www
-creates application component
+creates required folders src, public
+and app component
 
   wk start <port?>                   (s)
 starts development server on 
@@ -120,15 +122,15 @@ function init()
 		error("current folder is already initialized");
 		return;
 	}
-	
+
 	log("initializing a new project");
-	if (!FS.existsSync("./www")){FS.mkdirSync("./www");}
-	if (!FS.existsSync("./src")){FS.mkdirSync("./src");}
-	if (!FS.existsSync("./com")){FS.mkdirSync("./com");}
+	create_folder_if_not_exits(BASE_PATH_PUBLIC);
+	create_folder_if_not_exits(BASE_PATH_SRC);
+	create_folder_if_not_exits(BASE_PATH_COMPONENT);
 	log("- folders created");
 
 	b64_to_file("./src/component.js", SOURCE_COMPONENT);
-	b64_to_file("./www/index.html", SOURCE_INDEX);
+	b64_to_file("./public/index.html", SOURCE_INDEX);
 	log("- classes created");
 
 	new_component(["application"]);
@@ -137,14 +139,13 @@ function init()
 
 	highlight("project initialized successfully");
 	log("you can run **start** command now")
-	log("wk start  | auto-builds components and serves them under ./www folder");
+	log("wk start  | auto-builds components and serves them under ./public folder");
 }
 
 function deinit()
 {
-	delete_folder_recursive("./www");
-	delete_folder_recursive("./src");
-	delete_folder_recursive("./com");
+	delete_folder_recursive(BASE_PATH_SRC);
+	delete_folder_recursive(BASE_PATH_PUBLIC);
 	log("- de initialized project and deleted all files");
 }
 
@@ -182,10 +183,11 @@ function start(port)
 	const EXPRESS_APP = EXPRESS();
 	
 	// serve static assets normally
-	EXPRESS_APP.use(EXPRESS.static('./www'));
+	EXPRESS_APP.use(EXPRESS.static('./public'));
 	EXPRESS_APP.get('*', function (request, response)
 	{
-		response.sendFile(PATH.resolve("./www", 'index.html'));
+		console.log(request);
+		response.sendFile(PATH.resolve("./public", 'index.html'));
 	});
 
 	if (typeof port[0] == "undefined")
@@ -217,8 +219,8 @@ function start_watcher()
 {
 	update_markup_enums();
 	var watch = require('node-watch');
-	watch(COMPONENT_BASE_PATH, { recursive: true }, onchange);
-	watch(CLASS_BASE_PATH, { recursive: true }, onchange);
+	watch(BASE_PATH_COMPONENT, { recursive: true }, onchange);
+	watch(BASE_PATH_SRC, { recursive: true }, onchange);
 	onchange("change",".js");
 }
 
@@ -359,7 +361,7 @@ function build()
 	g_changed_files.push(".js");
 	transpile_all();
 	delete_folder_recursive("./build");
-	copy_recursive_sync("./www", "./build");
+	copy_recursive_sync("./public", "./build");
 
 	FS.unlinkSync("./build/dev.css");
 	FS.unlinkSync("./build/dev.json");
@@ -369,7 +371,7 @@ function build()
 	var name;
 	var UGLIFYJS = require("uglify-es");
 	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(FS.readFileSync("./www/index.html"));
+	var $ = CHEERIO.load(FS.readFileSync("./public/index.html"));
 
 	name = time_seed_v2();
 	$("link[href$='./dev.css']").attr("href" , "./" + name + ".css");
@@ -378,7 +380,7 @@ function build()
 	var h = $.html();
 	h = h.replace('"./dev.json"', '"./'+name+'.json"');
 	
-	var jsContent =  FS.readFileSync("./www/dev.js", "utf8");
+	var jsContent =  FS.readFileSync("./public/dev.js", "utf8");
 	var options = 
 	{
 		"mangle" :
@@ -398,12 +400,12 @@ function build()
 	}
 
 	var UGLIFYCSS = require('uglifycss');
-	var minified_css = UGLIFYCSS.processFiles([ './www/dev.css' ], {});
+	var minified_css = UGLIFYCSS.processFiles([ './public/dev.css' ], {});
 
 	FS.writeFileSync( "./build/" + name + ".js", minified_js.code)
 	FS.writeFileSync("./build/index.html" , h);
 	FS.writeFileSync( "./build/" + name + ".css", minified_css)
-	FS.copyFileSync("./www/dev.json", "./build/" + name + ".json");
+	FS.copyFileSync("./public/dev.json", "./build/" + name + ".json");
 
 	console.timeEnd(msg);
 	log("production build completed with seed " + name);
@@ -416,7 +418,7 @@ function burn()
 	g_changed_files.push(".js");
 	transpile_all();
 	delete_folder_recursive("./build");
-	copy_recursive_sync("./www", "./build");
+	copy_recursive_sync("./public", "./build");
 
 	var markup = FS.readFileSync("./build/dev.json");
 	FS.unlinkSync("./build/dev.css");
@@ -426,7 +428,7 @@ function burn()
 
 	var UGLIFYJS = require("uglify-es");
 	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(FS.readFileSync("./www/index.html"));
+	var $ = CHEERIO.load(FS.readFileSync("./public/index.html"));
 
 	$("script[src$='dev.js']").remove();
 	$("link[href$='dev.css']").remove();
@@ -435,7 +437,7 @@ function burn()
 	embed_script += "		window.onload = function () { window.__markup_data = " + markup +";";
 	embed_script += "		new Application(document.getElementById('root')); }"
 
-	var js_content =  FS.readFileSync("./www/dev.js", "utf8");
+	var js_content =  FS.readFileSync("./public/dev.js", "utf8");
 	var options = 
 	{
 		"mangle" :
@@ -454,7 +456,7 @@ function burn()
 	}
 	$("#wk-script").text(minified_js.code + "\n" + embed_script+ "\n");
 	var UGLIFYCSS = require('uglifycss');
-	var minified_css = UGLIFYCSS.processFiles([ './www/dev.css' ], {});
+	var minified_css = UGLIFYCSS.processFiles([ './public/dev.css' ], {});
 
 	if (typeof $("style")[0] == "undefined")
 		$("head").append($("<style></style>")); 
@@ -490,7 +492,8 @@ function create_component_files(name)
 
 	var upper = "MARKUP_" + dash_to_upper(name);
 	var pascal = dash_to_pascal(name);
-	var js = Buffer.from(SOURCE_SAMPLE, 'base64').toString('ascii');
+	
+	var js = to_ascii(SOURCE_SAMPLE);
 	js = js.replace("SampleComponent", pascal);
 	js = js.replace('"sample-component"', upper);
 
@@ -543,7 +546,7 @@ function update_markup_enums()
 		if (components[i].startsWith("."))
 			continue;
 
-		var templates = find_template_files(COMPONENT_BASE_PATH + components[i] + '/', components[i]);
+		var templates = find_template_files(BASE_PATH_COMPONENT + components[i] + '/', components[i]);
 		for (var t in templates)
 		{
 			var name = "TEMPLATE_" + dash_to_upper(components[i]) + "__" + dash_to_upper(templates[t]);
@@ -552,7 +555,7 @@ function update_markup_enums()
 		}
 	}
 
-	s = Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii') + s;
+	s = to_ascii(SOURCE_COMPONENT) + s;
 	FS.writeFileSync("./src/component.js", s, "utf8");
 }
 
@@ -606,16 +609,16 @@ function transpile_all()
 	var js_files = [];
 	var names = [];
 
-	var files = FS.readdirSync(CLASS_BASE_PATH);
+	var files = FS.readdirSync(BASE_PATH_SRC);
 	files.forEach(function(file)
 	{
 		if (!file.endsWith(".js"))
 			return;
 
-		js_files.push(CLASS_BASE_PATH + file);
+		js_files.push(BASE_PATH_SRC + file);
 	});
 
-	files = FS.readdirSync(COMPONENT_BASE_PATH);
+	files = FS.readdirSync(BASE_PATH_COMPONENT);
 	files.forEach(function(file)
 	{
 		if (file.indexOf('.') == 0)
@@ -626,7 +629,7 @@ function transpile_all()
 
 	for (var i=0;i<names.length;i++)
 	{
-		var input = COMPONENT_BASE_PATH + names[i] + '/' + names[i];
+		var input = BASE_PATH_COMPONENT + names[i] + '/' + names[i];
 
 		if (!FS.existsSync(input + '.html')) 
 		{
@@ -657,10 +660,10 @@ function transpile_all()
 
 	for (var i=0;i<names.length;i++)
 	{
-		var templates = find_template_files(COMPONENT_BASE_PATH + names[i] + '/', names[i]);
+		var templates = find_template_files(BASE_PATH_COMPONENT + names[i] + '/', names[i]);
 		for (var t in templates)
 		{
-			var markup = FS.readFileSync(COMPONENT_BASE_PATH + names[i] + "/" + templates[t] + ".html","utf8");
+			var markup = FS.readFileSync(BASE_PATH_COMPONENT + names[i] + "/" + templates[t] + ".html","utf8");
 			markups.push(Buffer.from(markup, "utf8").toString('base64'));
 		}
 	}
@@ -707,7 +710,7 @@ function print_invalid_project_msg(path)
 
 function is_project_valid(path)
 {
-	if (!FS.existsSync(path + "www"))
+	if (!FS.existsSync(path + "public"))
 	{
 		return false;
 	}
@@ -727,7 +730,7 @@ function is_project_valid(path)
 
 function check_legacy_project()
 {
-	var files = FS.readdirSync(CLASS_BASE_PATH);
+	var files = FS.readdirSync(BASE_PATH_SRC);
 	files.forEach(function(file)
 	{
 		if (file.endsWith(".ts"))
@@ -744,8 +747,13 @@ function check_legacy_project()
 	});
 }
 
+function create_folder_if_not_exits(path)
+{
+	if (!FS.existsSync(path)){FS.mkdirSync(path);}
+}
+
 function delete_folder_recursive(path)
- {
+{
 	if (FS.existsSync(path))
 	{
 		FS.readdirSync(path).forEach(function(file, index)
@@ -805,10 +813,14 @@ function unlink_if_exists(path)
 	catch (e) { }
 }
 
+function to_ascii(source)
+{
+	return Buffer.from(source, 'base64').toString('ascii');
+}
+
 function b64_to_file(path, source)
 {
-	var content = Buffer.from(source, 'base64').toString('ascii');
-	FS.writeFileSync(path, content, "utf8");
+	FS.writeFileSync(path, to_ascii(source), "utf8");
 }
 
 function time_seed()
@@ -850,3 +862,29 @@ function time_seed_v2()
 	formatted += hour + "_" + minutes + "_" + seconds;
 	return formatted;
 }
+
+/*
+
+handle process exit and remove jsconfig.json
+
+process.stdin.resume();//so the program will not close instantly
+
+function exitHandler(options, exitCode) {
+    if (options.cleanup) console.log('clean');
+    if (exitCode || exitCode === 0) console.log(exitCode);
+    if (options.exit) process.exit();
+}
+
+//do something when app is closing
+process.on('exit', exitHandler.bind(null,{cleanup:true}));
+
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+
+// catches "kill pid" (for example: nodemon restart)
+process.on('SIGUSR1', exitHandler.bind(null, {exit:true}));
+process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
+
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
+*/

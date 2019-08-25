@@ -1,3 +1,27 @@
+# Migration Notes 0.3.0 to 0.3.1
+August-23-2019
+
+folder structure is changed with this release (this is a breaking change)
+
+- www is changed to public
+since this folder is for serving static files,
+i thought it would be a good idea to name it www/, 
+(just like default apache root folder name)
+but no one get the reference and i decided to change its name to public/
+which is inspired from create-react-app 
+
+- src is kept same
+src is a good abbrevetion for name 'source' so i kept it as it is
+
+- com is moved under src and renamed as src/components
+
+folder name 'com' has an undesired resemblance with Android package names ( eg: com.foo.bar ) i thought having 3 letter base folder names looked cool ( www, src, com) but every developer that tried to use wk, complained with these cryptic
+namings.
+
+with these changes, folder structure looked more familiar to react developers
+
+component.js
+
 # Migration Notes 0.2.22 to 0.3.0
 August-18-2019
 
