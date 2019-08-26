@@ -9,17 +9,18 @@ const BG_GREEN = "\x1b[42m";
 const RESET = "\x1b[0m";
 
 const SOURCE_COMPONENT = 'Ly8gVEhJUyBGSUxFIElTIEFVVE8gR0VORVJBVEVEICwgRE8gTk9UIEVESVQNCmNsYXNzIENvbXBvbmVudA0Kew0KCWNvbnN0cnVjdG9yKHJvb3QsIG1hcmt1cCkNCgl7DQoJCXRoaXMucm9vdCA9IHJvb3Q7DQoJCXZhciBlbGVtZW50ID0gQ29tcG9uZW50LmxvYWRfbWFya3VwKG1hcmt1cCk7DQoJCXRoaXMucm9vdC5hcHBlbmRDaGlsZChlbGVtZW50KTsNCgl9DQoNCglmaW5kKHF1ZXJ5KSAvLyBhbGlhcyBmb3IgcXVlcnlTZWxlY3RvciwgaW5zcGlyZWQgZnJvbSBqUXVlcnkgDQoJew0KCQlyZXR1cm4gdGhpcy5xdWVyeVNlbGVjdG9yKHF1ZXJ5KTsNCgl9DQoNCglxdWVyeVNlbGVjdG9yKHF1ZXJ5KQ0KCXsNCgkJcmV0dXJuIHRoaXMucm9vdC5xdWVyeVNlbGVjdG9yKHF1ZXJ5KTsNCgl9DQoNCglxdWVyeVNlbGVjdG9yQWxsKHF1ZXJ5KQ0KCXsNCgkJcmV0dXJuIHRoaXMucm9vdC5xdWVyeVNlbGVjdG9yQWxsKHF1ZXJ5KTsNCgl9DQoNCglzdGF0aWMgbG9hZF9tYXJrdXAoa2V5KSAvLyBhbHNvIHVzZWQgZm9yIHRlbXBsYXRlIGxvYWRpbmcNCgl7DQoJCXZhciB3ID0gd2luZG93Ow0KCQlpZiAoIXcuX19tYXJrdXBfZGF0YVtrZXldKQ0KCQkJdGhyb3cgInRoZXJlIGlzIG5vIG1hcmt1cCBmb3IgIiArIGtleTsNCgkNCgkJZnVuY3Rpb24gaHRtbF90b19lbGVtZW50KGh0bWwpDQoJCXsNCgkJCXZhciB0ZW1wbGF0ZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3RlbXBsYXRlJyk7DQoJCQlodG1sID0gaHRtbC50cmltKCk7DQoJCQl0ZW1wbGF0ZS5pbm5lckhUTUwgPSBodG1sOw0KCQkJcmV0dXJuIHRlbXBsYXRlLmNvbnRlbnQuZmlyc3RDaGlsZDsNCgkJfQ0KCQl2YXIgaHRtbCA9IGRlY29kZVVSSUNvbXBvbmVudChhdG9iKHcuX19tYXJrdXBfZGF0YVtrZXldKSk7DQoJCXJldHVybiBodG1sX3RvX2VsZW1lbnQoaHRtbCk7DQoJfQ0KfQ==';
-const SOURCE_INDEX = 'PCFkb2N0eXBlIGh0bWw+CjxtZXRhIGNoYXJzZXQ9InV0Zi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCI+Cjx0aXRsZT53azwvdGl0bGU+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iLi9kZXYuY3NzIj4KPHNjcmlwdCBzcmM9Jy4vZGV2LmpzJz48L3NjcmlwdD4KPHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJbmV3IEFwcChkb2N1bWVudC5ib2R5KTsKCX0KfQo8L3NjcmlwdD4=';
+const SOURCE_INDEX = 'PGh0bWw+Cgk8aGVhZD4KCQk8bWV0YSBjaGFyc2V0PSJ1dGYtOCI+CgkJPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCI+CgkJPHRpdGxlPndrPC90aXRsZT4KCTwvaGVhZD4KCTxib2R5PjwvYm9keT4KPC9odG1sPg==';
 const SOURCE_SAMPLE = 'Y2xhc3MgU2FtcGxlQ29tcG9uZW50IGV4dGVuZHMgQ29tcG9uZW50DQp7DQoJY29uc3RydWN0b3Iocm9vdCwgb3B0aW9ucykNCgl7DQoJCXN1cGVyKHJvb3QsICJzYW1wbGUtY29tcG9uZW50Iik7DQoJfQ0KfQ==';
 const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwbGljYXRpb24nPgoJPGgxPmJhc2ljIHdrIHByb2plY3Q8L2gxPgoJPHA+dGhpcyBwYWdlIGlzIGdlbmVyYXRlZCBieSBhcHBsaWNhdGlvbiBjb21wb25lbnQ8L3A+Cgk8cD5pdCBjYW4gYmUgZm91bmQgdW5kZXIgPHN0cm9uZz4vY29tcG9uZW50czwvc3Ryb25nPiBmb2xkZXI8L3A+Cgk8cCBjbGFzcz0nYWNjZW50Jz55b3UgY2FuIHR3ZWFrIHRoaXMgY29tcG9uZW50J3Mgc3R5bGUgYnkgZWRpdGluZyA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uY3NzPC9zdHJvbmc+IGZpbGU8L3A+Cgk8cD5hbGwgdGhpcyBjb21wb25lbnQgbWFya3VwIGlzIHdyaXR0ZW4gaW50byA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uaHRtbDwvc3Ryb25nPjwvcD4KPC9kaXY+';
 const SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAnU2Vnb2UgVUknLCBSb2JvdG8sICdIZWx2ZXRpY2EgTmV1ZScsIEFyaWFsLCBzYW5zLXNlcmlmOwp9CgouYXBwbGljYXRpb24gLmFjY2VudHsKCWNvbG9yOiAjYzBhOwp9';
 const SOURCE_HTTP = 'dmFyIGh0dHBfYmFzZSA9ICJodHRwOi8vbG9jYWxob3N0OjgwNjAvIjsKCmZ1bmN0aW9uIGh0dHBfZ2V0X2ZvbyhpZCwgb25sb2FkKSAvLyBzYW1wbGUgZ2V0IHJlcXVlc3QKewoJaHR0cF94aHIoIkdFVCIsICJmb28/aWQ9IiArIGlkLCBvbmxvYWQpOwp9CgpmdW5jdGlvbiBodHRwX3Bvc3RfYmFyKGRhdGExLCBkYXRhMiwgb25sb2FkKSAvLyBzYW1wbGUgcG9zdCByZXF1ZXN0CnsKCXZhciBib2R5ID0KCXsKCQkiZGF0YTEiOiBkYXRhMSwKCQkiZGF0YTIiOiBkYXRhMgoJfTsKCglodHRwX3hocigiUE9TVCIsICJiYXIiLCBvbmxvYWQsIGJvZHkpOwp9CgpmdW5jdGlvbiBodHRwX3hocihtZXRob2QsIHVybCwgb25sb2FkLCBib2R5KQp7Cgl2YXIgeCA9IG5ldyBYTUxIdHRwUmVxdWVzdCgpOwoJeC5vcGVuKG1ldGhvZCwgaHR0cF9iYXNlICsgdXJsKTsKCXguc2V0UmVxdWVzdEhlYWRlcigiQ29udGVudC1UeXBlIiwgImFwcGxpY2F0aW9uL2pzb24iKTsKCXgub25sb2FkID0gZnVuY3Rpb24oKQoJewoJCWlmICh4LnN0YXR1cyAhPSAyMDApCgkJewoJCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCQkJcmV0dXJuOwoJCX0KCQl0cnkKCQl7CgkJCXZhciByID0geC5yZXNwb25zZVRleHQ7CgkJCW9ubG9hZChyLCBmYWxzZSk7CgkJfQoJCWNhdGNoKGUpCgkJewoJCQlvbmxvYWQociwgdHJ1ZSk7CgkJfQoJfQoKCXgub25lcnJvciA9IGZ1bmN0aW9uKCkKCXsKCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCX0KCglpZiAobWV0aG9kLnRvVXBwZXJDYXNlKCkgPT0gIlBPU1QiKQoJewoJCWlmICh0eXBlb2YgYm9keSA9PSAib2JqZWN0IikKCQkJYm9keSA9IEpTT04uc3RyaW5naWZ5KGJvZHkpOwoKCQl4LnNlbmQoYm9keSk7Cgl9CgllbHNlCgl7CgkJeC5zZW5kKCk7Cgl9Cn0=';
+const SOURCE_START_SCRIPT = 'PHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJbmV3IEFwcChkb2N1bWVudC5ib2R5KTsKCX0KfQo8L3NjcmlwdD4=';
 
 const BASE_PATH_COMPONENT = "./src/components/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_PUBLIC = "./public/";
 
-const VERSION = "0.3.1";
+const VERSION = "0.3.2";
 
 var commands =
 {
@@ -135,6 +136,10 @@ function init()
 	b64_to_file(BASE_PATH_COMPONENT + "app/app.css", SOURCE_BASIC_CSS);
 	b64_to_file(BASE_PATH_COMPONENT + "app/app.html", SOURCE_BASIC_HTML);
 
+	var jsconfig = {"include": ["src/**/*" ]};
+
+	FS.writeFileSync("./jsconfig.json", JSON.stringify(jsconfig), "utf8");
+
 	highlight("project initialized successfully");
 	log("you can run **start** command now")
 	log("wk start  | auto-builds components and serves them under ./public folder");
@@ -174,14 +179,19 @@ function start(port)
 	log("starting file server and auto-builder");
 	
 	start_watcher();
-	var OPN = require("opn");
+	var OPN = require("open");
 
 	const EXPRESS = require('express');
-	const PATH = require('path');
 	const EXPRESS_APP = EXPRESS();
-	
-	// serve static assets normally
-	EXPRESS_APP.use(EXPRESS.static('./public'));
+
+	EXPRESS_APP.get("/index.html", function (request, response)
+	{
+		response.setHeader("Content-Type", "text/html");
+		response.send(render_index_html());
+		return;
+	});
+
+	EXPRESS_APP.use(EXPRESS.static('./public', {index: false}));
 	EXPRESS_APP.get('*', function (request, response)
 	{
 		if (request.originalUrl == "/dev.js")
@@ -205,7 +215,15 @@ function start(port)
 			return;
 		}
 
-		response.sendFile(PATH.resolve("./public", 'index.html'));
+		if (request.originalUrl == "/index.html")
+		{
+			response.setHeader("Content-Type", "text/html");
+			response.send(render_index_html());
+			return;
+		}
+
+		response.setHeader("Content-Type", "text/html");
+		response.send(render_index_html());
 	});
 
 	if (typeof port[0] == "undefined")
@@ -377,6 +395,7 @@ function build()
 	check_legacy_project();
 	log("building for production");
 	g_changed_files.push(".js");
+	update_markup_enums();
 	transpile_all();
 	delete_folder_recursive("./build");
 	copy_recursive_sync("./public", "./build");
@@ -386,9 +405,9 @@ function build()
 	var name;
 	var UGLIFYJS = require("uglify-es");
 	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(FS.readFileSync("./public/index.html"));
+	var $ = CHEERIO.load(render_index_html());
 
-	name = time_seed_v2();
+	name = time_seed();
 	$("link[href$='./dev.css']").attr("href" , "./" + name + ".css");
 	$("script[src$='./dev.js']").attr("src" , "./" + name + ".js");
 
@@ -416,10 +435,10 @@ function build()
 	var UGLIFYCSS = require('uglifycss');
 	var minified_css = UGLIFYCSS.processString(g_css, {});
 
-	FS.writeFileSync( "./build/" + name + ".js", minified_js.code)
+	FS.writeFileSync( "./build/" + name + ".js", minified_js.code);
 	FS.writeFileSync("./build/index.html" , h);
-	FS.writeFileSync( "./build/" + name + ".css", minified_css)
-	FS.writeFileSync( "./build/" + name + ".json", g_json)
+	FS.writeFileSync( "./build/" + name + ".css", minified_css);
+	FS.writeFileSync( "./build/" + name + ".json", JSON.stringify(g_json));
 
 	console.timeEnd(msg);
 	log("production build completed with seed " + name);
@@ -683,13 +702,17 @@ function transpile_all()
 	}
 
 	var js = g_component + "\n";
-
 	for (var i=0;i<js_files.length;i++)
 		js += FS.readFileSync(js_files[i], "utf8") + '\n';
 
 	g_js = js;
 	g_css = css;
 	g_json = markups;
+
+	console.log("transpilgnegin");
+	console.log(g_js);
+	console.log(g_css);
+	console.log(g_json);
 
 	console.timeEnd(msg);
 }
@@ -850,6 +873,16 @@ function time_seed()
 	var id = int2str(Math.floor((Date.now()) / 1000));
 	id = id.substr(id.length - SEED_LENGTH, SEED_LENGTH);
 	return id;
+}
+
+function render_index_html()
+{
+	var CHEERIO = require('cheerio');
+	var $ = CHEERIO.load(to_ascii(SOURCE_INDEX));
+	$("head").append('<link rel="stylesheet" href="./dev.css">');
+	$("head").append('<script src="./dev.js"></script>');
+	$("html").append(to_ascii(SOURCE_START_SCRIPT));
+	return $.html();
 }
 
 function time_seed_v2()
