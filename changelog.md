@@ -1,5 +1,5 @@
 # Migration Notes 0.3.0 to 0.3.1
-August-23-2019
+August-26-2019
 
 folder structure is changed with this release (this is a breaking change)
 
@@ -15,12 +15,11 @@ src is a good abbrevetion for name 'source' so i kept it as it is
 
 - com is moved under src and renamed as src/components
 
-folder name 'com' has an undesired resemblance with Android package names ( eg: com.foo.bar ) i thought having 3 letter base folder names looked cool ( www, src, com) but every developer that tried to use wk, complained with these cryptic
-namings.
+folder name 'com' has an undesired resemblance with Android package names 
+( eg: com.foo.bar ) i thought having 3 letter base folder names looked cool 
+( www, src, com) but every developer that tried to use wk, 
+complained with these cryptic namings.
 
-with these changes, folder structure looked more familiar to react developers
-
-component.js
 
 # Migration Notes 0.2.22 to 0.3.0
 August-18-2019

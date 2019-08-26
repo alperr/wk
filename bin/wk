@@ -9,16 +9,17 @@ const BG_GREEN = "\x1b[42m";
 const RESET = "\x1b[0m";
 
 const SOURCE_COMPONENT = 'Ly8gVEhJUyBGSUxFIElTIEFVVE8gR0VORVJBVEVEICwgRE8gTk9UIEVESVQNCmNsYXNzIENvbXBvbmVudA0Kew0KCWNvbnN0cnVjdG9yKHJvb3QsIG1hcmt1cCkNCgl7DQoJCXRoaXMucm9vdCA9IHJvb3Q7DQoJCXZhciBlbGVtZW50ID0gQ29tcG9uZW50LmxvYWRfbWFya3VwKG1hcmt1cCk7DQoJCXRoaXMucm9vdC5hcHBlbmRDaGlsZChlbGVtZW50KTsNCgl9DQoNCglmaW5kKHF1ZXJ5KSAvLyBhbGlhcyBmb3IgcXVlcnlTZWxlY3RvciwgaW5zcGlyZWQgZnJvbSBqUXVlcnkgDQoJew0KCQlyZXR1cm4gdGhpcy5xdWVyeVNlbGVjdG9yKHF1ZXJ5KTsNCgl9DQoNCglxdWVyeVNlbGVjdG9yKHF1ZXJ5KQ0KCXsNCgkJcmV0dXJuIHRoaXMucm9vdC5xdWVyeVNlbGVjdG9yKHF1ZXJ5KTsNCgl9DQoNCglxdWVyeVNlbGVjdG9yQWxsKHF1ZXJ5KQ0KCXsNCgkJcmV0dXJuIHRoaXMucm9vdC5xdWVyeVNlbGVjdG9yQWxsKHF1ZXJ5KTsNCgl9DQoNCglzdGF0aWMgbG9hZF9tYXJrdXAoa2V5KSAvLyBhbHNvIHVzZWQgZm9yIHRlbXBsYXRlIGxvYWRpbmcNCgl7DQoJCXZhciB3ID0gd2luZG93Ow0KCQlpZiAoIXcuX19tYXJrdXBfZGF0YVtrZXldKQ0KCQkJdGhyb3cgInRoZXJlIGlzIG5vIG1hcmt1cCBmb3IgIiArIGtleTsNCgkNCgkJZnVuY3Rpb24gaHRtbF90b19lbGVtZW50KGh0bWwpDQoJCXsNCgkJCXZhciB0ZW1wbGF0ZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3RlbXBsYXRlJyk7DQoJCQlodG1sID0gaHRtbC50cmltKCk7DQoJCQl0ZW1wbGF0ZS5pbm5lckhUTUwgPSBodG1sOw0KCQkJcmV0dXJuIHRlbXBsYXRlLmNvbnRlbnQuZmlyc3RDaGlsZDsNCgkJfQ0KCQl2YXIgaHRtbCA9IGRlY29kZVVSSUNvbXBvbmVudChhdG9iKHcuX19tYXJrdXBfZGF0YVtrZXldKSk7DQoJCXJldHVybiBodG1sX3RvX2VsZW1lbnQoaHRtbCk7DQoJfQ0KfQ==';
-const SOURCE_INDEX = 'PCFkb2N0eXBlIGh0bWw+CjxtZXRhIGNoYXJzZXQ9InV0Zi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCI+Cjx0aXRsZT53azwvdGl0bGU+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iLi9kZXYuY3NzIj4KPHNjcmlwdCBzcmM9Jy4vZGV2LmpzJz48L3NjcmlwdD4KPHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJbmV3IEFwcGxpY2F0aW9uKGRvY3VtZW50LmJvZHkpOwoJfQp9Cjwvc2NyaXB0Pg==';
+const SOURCE_INDEX = 'PCFkb2N0eXBlIGh0bWw+CjxtZXRhIGNoYXJzZXQ9InV0Zi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCI+Cjx0aXRsZT53azwvdGl0bGU+CjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iLi9kZXYuY3NzIj4KPHNjcmlwdCBzcmM9Jy4vZGV2LmpzJz48L3NjcmlwdD4KPHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJbmV3IEFwcChkb2N1bWVudC5ib2R5KTsKCX0KfQo8L3NjcmlwdD4=';
 const SOURCE_SAMPLE = 'Y2xhc3MgU2FtcGxlQ29tcG9uZW50IGV4dGVuZHMgQ29tcG9uZW50DQp7DQoJY29uc3RydWN0b3Iocm9vdCwgb3B0aW9ucykNCgl7DQoJCXN1cGVyKHJvb3QsICJzYW1wbGUtY29tcG9uZW50Iik7DQoJfQ0KfQ==';
 const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwbGljYXRpb24nPgoJPGgxPmJhc2ljIHdrIHByb2plY3Q8L2gxPgoJPHA+dGhpcyBwYWdlIGlzIGdlbmVyYXRlZCBieSBhcHBsaWNhdGlvbiBjb21wb25lbnQ8L3A+Cgk8cD5pdCBjYW4gYmUgZm91bmQgdW5kZXIgPHN0cm9uZz4vY29tcG9uZW50czwvc3Ryb25nPiBmb2xkZXI8L3A+Cgk8cCBjbGFzcz0nYWNjZW50Jz55b3UgY2FuIHR3ZWFrIHRoaXMgY29tcG9uZW50J3Mgc3R5bGUgYnkgZWRpdGluZyA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uY3NzPC9zdHJvbmc+IGZpbGU8L3A+Cgk8cD5hbGwgdGhpcyBjb21wb25lbnQgbWFya3VwIGlzIHdyaXR0ZW4gaW50byA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uaHRtbDwvc3Ryb25nPjwvcD4KPC9kaXY+';
 const SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAnU2Vnb2UgVUknLCBSb2JvdG8sICdIZWx2ZXRpY2EgTmV1ZScsIEFyaWFsLCBzYW5zLXNlcmlmOwp9CgouYXBwbGljYXRpb24gLmFjY2VudHsKCWNvbG9yOiAjYzBhOwp9';
 const SOURCE_HTTP = 'dmFyIGh0dHBfYmFzZSA9ICJodHRwOi8vbG9jYWxob3N0OjgwNjAvIjsKCmZ1bmN0aW9uIGh0dHBfZ2V0X2ZvbyhpZCwgb25sb2FkKSAvLyBzYW1wbGUgZ2V0IHJlcXVlc3QKewoJaHR0cF94aHIoIkdFVCIsICJmb28/aWQ9IiArIGlkLCBvbmxvYWQpOwp9CgpmdW5jdGlvbiBodHRwX3Bvc3RfYmFyKGRhdGExLCBkYXRhMiwgb25sb2FkKSAvLyBzYW1wbGUgcG9zdCByZXF1ZXN0CnsKCXZhciBib2R5ID0KCXsKCQkiZGF0YTEiOiBkYXRhMSwKCQkiZGF0YTIiOiBkYXRhMgoJfTsKCglodHRwX3hocigiUE9TVCIsICJiYXIiLCBvbmxvYWQsIGJvZHkpOwp9CgpmdW5jdGlvbiBodHRwX3hocihtZXRob2QsIHVybCwgb25sb2FkLCBib2R5KQp7Cgl2YXIgeCA9IG5ldyBYTUxIdHRwUmVxdWVzdCgpOwoJeC5vcGVuKG1ldGhvZCwgaHR0cF9iYXNlICsgdXJsKTsKCXguc2V0UmVxdWVzdEhlYWRlcigiQ29udGVudC1UeXBlIiwgImFwcGxpY2F0aW9uL2pzb24iKTsKCXgub25sb2FkID0gZnVuY3Rpb24oKQoJewoJCWlmICh4LnN0YXR1cyAhPSAyMDApCgkJewoJCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCQkJcmV0dXJuOwoJCX0KCQl0cnkKCQl7CgkJCXZhciByID0geC5yZXNwb25zZVRleHQ7CgkJCW9ubG9hZChyLCBmYWxzZSk7CgkJfQoJCWNhdGNoKGUpCgkJewoJCQlvbmxvYWQociwgdHJ1ZSk7CgkJfQoJfQoKCXgub25lcnJvciA9IGZ1bmN0aW9uKCkKCXsKCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCX0KCglpZiAobWV0aG9kLnRvVXBwZXJDYXNlKCkgPT0gIlBPU1QiKQoJewoJCWlmICh0eXBlb2YgYm9keSA9PSAib2JqZWN0IikKCQkJYm9keSA9IEpTT04uc3RyaW5naWZ5KGJvZHkpOwoKCQl4LnNlbmQoYm9keSk7Cgl9CgllbHNlCgl7CgkJeC5zZW5kKCk7Cgl9Cn0=';
 
-const COMPONENT_BASE_PATH = "./com/";
-const CLASS_BASE_PATH = "./src/";
-const OUTPUT_PATH = "./www/dev";
-const VERSION = "0.3.0";
+const BASE_PATH_COMPONENT = "./src/components/";
+const BASE_PATH_SRC = "./src/";
+const BASE_PATH_PUBLIC = "./public/";
+
+const VERSION = "0.3.1";
 
 var commands =
 {
@@ -45,8 +46,12 @@ var commands =
 	"x" : add_extras
 }
 
-var g_timer;
 var g_changed_files = [];
+var g_timer;
+var g_css;
+var g_js;
+var g_json;
+var g_component;
 
 var args = process.argv.slice(2);
 var command = args[0];
@@ -78,8 +83,8 @@ wk has following 8 commands
 
   wk init                            (i)
 initializes a new project
-creates 3 required folders; com, src, www
-creates application component
+creates required folders src, public
+and app component
 
   wk start <port?>                   (s)
 starts development server on 
@@ -94,11 +99,9 @@ under build/ folder with a time seed
   wk new <component-name>            (n)
 generates component folder
 generates necessary js,css and html files
-adds markup enum to src/component.js
 
   wk del <component-name>            (d)
 deletes component folder recursively
-removes markup enum in src/component.js
 
   wk extras                          (x)
 generates extra utility javascript files
@@ -120,31 +123,27 @@ function init()
 		error("current folder is already initialized");
 		return;
 	}
-	
+
 	log("initializing a new project");
-	if (!FS.existsSync("./www")){FS.mkdirSync("./www");}
-	if (!FS.existsSync("./src")){FS.mkdirSync("./src");}
-	if (!FS.existsSync("./com")){FS.mkdirSync("./com");}
-	log("- folders created");
+	create_folder_if_not_exits(BASE_PATH_PUBLIC);
+	create_folder_if_not_exits(BASE_PATH_SRC);
+	create_folder_if_not_exits(BASE_PATH_COMPONENT);
+	b64_to_file("./public/index.html", SOURCE_INDEX);
 
-	b64_to_file("./src/component.js", SOURCE_COMPONENT);
-	b64_to_file("./www/index.html", SOURCE_INDEX);
-	log("- classes created");
-
-	new_component(["application"]);
-	b64_to_file("./com/application/application.css", SOURCE_BASIC_CSS);
-	b64_to_file("./com/application/application.html", SOURCE_BASIC_HTML);
+	new_component(["app"]);
+	
+	b64_to_file(BASE_PATH_COMPONENT + "app/app.css", SOURCE_BASIC_CSS);
+	b64_to_file(BASE_PATH_COMPONENT + "app/app.html", SOURCE_BASIC_HTML);
 
 	highlight("project initialized successfully");
 	log("you can run **start** command now")
-	log("wk start  | auto-builds components and serves them under ./www folder");
+	log("wk start  | auto-builds components and serves them under ./public folder");
 }
 
 function deinit()
 {
-	delete_folder_recursive("./www");
-	delete_folder_recursive("./src");
-	delete_folder_recursive("./com");
+	delete_folder_recursive(BASE_PATH_SRC);
+	delete_folder_recursive(BASE_PATH_PUBLIC);
 	log("- de initialized project and deleted all files");
 }
 
@@ -182,10 +181,31 @@ function start(port)
 	const EXPRESS_APP = EXPRESS();
 	
 	// serve static assets normally
-	EXPRESS_APP.use(EXPRESS.static('./www'));
+	EXPRESS_APP.use(EXPRESS.static('./public'));
 	EXPRESS_APP.get('*', function (request, response)
 	{
-		response.sendFile(PATH.resolve("./www", 'index.html'));
+		if (request.originalUrl == "/dev.js")
+		{
+			response.setHeader("Content-Type", "text/javascript");
+			response.send(g_js);
+			return;
+		}
+		
+		if (request.originalUrl == "/dev.css")
+		{
+			response.setHeader("Content-Type", "text/css");
+			response.send(g_css);
+			return;
+		}
+
+		if (request.originalUrl == "/dev.json")
+		{
+			response.setHeader("Content-Type", "application/json");
+			response.send(g_json);
+			return;
+		}
+
+		response.sendFile(PATH.resolve("./public", 'index.html'));
 	});
 
 	if (typeof port[0] == "undefined")
@@ -217,8 +237,8 @@ function start_watcher()
 {
 	update_markup_enums();
 	var watch = require('node-watch');
-	watch(COMPONENT_BASE_PATH, { recursive: true }, onchange);
-	watch(CLASS_BASE_PATH, { recursive: true }, onchange);
+	watch(BASE_PATH_COMPONENT, { recursive: true }, onchange);
+	watch(BASE_PATH_SRC, { recursive: true }, onchange);
 	onchange("change",".js");
 }
 
@@ -279,7 +299,7 @@ function delete_component(a)
 	if (!print_invalid_project_msg("./"))
 		return;
 
-	var input = "./com/" + a[0] + '/' + a[0];
+	var input = BASE_PATH_COMPONENT + a[0] + '/' + a[0];
 
 	if (!FS.existsSync(input + '.html') || !FS.existsSync(input + '.js') || !FS.existsSync(input + '.css'))
 	{
@@ -287,7 +307,7 @@ function delete_component(a)
 		return;
 	}
 
-	delete_folder_recursive("./com/" + a[0]);
+	delete_folder_recursive(BASE_PATH_COMPONENT + a[0]);
 	update_markup_enums();
 	log("deleted component -> " + a[0])
 }
@@ -359,17 +379,14 @@ function build()
 	g_changed_files.push(".js");
 	transpile_all();
 	delete_folder_recursive("./build");
-	copy_recursive_sync("./www", "./build");
+	copy_recursive_sync("./public", "./build");
 
-	FS.unlinkSync("./build/dev.css");
-	FS.unlinkSync("./build/dev.json");
-	FS.unlinkSync("./build/dev.js");
 	FS.unlinkSync("./build/index.html");
 
 	var name;
 	var UGLIFYJS = require("uglify-es");
 	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(FS.readFileSync("./www/index.html"));
+	var $ = CHEERIO.load(FS.readFileSync("./public/index.html"));
 
 	name = time_seed_v2();
 	$("link[href$='./dev.css']").attr("href" , "./" + name + ".css");
@@ -378,18 +395,17 @@ function build()
 	var h = $.html();
 	h = h.replace('"./dev.json"', '"./'+name+'.json"');
 	
-	var jsContent =  FS.readFileSync("./www/dev.js", "utf8");
 	var options = 
 	{
 		"mangle" :
 		{
 			"toplevel" : true,
-			"reserved": ['Application', 'Component']
+			"reserved": ['App', 'Component']
 		}
 	}
 	var msg = '\x1b[32m minification\x1b[0m';
 	console.time(msg);
-	var minified_js = UGLIFYJS.minify(jsContent, options);
+	var minified_js = UGLIFYJS.minify(g_js, options);
 	if(minified_js.error)
 	{
 		console.log(minified_js.error);
@@ -398,50 +414,49 @@ function build()
 	}
 
 	var UGLIFYCSS = require('uglifycss');
-	var minified_css = UGLIFYCSS.processFiles([ './www/dev.css' ], {});
+	var minified_css = UGLIFYCSS.processString(g_css, {});
 
 	FS.writeFileSync( "./build/" + name + ".js", minified_js.code)
 	FS.writeFileSync("./build/index.html" , h);
 	FS.writeFileSync( "./build/" + name + ".css", minified_css)
-	FS.copyFileSync("./www/dev.json", "./build/" + name + ".json");
+	FS.writeFileSync( "./build/" + name + ".json", g_json)
 
 	console.timeEnd(msg);
 	log("production build completed with seed " + name);
 	return name;
 }
 
+
+// needs a whole rewrite
 function burn()
 {
 	log("building & embedding into build/index.html");
 	g_changed_files.push(".js");
 	transpile_all();
 	delete_folder_recursive("./build");
-	copy_recursive_sync("./www", "./build");
+	copy_recursive_sync("./public", "./build");
 
 	var markup = FS.readFileSync("./build/dev.json");
-	FS.unlinkSync("./build/dev.css");
-	FS.unlinkSync("./build/dev.json");
-	FS.unlinkSync("./build/dev.js");
 	FS.unlinkSync("./build/index.html");
 
 	var UGLIFYJS = require("uglify-es");
 	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(FS.readFileSync("./www/index.html"));
+	var $ = CHEERIO.load(FS.readFileSync("./public/index.html"));
 
 	$("script[src$='dev.js']").remove();
 	$("link[href$='dev.css']").remove();
 
 	var embed_script = "";
 	embed_script += "		window.onload = function () { window.__markup_data = " + markup +";";
-	embed_script += "		new Application(document.getElementById('root')); }"
+	embed_script += "		new App(document.getElementById('root')); }"
 
-	var js_content =  FS.readFileSync("./www/dev.js", "utf8");
+	var js_content =  FS.readFileSync("./public/dev.js", "utf8");
 	var options = 
 	{
 		"mangle" :
 		{
 			"toplevel" : true,
-			"reserved": ['Application']
+			"reserved": ['App']
 		}
 	}
 	console.time('\x1b[32m minification\x1b[0m');
@@ -454,7 +469,7 @@ function burn()
 	}
 	$("#wk-script").text(minified_js.code + "\n" + embed_script+ "\n");
 	var UGLIFYCSS = require('uglifycss');
-	var minified_css = UGLIFYCSS.processFiles([ './www/dev.css' ], {});
+	var minified_css = UGLIFYCSS.processFiles([ './public/dev.css' ], {});
 
 	if (typeof $("style")[0] == "undefined")
 		$("head").append($("<style></style>")); 
@@ -482,7 +497,7 @@ function add_extras()
 
 function create_component_files(name)
 {
-	if (FS.existsSync("./com/" + name))
+	if (FS.existsSync(BASE_PATH_COMPONENT + name))
 	{
 		error("a component with a name " + name + " already exists");
 		return;
@@ -490,17 +505,19 @@ function create_component_files(name)
 
 	var upper = "MARKUP_" + dash_to_upper(name);
 	var pascal = dash_to_pascal(name);
-	var js = Buffer.from(SOURCE_SAMPLE, 'base64').toString('ascii');
+	
+	var js = to_ascii(SOURCE_SAMPLE);
 	js = js.replace("SampleComponent", pascal);
 	js = js.replace('"sample-component"', upper);
 
 	var html = '<div class="'+name+'"></div>';
 	var css = '.'+name+'{}';
 
-	FS.mkdirSync("./com/" + name);
-	FS.writeFileSync("./com/" + name + "/" + name + ".html" , html, "utf8");
-	FS.writeFileSync("./com/" + name + "/" + name + ".css" , css, "utf8");
-	FS.writeFileSync("./com/" + name + "/" + name + ".js" , js, "utf8");
+
+	FS.mkdirSync(BASE_PATH_COMPONENT + name);
+	FS.writeFileSync(BASE_PATH_COMPONENT + name + "/" + name + ".html" , html, "utf8");
+	FS.writeFileSync(BASE_PATH_COMPONENT + name + "/" + name + ".css" , css, "utf8");
+	FS.writeFileSync(BASE_PATH_COMPONENT + name + "/" + name + ".js" , js, "utf8");
 
 	log("created a new component named " + name);
 }
@@ -526,7 +543,7 @@ function find_template_files(path, componentName)
 function update_markup_enums()
 {
 	var counter = 0;
-	var components = FS.readdirSync("./com/");
+	var components = FS.readdirSync(BASE_PATH_COMPONENT);
 	var s = "";
 	for (var i in components)
 	{
@@ -543,7 +560,7 @@ function update_markup_enums()
 		if (components[i].startsWith("."))
 			continue;
 
-		var templates = find_template_files(COMPONENT_BASE_PATH + components[i] + '/', components[i]);
+		var templates = find_template_files(BASE_PATH_COMPONENT + components[i] + '/', components[i]);
 		for (var t in templates)
 		{
 			var name = "TEMPLATE_" + dash_to_upper(components[i]) + "__" + dash_to_upper(templates[t]);
@@ -552,8 +569,8 @@ function update_markup_enums()
 		}
 	}
 
-	s = Buffer.from(SOURCE_COMPONENT, 'base64').toString('ascii') + s;
-	FS.writeFileSync("./src/component.js", s, "utf8");
+	s = to_ascii(SOURCE_COMPONENT) + s;
+	g_component = s;
 }
 
 function error(m)
@@ -606,16 +623,16 @@ function transpile_all()
 	var js_files = [];
 	var names = [];
 
-	var files = FS.readdirSync(CLASS_BASE_PATH);
+	var files = FS.readdirSync(BASE_PATH_SRC);
 	files.forEach(function(file)
 	{
 		if (!file.endsWith(".js"))
 			return;
 
-		js_files.push(CLASS_BASE_PATH + file);
+		js_files.push(BASE_PATH_SRC + file);
 	});
 
-	files = FS.readdirSync(COMPONENT_BASE_PATH);
+	files = FS.readdirSync(BASE_PATH_COMPONENT);
 	files.forEach(function(file)
 	{
 		if (file.indexOf('.') == 0)
@@ -626,7 +643,7 @@ function transpile_all()
 
 	for (var i=0;i<names.length;i++)
 	{
-		var input = COMPONENT_BASE_PATH + names[i] + '/' + names[i];
+		var input = BASE_PATH_COMPONENT + names[i] + '/' + names[i];
 
 		if (!FS.existsSync(input + '.html')) 
 		{
@@ -657,29 +674,23 @@ function transpile_all()
 
 	for (var i=0;i<names.length;i++)
 	{
-		var templates = find_template_files(COMPONENT_BASE_PATH + names[i] + '/', names[i]);
+		var templates = find_template_files(BASE_PATH_COMPONENT + names[i] + '/', names[i]);
 		for (var t in templates)
 		{
-			var markup = FS.readFileSync(COMPONENT_BASE_PATH + names[i] + "/" + templates[t] + ".html","utf8");
+			var markup = FS.readFileSync(BASE_PATH_COMPONENT + names[i] + "/" + templates[t] + ".html","utf8");
 			markups.push(Buffer.from(markup, "utf8").toString('base64'));
 		}
 	}
 
-	var js = "";
+	var js = g_component + "\n";
+
 	for (var i=0;i<js_files.length;i++)
-	{
 		js += FS.readFileSync(js_files[i], "utf8") + '\n';
-	}
 
-	unlink_if_exists(OUTPUT_PATH + ".js");
-	FS.writeFileSync( OUTPUT_PATH + ".js" , js , 'utf8');
+	g_js = js;
+	g_css = css;
+	g_json = markups;
 
-	unlink_if_exists(OUTPUT_PATH + ".css");
-	FS.writeFileSync( OUTPUT_PATH + ".css" , css , 'utf8');
-
-	markups = JSON.stringify(markups);
-	unlink_if_exists(OUTPUT_PATH + ".json");
-	FS.writeFileSync( OUTPUT_PATH + ".json" , markups, 'utf8');
 	console.timeEnd(msg);
 }
 
@@ -707,12 +718,7 @@ function print_invalid_project_msg(path)
 
 function is_project_valid(path)
 {
-	if (!FS.existsSync(path + "www"))
-	{
-		return false;
-	}
-
-	if (!FS.existsSync(path + "com"))
+	if (!FS.existsSync(path + "public"))
 	{
 		return false;
 	}
@@ -722,12 +728,17 @@ function is_project_valid(path)
 		return false;
 	}
 
+	if (!FS.existsSync(path + "src/components"))
+	{
+		return false;
+	}
+
 	return true;
 }
 
 function check_legacy_project()
 {
-	var files = FS.readdirSync(CLASS_BASE_PATH);
+	var files = FS.readdirSync(BASE_PATH_SRC);
 	files.forEach(function(file)
 	{
 		if (file.endsWith(".ts"))
@@ -744,8 +755,13 @@ function check_legacy_project()
 	});
 }
 
+function create_folder_if_not_exits(path)
+{
+	if (!FS.existsSync(path)){FS.mkdirSync(path);}
+}
+
 function delete_folder_recursive(path)
- {
+{
 	if (FS.existsSync(path))
 	{
 		FS.readdirSync(path).forEach(function(file, index)
@@ -805,10 +821,14 @@ function unlink_if_exists(path)
 	catch (e) { }
 }
 
+function to_ascii(source)
+{
+	return Buffer.from(source, 'base64').toString('ascii');
+}
+
 function b64_to_file(path, source)
 {
-	var content = Buffer.from(source, 'base64').toString('ascii');
-	FS.writeFileSync(path, content, "utf8");
+	FS.writeFileSync(path, to_ascii(source), "utf8");
 }
 
 function time_seed()
@@ -850,3 +870,28 @@ function time_seed_v2()
 	formatted += hour + "_" + minutes + "_" + seconds;
 	return formatted;
 }
+
+/*
+handle process exit and remove jsconfig.json
+
+process.stdin.resume();//so the program will not close instantly
+
+function exitHandler(options, exitCode) {
+    if (options.cleanup) console.log('clean');
+    if (exitCode || exitCode === 0) console.log(exitCode);
+    if (options.exit) process.exit();
+}
+
+//do something when app is closing
+process.on('exit', exitHandler.bind(null,{cleanup:true}));
+
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+
+// catches "kill pid" (for example: nodemon restart)
+process.on('SIGUSR1', exitHandler.bind(null, {exit:true}));
+process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
+
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
+*/

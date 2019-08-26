@@ -19,7 +19,6 @@ const BASE_PATH_COMPONENT = "./src/components/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_PUBLIC = "./public/";
 
-const OUTPUT_PATH = "./public/dev";
 const VERSION = "0.3.1";
 
 var commands =
@@ -47,8 +46,12 @@ var commands =
 	"x" : add_extras
 }
 
-var g_timer;
 var g_changed_files = [];
+var g_timer;
+var g_css;
+var g_js;
+var g_json;
+var g_component;
 
 var args = process.argv.slice(2);
 var command = args[0];
@@ -96,11 +99,9 @@ under build/ folder with a time seed
   wk new <component-name>            (n)
 generates component folder
 generates necessary js,css and html files
-adds markup enum to src/component.js
 
   wk del <component-name>            (d)
 deletes component folder recursively
-removes markup enum in src/component.js
 
   wk extras                          (x)
 generates extra utility javascript files
@@ -127,11 +128,7 @@ function init()
 	create_folder_if_not_exits(BASE_PATH_PUBLIC);
 	create_folder_if_not_exits(BASE_PATH_SRC);
 	create_folder_if_not_exits(BASE_PATH_COMPONENT);
-	log("- folders created");
-
-	b64_to_file("./src/component.js", SOURCE_COMPONENT);
 	b64_to_file("./public/index.html", SOURCE_INDEX);
-	log("- classes created");
 
 	new_component(["app"]);
 	
@@ -187,7 +184,27 @@ function start(port)
 	EXPRESS_APP.use(EXPRESS.static('./public'));
 	EXPRESS_APP.get('*', function (request, response)
 	{
-		console.log(request.originalUrl);
+		if (request.originalUrl == "/dev.js")
+		{
+			response.setHeader("Content-Type", "text/javascript");
+			response.send(g_js);
+			return;
+		}
+		
+		if (request.originalUrl == "/dev.css")
+		{
+			response.setHeader("Content-Type", "text/css");
+			response.send(g_css);
+			return;
+		}
+
+		if (request.originalUrl == "/dev.json")
+		{
+			response.setHeader("Content-Type", "application/json");
+			response.send(g_json);
+			return;
+		}
+
 		response.sendFile(PATH.resolve("./public", 'index.html'));
 	});
 
@@ -364,9 +381,6 @@ function build()
 	delete_folder_recursive("./build");
 	copy_recursive_sync("./public", "./build");
 
-	FS.unlinkSync("./build/dev.css");
-	FS.unlinkSync("./build/dev.json");
-	FS.unlinkSync("./build/dev.js");
 	FS.unlinkSync("./build/index.html");
 
 	var name;
@@ -381,7 +395,6 @@ function build()
 	var h = $.html();
 	h = h.replace('"./dev.json"', '"./'+name+'.json"');
 	
-	var jsContent =  FS.readFileSync("./public/dev.js", "utf8");
 	var options = 
 	{
 		"mangle" :
@@ -392,7 +405,7 @@ function build()
 	}
 	var msg = '\x1b[32m minification\x1b[0m';
 	console.time(msg);
-	var minified_js = UGLIFYJS.minify(jsContent, options);
+	var minified_js = UGLIFYJS.minify(g_js, options);
 	if(minified_js.error)
 	{
 		console.log(minified_js.error);
@@ -401,18 +414,20 @@ function build()
 	}
 
 	var UGLIFYCSS = require('uglifycss');
-	var minified_css = UGLIFYCSS.processFiles([ './public/dev.css' ], {});
+	var minified_css = UGLIFYCSS.processString(g_css, {});
 
 	FS.writeFileSync( "./build/" + name + ".js", minified_js.code)
 	FS.writeFileSync("./build/index.html" , h);
 	FS.writeFileSync( "./build/" + name + ".css", minified_css)
-	FS.copyFileSync("./public/dev.json", "./build/" + name + ".json");
+	FS.writeFileSync( "./build/" + name + ".json", g_json)
 
 	console.timeEnd(msg);
 	log("production build completed with seed " + name);
 	return name;
 }
 
+
+// needs a whole rewrite
 function burn()
 {
 	log("building & embedding into build/index.html");
@@ -422,9 +437,6 @@ function burn()
 	copy_recursive_sync("./public", "./build");
 
 	var markup = FS.readFileSync("./build/dev.json");
-	FS.unlinkSync("./build/dev.css");
-	FS.unlinkSync("./build/dev.json");
-	FS.unlinkSync("./build/dev.js");
 	FS.unlinkSync("./build/index.html");
 
 	var UGLIFYJS = require("uglify-es");
@@ -558,7 +570,7 @@ function update_markup_enums()
 	}
 
 	s = to_ascii(SOURCE_COMPONENT) + s;
-	FS.writeFileSync("./src/component.js", s, "utf8");
+	g_component = s;
 }
 
 function error(m)
@@ -670,21 +682,15 @@ function transpile_all()
 		}
 	}
 
-	var js = "";
+	var js = g_component + "\n";
+
 	for (var i=0;i<js_files.length;i++)
-	{
 		js += FS.readFileSync(js_files[i], "utf8") + '\n';
-	}
 
-	unlink_if_exists(OUTPUT_PATH + ".js");
-	FS.writeFileSync( OUTPUT_PATH + ".js" , js , 'utf8');
+	g_js = js;
+	g_css = css;
+	g_json = markups;
 
-	unlink_if_exists(OUTPUT_PATH + ".css");
-	FS.writeFileSync( OUTPUT_PATH + ".css" , css , 'utf8');
-
-	markups = JSON.stringify(markups);
-	unlink_if_exists(OUTPUT_PATH + ".json");
-	FS.writeFileSync( OUTPUT_PATH + ".json" , markups, 'utf8');
 	console.timeEnd(msg);
 }
 
