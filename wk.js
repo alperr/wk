@@ -14,13 +14,14 @@ const SOURCE_SAMPLE = 'Y2xhc3MgU2FtcGxlQ29tcG9uZW50IGV4dGVuZHMgQ29tcG9uZW50DQp7D
 const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwbGljYXRpb24nPgoJPGgxPmJhc2ljIHdrIHByb2plY3Q8L2gxPgoJPHA+dGhpcyBwYWdlIGlzIGdlbmVyYXRlZCBieSBhcHBsaWNhdGlvbiBjb21wb25lbnQ8L3A+Cgk8cD5pdCBjYW4gYmUgZm91bmQgdW5kZXIgPHN0cm9uZz4vY29tcG9uZW50czwvc3Ryb25nPiBmb2xkZXI8L3A+Cgk8cCBjbGFzcz0nYWNjZW50Jz55b3UgY2FuIHR3ZWFrIHRoaXMgY29tcG9uZW50J3Mgc3R5bGUgYnkgZWRpdGluZyA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uY3NzPC9zdHJvbmc+IGZpbGU8L3A+Cgk8cD5hbGwgdGhpcyBjb21wb25lbnQgbWFya3VwIGlzIHdyaXR0ZW4gaW50byA8c3Ryb25nPmNvbXBvbmVudHMvYXBwbGljYXRpb24vYXBwbGljYXRpb24uaHRtbDwvc3Ryb25nPjwvcD4KPC9kaXY+';
 const SOURCE_BASIC_CSS = 'LmFwcGxpY2F0aW9uICp7Cglmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAnU2Vnb2UgVUknLCBSb2JvdG8sICdIZWx2ZXRpY2EgTmV1ZScsIEFyaWFsLCBzYW5zLXNlcmlmOwp9CgouYXBwbGljYXRpb24gLmFjY2VudHsKCWNvbG9yOiAjYzBhOwp9';
 const SOURCE_HTTP = 'dmFyIGh0dHBfYmFzZSA9ICJodHRwOi8vbG9jYWxob3N0OjgwNjAvIjsKCmZ1bmN0aW9uIGh0dHBfZ2V0X2ZvbyhpZCwgb25sb2FkKSAvLyBzYW1wbGUgZ2V0IHJlcXVlc3QKewoJaHR0cF94aHIoIkdFVCIsICJmb28/aWQ9IiArIGlkLCBvbmxvYWQpOwp9CgpmdW5jdGlvbiBodHRwX3Bvc3RfYmFyKGRhdGExLCBkYXRhMiwgb25sb2FkKSAvLyBzYW1wbGUgcG9zdCByZXF1ZXN0CnsKCXZhciBib2R5ID0KCXsKCQkiZGF0YTEiOiBkYXRhMSwKCQkiZGF0YTIiOiBkYXRhMgoJfTsKCglodHRwX3hocigiUE9TVCIsICJiYXIiLCBvbmxvYWQsIGJvZHkpOwp9CgpmdW5jdGlvbiBodHRwX3hocihtZXRob2QsIHVybCwgb25sb2FkLCBib2R5KQp7Cgl2YXIgeCA9IG5ldyBYTUxIdHRwUmVxdWVzdCgpOwoJeC5vcGVuKG1ldGhvZCwgaHR0cF9iYXNlICsgdXJsKTsKCXguc2V0UmVxdWVzdEhlYWRlcigiQ29udGVudC1UeXBlIiwgImFwcGxpY2F0aW9uL2pzb24iKTsKCXgub25sb2FkID0gZnVuY3Rpb24oKQoJewoJCWlmICh4LnN0YXR1cyAhPSAyMDApCgkJewoJCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCQkJcmV0dXJuOwoJCX0KCQl0cnkKCQl7CgkJCXZhciByID0geC5yZXNwb25zZVRleHQ7CgkJCW9ubG9hZChyLCBmYWxzZSk7CgkJfQoJCWNhdGNoKGUpCgkJewoJCQlvbmxvYWQociwgdHJ1ZSk7CgkJfQoJfQoKCXgub25lcnJvciA9IGZ1bmN0aW9uKCkKCXsKCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCX0KCglpZiAobWV0aG9kLnRvVXBwZXJDYXNlKCkgPT0gIlBPU1QiKQoJewoJCWlmICh0eXBlb2YgYm9keSA9PSAib2JqZWN0IikKCQkJYm9keSA9IEpTT04uc3RyaW5naWZ5KGJvZHkpOwoKCQl4LnNlbmQoYm9keSk7Cgl9CgllbHNlCgl7CgkJeC5zZW5kKCk7Cgl9Cn0=';
-const SOURCE_START_SCRIPT = 'PHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJbmV3IEFwcChkb2N1bWVudC5ib2R5KTsKCX0KfQo8L3NjcmlwdD4=';
+const SOURCE_START_SCRIPT = 'PHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQkvL0hPVF9SRUxPQURfQ09ERS8vCgkJd2luZG93Ll9fbWFya3VwX2RhdGEgPSBKU09OLnBhcnNlKHhoci5yZXNwb25zZVRleHQpOwoJCW5ldyBBcHAoZG9jdW1lbnQuYm9keSk7Cgl9Cn0KPC9zY3JpcHQ+';
+const SOURCE_HOT_RELOAD = 'dmFyIHdzID0gbmV3IFdlYlNvY2tldCgid3M6Ly8xMjcuMC4wLjE6e3tXU19QT1JUfX0iKTsKd3Mub25tZXNzYWdlID0gZnVuY3Rpb24oKXsgd2luZG93LmxvY2F0aW9uID0gd2luZG93LmxvY2F0aW9uOyB9';
 
 const BASE_PATH_COMPONENT = "./src/components/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_PUBLIC = "./public/";
 
-const VERSION = "0.3.2";
+const VERSION = "0.3.3";
 
 var commands =
 {
@@ -53,6 +54,8 @@ var g_css;
 var g_js;
 var g_json;
 var g_component;
+var g_socket_clients = {};
+var g_ws_port;
 
 var args = process.argv.slice(2);
 var command = args[0];
@@ -187,7 +190,7 @@ function start(port)
 	EXPRESS_APP.get("/index.html", function (request, response)
 	{
 		response.setHeader("Content-Type", "text/html");
-		response.send(render_index_html());
+		response.send(render_index_html(true));
 		return;
 	});
 
@@ -218,12 +221,12 @@ function start(port)
 		if (request.originalUrl == "/index.html")
 		{
 			response.setHeader("Content-Type", "text/html");
-			response.send(render_index_html());
+			response.send(render_index_html(true));
 			return;
 		}
 
 		response.setHeader("Content-Type", "text/html");
-		response.send(render_index_html());
+		response.send(render_index_html(true));
 	});
 
 	if (typeof port[0] == "undefined")
@@ -248,6 +251,21 @@ function start(port)
 		{
 			OPN('http://localhost:' + port);
 		}, 250);
+
+		g_ws_port = port + 1;
+		const WS = require("ws");
+		const WS_SERVER = new WS.Server({ "port": g_ws_port });
+
+		WS_SERVER.on('connection', function connection(ws)
+		{
+			var s = seed(16);
+			ws.data = s;
+			g_socket_clients[s] = ws;
+			ws.on("close", function()
+			{
+				delete g_socket_clients[ws.data];
+			});
+		});
 	});
 }
 
@@ -405,7 +423,7 @@ function build()
 	var name;
 	var UGLIFYJS = require("uglify-es");
 	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(render_index_html());
+	var $ = CHEERIO.load(render_index_html(false));
 
 	name = time_seed();
 	$("link[href$='./dev.css']").attr("href" , "./" + name + ".css");
@@ -444,7 +462,6 @@ function build()
 	log("production build completed with seed " + name);
 	return name;
 }
-
 
 // needs a whole rewrite
 function burn()
@@ -708,13 +725,12 @@ function transpile_all()
 	g_js = js;
 	g_css = css;
 	g_json = markups;
-
-	console.log("transpilgnegin");
-	console.log(g_js);
-	console.log(g_css);
-	console.log(g_json);
-
 	console.timeEnd(msg);
+
+	for (var i in g_socket_clients)
+	{
+		g_socket_clients[i].send("reload-all");
+	}
 }
 
 function onchange(event, file_name)
@@ -854,6 +870,18 @@ function b64_to_file(path, source)
 	FS.writeFileSync(path, to_ascii(source), "utf8");
 }
 
+function seed(length)
+{
+	var alphabet = '0123456789abcdefghijklmnopqrstuwvxyz';
+	var s = "";
+	for (var i=0;i<length;i++)
+	{
+		var ind = Math.floor(Math.random() * alphabet.length);
+		s += alphabet[ind]
+	}
+	return s;
+}
+
 function time_seed()
 {
 	var alphabet = '0123456789abcdefghijklmnopqrstuwvxyz';
@@ -875,14 +903,27 @@ function time_seed()
 	return id;
 }
 
-function render_index_html()
+function render_index_html(development_mode)
 {
 	var CHEERIO = require('cheerio');
 	var $ = CHEERIO.load(to_ascii(SOURCE_INDEX));
 	$("head").append('<link rel="stylesheet" href="./dev.css">');
 	$("head").append('<script src="./dev.js"></script>');
-	$("html").append(to_ascii(SOURCE_START_SCRIPT));
-	return $.html();
+	var src = to_ascii(SOURCE_START_SCRIPT);
+	if (development_mode)
+	{
+		var reloader = to_ascii(SOURCE_HOT_RELOAD);
+		src = src.replace("//HOT_RELOAD_CODE//", reloader);
+	}
+	else
+	{
+		src = src.replace("//HOT_RELOAD_CODE//", "");
+	}
+
+	$("html").append(src);
+	var h = $.html();
+	h = h.replace("{{WS_PORT}}" , g_ws_port);
+	return h;
 }
 
 function time_seed_v2()
@@ -903,28 +944,3 @@ function time_seed_v2()
 	formatted += hour + "_" + minutes + "_" + seconds;
 	return formatted;
 }
-
-/*
-handle process exit and remove jsconfig.json
-
-process.stdin.resume();//so the program will not close instantly
-
-function exitHandler(options, exitCode) {
-    if (options.cleanup) console.log('clean');
-    if (exitCode || exitCode === 0) console.log(exitCode);
-    if (options.exit) process.exit();
-}
-
-//do something when app is closing
-process.on('exit', exitHandler.bind(null,{cleanup:true}));
-
-//catches ctrl+c event
-process.on('SIGINT', exitHandler.bind(null, {exit:true}));
-
-// catches "kill pid" (for example: nodemon restart)
-process.on('SIGUSR1', exitHandler.bind(null, {exit:true}));
-process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
-
-//catches uncaught exceptions
-process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
-*/
