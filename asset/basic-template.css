@@ -1,7 +1,7 @@
-.application *{
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+.app *{
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
-.application .accent{
-	color: #c0a;
+.app .accent{
+	color: #0af;
 }
