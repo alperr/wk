@@ -1,7 +1,19 @@
+.app{
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 770px;	
+	padding: 40px;
+	line-height: 1.4;
+}
+
 .app *{
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .app .accent{
 	color: #0af;
+}
+
+.app li{
+	line-height: 2;
 }
