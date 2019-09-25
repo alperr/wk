@@ -904,6 +904,12 @@ function time_seed()
 	return id;
 }
 
+function compile_wasm()
+{
+	var cmd = "clang --target=wasm32 -nostdlib -Wl,--no-entry -Wl,--export-all -o ";
+	cmd += " sample.wasm sample.c"
+}
+
 function render_index_html(development_mode)
 {
 	var CHEERIO = require('cheerio');
