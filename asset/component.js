@@ -1,42 +1,26 @@
-// THIS FILE IS AUTO GENERATED , DO NOT EDIT
-class Component
+function load_markup(key) // also used for template loading
 {
-	constructor(root, markup)
+	var w = window;
+	if (!w.__markup_data[key])
+		throw "there is no markup for " + key;
+
+	function html_to_element(html)
 	{
-		this.root = root;
-		var element = Component.load_markup(markup);
-		this.root.appendChild(element);
+		var template = document.createElement('template');
+		html = html.trim();
+		template.innerHTML = html;
+		return template.content.firstChild;
 	}
 
-	find(query) // alias for querySelector, inspired from jQuery 
-	{
-		return this.querySelector(query);
-	}
+	var html = decodeURIComponent(atob(w.__markup_data[key]));
+	return html_to_element(html);
+}
 
-	querySelector(query)
-	{
-		return this.root.querySelector(query);
-	}
-
-	querySelectorAll(query)
-	{
-		return this.root.querySelectorAll(query);
-	}
-
-	static load_markup(key) // also used for template loading
-	{
-		var w = window;
-		if (!w.__markup_data[key])
-			throw "there is no markup for " + key;
-	
-		function html_to_element(html)
-		{
-			var template = document.createElement('template');
-			html = html.trim();
-			template.innerHTML = html;
-			return template.content.firstChild;
-		}
-		var html = decodeURIComponent(atob(w.__markup_data[key]));
-		return html_to_element(html);
-	}
+function load_component(root, key)
+{
+	var $ = {};
+	$.root = root;
+	$.find = function(q) { $.root.querySelector(q)[0]; }
+	$.root.appendChild(load_markup(key));
+	return $;
 }

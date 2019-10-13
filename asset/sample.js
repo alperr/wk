@@ -1,7 +1,4 @@
-class SampleComponent extends Component
+function sample_component(root)
 {
-	constructor(root, options)
-	{
-		super(root, "sample-component");
-	}
+	var $ = load_component(root, "sample-component");
 }
