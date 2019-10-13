@@ -20,7 +20,7 @@ function load_component(root, key)
 {
 	var $ = {};
 	$.root = root;
-	$.find = function(q) { $.root.querySelector(q)[0]; }
+	$.find = function(q) { return root.querySelector(q); }
 	$.root.appendChild(load_markup(key));
 	return $;
 }
