@@ -21,7 +21,7 @@ const BASE_PATH_COMPONENT = "./src/components/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_PUBLIC = "./public/";
 
-const VERSION = "0.4.1";
+const VERSION = "0.4.2";
 
 var commands =
 {
@@ -840,9 +840,9 @@ function dash_to_snake(s)
 	var words = s.split("-");
 	var r = [];
 	for (var i in words)
-		r.push(words[i][0].toLowerCase() + words[i].slice(1));
+		r.push(words[i].toLowerCase());
 
-	return r.join("");
+	return r.join("_");
 }
 
 function dash_to_pascal(s)
