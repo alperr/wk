@@ -1,7 +1,7 @@
 var __i18n = {};
 __i18n.selected_lang = "en";
 
-function set_application_language(lang)
+function set_lang(lang)
 {
 	__i18n.selected_lang = lang;
 }
