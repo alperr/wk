@@ -44,6 +44,13 @@ function load_markup(key) // also used for template loading
 			var k = elems[i].getAttribute("i18n");
 			elems[i].innerHTML = i18n(k);
 		}
+
+		elems = e.querySelectorAll("[i18n-placeholder]");
+		for (var i=0;i<elems.length;i++)
+		{
+			var k = elems[i].getAttribute("i18n-placeholder");
+			elems[i].placeholder = i18n(k);
+		}
 	}
 	return e;
 }
