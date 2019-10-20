@@ -1,13 +1,23 @@
 var __i18n = {};
 __i18n.selected_lang = "en";
+__i18n.initialized = false;
 
 function set_lang(lang)
 {
 	__i18n.selected_lang = lang;
+	localStorage.setItem("lang", lang);
 }
 
 function i18n(k)
 {
+	if (!__i18n.initialized)
+	{
+		var l = localStorage.getItem("lang");
+		if (l == null) l = "en";
+		else __i18n.selected_lang = l;
+		__i18n.initialized = true;
+	}
+
 	var t = __i18n.data[k];
 	if (typeof t == "undefined")
 		throw "there is no translation for " + k;
