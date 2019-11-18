@@ -16,12 +16,14 @@ const SOURCE_BASIC_CSS = 'LmFwcHsKCW1hcmdpbi1sZWZ0OiBhdXRvOwoJbWFyZ2luLXJpZ2h0Oi
 const SOURCE_HTTP = 'dmFyIGh0dHBfYmFzZSA9ICJodHRwOi8vbG9jYWxob3N0OjgwNjAvIjsKCmZ1bmN0aW9uIGh0dHBfZ2V0X2ZvbyhpZCwgb25sb2FkKSAvLyBzYW1wbGUgZ2V0IHJlcXVlc3QKewoJaHR0cF94aHIoIkdFVCIsICJmb28/aWQ9IiArIGlkLCBvbmxvYWQpOwp9CgpmdW5jdGlvbiBodHRwX3Bvc3RfYmFyKGRhdGExLCBkYXRhMiwgb25sb2FkKSAvLyBzYW1wbGUgcG9zdCByZXF1ZXN0CnsKCXZhciBib2R5ID0KCXsKCQkiZGF0YTEiOiBkYXRhMSwKCQkiZGF0YTIiOiBkYXRhMgoJfTsKCglodHRwX3hocigiUE9TVCIsICJiYXIiLCBvbmxvYWQsIGJvZHkpOwp9CgpmdW5jdGlvbiBodHRwX3hocihtZXRob2QsIHVybCwgb25sb2FkLCBib2R5KQp7Cgl2YXIgeCA9IG5ldyBYTUxIdHRwUmVxdWVzdCgpOwoJeC5vcGVuKG1ldGhvZCwgaHR0cF9iYXNlICsgdXJsKTsKCXguc2V0UmVxdWVzdEhlYWRlcigiQ29udGVudC1UeXBlIiwgImFwcGxpY2F0aW9uL2pzb24iKTsKCXgub25sb2FkID0gZnVuY3Rpb24oKQoJewoJCWlmICh4LnN0YXR1cyAhPSAyMDApCgkJewoJCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCQkJcmV0dXJuOwoJCX0KCQl0cnkKCQl7CgkJCXZhciByID0geC5yZXNwb25zZVRleHQ7CgkJCW9ubG9hZChyLCBmYWxzZSk7CgkJfQoJCWNhdGNoKGUpCgkJewoJCQlvbmxvYWQociwgdHJ1ZSk7CgkJfQoJfQoKCXgub25lcnJvciA9IGZ1bmN0aW9uKCkKCXsKCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCX0KCglpZiAobWV0aG9kLnRvVXBwZXJDYXNlKCkgPT0gIlBPU1QiKQoJewoJCWlmICh0eXBlb2YgYm9keSA9PSAib2JqZWN0IikKCQkJYm9keSA9IEpTT04uc3RyaW5naWZ5KGJvZHkpOwoKCQl4LnNlbmQoYm9keSk7Cgl9CgllbHNlCgl7CgkJeC5zZW5kKCk7Cgl9Cn0=';
 const SOURCE_START_SCRIPT = 'PHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQkvL0hPVF9SRUxPQURfQ09ERS8vCgkJd2luZG93Ll9fbWFya3VwX2RhdGEgPSBKU09OLnBhcnNlKHhoci5yZXNwb25zZVRleHQpOwoJCW5ldyBhcHAoZG9jdW1lbnQuYm9keSk7Cgl9Cn0KPC9zY3JpcHQ+';
 const SOURCE_HOT_RELOAD = 'dmFyIHdzID0gbmV3IFdlYlNvY2tldCgid3M6Ly8xMjcuMC4wLjE6e3tXU19QT1JUfX0iKTsKd3Mub25tZXNzYWdlID0gZnVuY3Rpb24oKXsgd2luZG93LmxvY2F0aW9uID0gd2luZG93LmxvY2F0aW9uOyB9';
+const SOURCE_SAMPLE_C = 'I2luY2x1ZGUgPHN0ZGludC5oPgoKdWludDMyX3QgYWRkKHVpbnQzMl90IGEsIHVpbnQzMl90IGIpCnsKCXJldHVybiBhK2I7Cn0=';
 
 const BASE_PATH_COMPONENT = "./src/components/";
+const BASE_PATH_WASM_SOURCE = "./src/c/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_PUBLIC = "./public/";
 
-const VERSION = "0.4.5";
+const VERSION = "0.4.6";
 
 var commands =
 {
@@ -120,7 +122,7 @@ prints version
 	log(msg);
 }
 
-function init()
+function init(type)
 {
 	if (is_project_valid("./"))
 	{
@@ -128,10 +130,34 @@ function init()
 		return;
 	}
 
-	log("initializing a new project");
+	var is_wasm = false;
+	if (typeof type != "undefined")
+	{
+		if (type != "wasm")
+		{
+			error("invalid initialization type" + type);
+			log("if you want to init a webassembly project,");
+			log("wk init wasm");
+			return;
+		}
+		is_wasm = true;
+	}
+
+	if (is_wasm)
+		log("initializing a new webassembly project");
+	else
+		log("initializing a new javascript project");
+	
 	create_folder_if_not_exits(BASE_PATH_PUBLIC);
 	create_folder_if_not_exits(BASE_PATH_SRC);
 	create_folder_if_not_exits(BASE_PATH_COMPONENT);
+	
+	if (is_wasm)
+	{
+		create_folder_if_not_exits(BASE_PATH_WASM_SOURCE);
+		b64_to_file(BASE_PATH_WASM_SOURCE + "main.c", SOURCE_SAMPLE_C);
+	}
+
 	b64_to_file("./public/index.html", SOURCE_INDEX);
 
 	new_component(["app"]);
@@ -143,7 +169,11 @@ function init()
 
 	FS.writeFileSync("./jsconfig.json", JSON.stringify(jsconfig), "utf8");
 
-	highlight("project initialized successfully");
+	var msg = "project initialized successfully";
+	if (is_wasm)
+		msg = "webassembly " + msg;
+
+	highlight(msg);
 	log("you can run **start** command now")
 	log("wk start  | auto-builds components and serves them under ./public folder");
 }
@@ -635,6 +665,7 @@ function transpile_all()
 	var html_changed = false;
 	var css_changed = false;
 	var js_changed = false;
+	var c_changed = false;
 
 	for (var i in g_changed_files)
 	{
@@ -646,11 +677,15 @@ function transpile_all()
 
 		if (g_changed_files[i].endsWith(".html"))
 			html_changed = true;
+
+		if (g_changed_files[i].endsWith(".c"))
+			c_changed = true;
 	}
 
 	if (js_changed) msg = "  (js) |"
 	if (css_changed) msg = " (css) |";
 	if (html_changed) msg = "(html) |";
+	if (c_changed) msg = " (c) |";
 	msg = FG_DIM + msg + RESET + '\x1b[32m transpile \x1b[0m';
 	console.time(msg);
 	
@@ -928,8 +963,18 @@ function time_seed()
 	return id;
 }
 
-function compile_wasm()
+function compile_wasm(c_files)
 {
+	var cmd = "emcc ";
+	for (var i=0;i<c_files;i++)
+	{
+		var f = c_files[i];
+		cmd += f + " ";
+	}
+
+	cmd += "-s WASM=1 -s SIDE_MODULE=1 -s LINKABLE=1 -s EXPORT_ALL=1 ";
+	cmd += "-o app.wasm";
+
 	var cmd = "clang --target=wasm32 -nostdlib -Wl,--no-entry -Wl,--export-all -o ";
 	cmd += " sample.wasm sample.c"
 }

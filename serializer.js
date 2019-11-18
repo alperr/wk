@@ -13,7 +13,8 @@ var map =
 	"const SOURCE_BASIC_CSS = " 	: "basic-template.css",
 	"const SOURCE_HTTP = " 		: "http.js",
 	"const SOURCE_START_SCRIPT = "	: "start-script.html",
-	"const SOURCE_HOT_RELOAD = "	: "hot-reload.js"
+	"const SOURCE_HOT_RELOAD = "	: "hot-reload.js",
+	"const SOURCE_SAMPLE_C = "	: "template.c"
 }
 
 for (var i in lines)
