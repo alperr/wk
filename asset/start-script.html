@@ -6,9 +6,9 @@ window.onload = function ()
 	xhr.send();
 	xhr.onload = function()
 	{
-		//HOT_RELOAD_CODE//
 		window.__markup_data = JSON.parse(xhr.responseText);
-		new app(document.body);
+		//HOT_RELOAD_CODE//
+		//INITIALIZER_CODE//
 	}
 }
 </script>
