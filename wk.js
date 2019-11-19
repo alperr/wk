@@ -155,7 +155,7 @@ function init(type)
 	if (is_wasm)
 	{
 		create_folder_if_not_exits(BASE_PATH_WASM_SOURCE);
-		b64_to_file(BASE_PATH_WASM_SOURCE + "main.c", SOURCE_SAMPLE_C);
+		b64_to_file(BASE_PATH_WASM_SOURCE + "app.c", SOURCE_SAMPLE_C);
 	}
 
 	b64_to_file("./public/index.html", SOURCE_INDEX);
@@ -986,8 +986,6 @@ function time_seed()
 
 function compile_wasm(c_files)
 {
-	console.log("compiling wasmm");
-	console.log(c_files);
 	var cmd = "emcc ";
 	for (var i=0;i<c_files.length;i++)
 	{
@@ -995,17 +993,36 @@ function compile_wasm(c_files)
 		cmd += f + " ";
 	}
 
-	cmd += "-s WASM=1 -s SIDE_MODULE=1 -s LINKABLE=1 -s EXPORT_ALL=1 ";
-	cmd += "-o app.wasm";
+	// emcc test.c -Os -s WASM=1 -s SIDE_MODULE=1 -o test.wasm	
+	// cmd += "-s WASM=1 -s SIDE_MODULE=1 -s LINKABLE=1 -s EXPORT_ALL=1 ";
+	cmd += "-s WASM=1 -s SIDE_MODULE=1 ";
+	cmd += "-o " + BASE_PATH_PUBLIC + "app.wasm";
 	
-	console.log(cmd);
+	log(cmd);
 	try{ EXEC(cmd); }
 	catch(e)
 	{
-		error(e.status);  // Might be 127 in your example.
-		error(e.message); // Holds the message you typically want.
-		error(e.stderr);  // Holds the stderr output. Use `.toString()`.
-		error(e.stdout);  // Holds the stdout output. Use `.toString()`.
+		if (e.message.indexOf("emcc: command not found") != -1)
+		{
+			error("can't find emcc");
+			error("please add env variables in current terminal session");
+			highlight("cd ~/emsdk");
+			highlight("source emsdk_env.sh");
+			minor_log("if you haven't installed emsdk");
+			minor_log("git clone https://github.com/emscripten-core/emsdk.git");
+			minor_log("cd emsdk");
+			minor_log("./emsdk install latest");
+			minor_log("./emsdk activate latest");
+
+			process.exit();
+		}
+		else
+		{
+			error(e.status);  // Might be 127 in your example.
+			error(e.message); // Holds the message you typically want.
+			error(e.stderr);  // Holds the stderr output. Use `.toString()`.
+			error(e.stdout);  // Holds the stdout output. Use `.toString()`.
+		}
 	}
 }
 
@@ -1031,7 +1048,7 @@ function render_index_html(development_mode)
 	var code;
 	if (is_wasm)
 	{
-		code = "WebAssembly.instantiateStreaming(fetch('app.wasm')).then(onwasmload);";
+		code = "WebAssembly.instantiateStreaming(fetch('app.wasm'),{}).then(onwasmload);";
 		code +="\n\t\tfunction onwasmload(obj){ new app(document.body, obj); }";
 		src = src.replace("//INITIALIZER_CODE//", code);
 	}
