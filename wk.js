@@ -993,9 +993,9 @@ function compile_wasm(c_files)
 		cmd += f + " ";
 	}
 
-	// emcc test.c -Os -s WASM=1 -s SIDE_MODULE=1 -o test.wasm	
+	// emcc test.c -Os -s WASM=1 -s SIDE_MODULE=1 -o test.wasm
 	// cmd += "-s WASM=1 -s SIDE_MODULE=1 -s LINKABLE=1 -s EXPORT_ALL=1 ";
-	cmd += "-s WASM=1 -s SIDE_MODULE=1 ";
+	cmd += "-O2 -s WASM=1 -s SIDE_MODULE=1 ";
 	cmd += "-o " + BASE_PATH_PUBLIC + "app.wasm";
 	
 	log(cmd);
@@ -1049,7 +1049,7 @@ function render_index_html(development_mode)
 	if (is_wasm)
 	{
 		code = "WebAssembly.instantiateStreaming(fetch('app.wasm'),{}).then(onwasmload);";
-		code +="\n\t\tfunction onwasmload(obj){ new app(document.body, obj); }";
+		code +="\n\t\tfunction onwasmload(obj){ window.wasm = {}; wasm = obj.instance.exports; new app(document.body, obj); }";
 		src = src.replace("//INITIALIZER_CODE//", code);
 	}
 	else
