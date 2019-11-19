@@ -17,13 +17,14 @@ const SOURCE_HTTP = 'dmFyIGh0dHBfYmFzZSA9ICJodHRwOi8vbG9jYWxob3N0OjgwNjAvIjsKCmZ
 const SOURCE_START_SCRIPT = 'PHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7CgkJLy9IT1RfUkVMT0FEX0NPREUvLwoJCS8vSU5JVElBTElaRVJfQ09ERS8vCgl9Cn0KPC9zY3JpcHQ+';
 const SOURCE_HOT_RELOAD = 'dmFyIHdzID0gbmV3IFdlYlNvY2tldCgid3M6Ly8xMjcuMC4wLjE6e3tXU19QT1JUfX0iKTsKd3Mub25tZXNzYWdlID0gZnVuY3Rpb24oKXsgd2luZG93LmxvY2F0aW9uID0gd2luZG93LmxvY2F0aW9uOyB9';
 const SOURCE_SAMPLE_C = 'I2luY2x1ZGUgPHN0ZGludC5oPgoKdWludDMyX3QgYWRkKHVpbnQzMl90IGEsIHVpbnQzMl90IGIpCnsKCXJldHVybiBhK2I7Cn0=';
+const SOURCE_WASM_INIT = 'dmFyIG9wdHMgPQp7CgkiZW52IjoKCXsKCQkiX19tZW1vcnlfYmFzZSIgOiAwLAoJCSdtZW1vcnknOiBuZXcgV2ViQXNzZW1ibHkuTWVtb3J5KHtpbml0aWFsOiAyNTZ9KSwKCX0gCn0KV2ViQXNzZW1ibHkuaW5zdGFudGlhdGVTdHJlYW1pbmcoZmV0Y2goJ2FwcC53YXNtJyksIG9wdHMpLnRoZW4ob253YXNtbG9hZCk7CmZ1bmN0aW9uIG9ud2FzbWxvYWQob2JqKQp7IAoJd2luZG93Lm9iaiA9IG9iajsgCgl3aW5kb3cud2FzbSA9IHt9OwoJd2FzbSA9IG9iai5pbnN0YW5jZS5leHBvcnRzOwoJY29uc29sZS5sb2cod2FzbS5hZGQoMTIsMTIpKTsKfQ==';
 
 const BASE_PATH_COMPONENT = "./src/components/";
 const BASE_PATH_WASM_SOURCE = "./src/c/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_PUBLIC = "./public/";
 
-const VERSION = "0.4.6";
+const VERSION = "0.4.7";
 
 var commands =
 {
@@ -984,8 +985,33 @@ function time_seed()
 	return id;
 }
 
+function find_exported_c_functions(c_files)
+{
+	var funcs = [];
+	for (var k=0;k<c_files;k++)
+	{
+		var c_file = c_files[k];
+		var raw = FS.readFileSync(c_file, "utf8");
+		var lines = raw.split("\n");
+		for (var i=0;i<lines.length;i++)
+		{
+			var l = lines[i];
+			if (l.startsWith("// wasm-export"))
+			{
+				var parts = lines[i+1].split(" ");
+				var n = "\"_" + parts[1] + "\"";
+				funcs.push(n);
+				i++;
+			}
+		}
+	}
+	return funcs;
+}
+
 function compile_wasm(c_files)
 {
+	var exported = find_exported_c_functions(c_files);
+
 	var cmd = "emcc ";
 	for (var i=0;i<c_files.length;i++)
 	{
@@ -993,21 +1019,22 @@ function compile_wasm(c_files)
 		cmd += f + " ";
 	}
 
-	// emcc test.c -Os -s WASM=1 -s SIDE_MODULE=1 -o test.wasm
-	// cmd += "-s WASM=1 -s SIDE_MODULE=1 -s LINKABLE=1 -s EXPORT_ALL=1 ";
-	cmd += "-O2 -s WASM=1 -s SIDE_MODULE=1 ";
-	cmd += "-o " + BASE_PATH_PUBLIC + "app.wasm";
-	
+	cmd += "-O2 -s WASM=1 ";
+	cmd += "-o " + BASE_PATH_PUBLIC + "app.wasm ";
+	cmd += "-s EXPORTED_FUNCTIONS=";
+	cmd += "'[";
+	cmd += exported.join(",");
+	cmd += "]'";
+
 	log(cmd);
 	try{ EXEC(cmd); }
-	catch(e)
+	catch(e) 
 	{
 		if (e.message.indexOf("emcc: command not found") != -1)
 		{
 			error("can't find emcc");
 			error("please add env variables in current terminal session");
-			highlight("cd ~/emsdk");
-			highlight("source emsdk_env.sh");
+			highlight("source ~/emsdk/emsdk_env.sh");
 			minor_log("if you haven't installed emsdk");
 			minor_log("git clone https://github.com/emscripten-core/emsdk.git");
 			minor_log("cd emsdk");
@@ -1048,9 +1075,7 @@ function render_index_html(development_mode)
 	var code;
 	if (is_wasm)
 	{
-		code = "WebAssembly.instantiateStreaming(fetch('app.wasm'),{}).then(onwasmload);";
-		code +="\n\t\tfunction onwasmload(obj){ window.wasm = {}; wasm = obj.instance.exports; new app(document.body, obj); }";
-		src = src.replace("//INITIALIZER_CODE//", code);
+		src = src.replace("//INITIALIZER_CODE//", to_ascii(SOURCE_WASM_INIT));
 	}
 	else
 	{
