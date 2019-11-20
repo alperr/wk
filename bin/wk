@@ -24,7 +24,7 @@ const BASE_PATH_WASM_SOURCE = "./src/c/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_PUBLIC = "./public/";
 
-const VERSION = "0.4.7";
+const VERSION = "0.4.8";
 
 var commands =
 {
@@ -711,22 +711,28 @@ function transpile_all()
 
 	}
 
-	files = FS.readdirSync(BASE_PATH_WASM_SOURCE);
+	var is_wasm = FS.existsSync(BASE_PATH_WASM_SOURCE);
+	if (is_wasm)
+	{
+		files = FS.readdirSync(BASE_PATH_WASM_SOURCE);
+		for (var i=0;i<files.length;i++)
+		{
+			var f = files[i];
+			if (f.endsWith(".c"))
+				c_files.push(BASE_PATH_WASM_SOURCE + f);
+		}
+	}
+
+
+	files = FS.readdirSync(BASE_PATH_COMPONENT);
 	for (var i=0;i<files.length;i++)
 	{
 		var f = files[i];
-		if (f.endsWith(".c"))
-			c_files.push(BASE_PATH_WASM_SOURCE + f);
-	}
-
-	files = FS.readdirSync(BASE_PATH_COMPONENT);
-	files.forEach(function(file)
-	{
-		if (file.indexOf('.') == 0)
+		if (f.indexOf('.') == 0)
 			return;	
 
-		names.push(file);
-	});
+		names.push(f);
+	}
 
 	for (var i=0;i<names.length;i++)
 	{
