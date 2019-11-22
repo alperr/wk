@@ -24,7 +24,7 @@ const BASE_PATH_WASM_SOURCE = "./src/c/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_PUBLIC = "./public/";
 
-const VERSION = "0.4.9";
+const VERSION = "0.4.10";
 
 var commands =
 {
@@ -132,11 +132,11 @@ function init(type)
 	}
 
 	var is_wasm = false;
-	(type.length == 1)
+	if (type.length == 1)
 	{
 		if (type[1] != "wasm")
 		{
-			error("invalid initialization type" + type);
+			error("invalid initialization type: " + type);
 			log("if you want to init a webassembly project,");
 			log("wk init wasm");
 			return;
