@@ -24,7 +24,7 @@ const BASE_PATH_WASM_SOURCE = "./src/c/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_PUBLIC = "./public/";
 
-const VERSION = "0.4.10";
+const VERSION = "0.4.11";
 
 var commands =
 {
@@ -472,7 +472,7 @@ function build()
 		"mangle" :
 		{
 			"toplevel" : true,
-			"reserved": ['App', 'Component']
+			"reserved": ['app']
 		}
 	}
 	var msg = '\x1b[32m minification\x1b[0m';
