@@ -2,12 +2,27 @@ var __i18n = {};
 __i18n.selected_lang = "en";
 __i18n.initialized = false;
 
+// this function sets the application language
+// language value must be one of the types written in ./src/i18n.json file
+// sample ./src/i18n.json file looks like this
+// {
+// 	"HELLO": 
+// 	{
+// 		"en": "Hello",
+// 		"it": "Ciao",
+// 		"es": "Hola",
+// 		"tr": "Merhaba"
+// 	}
+// }
 function set_lang(lang)
 {
 	__i18n.selected_lang = lang;
 	localStorage.setItem("lang", lang);
 }
 
+// this function is for getting correct string value for given key
+// key-value pairs are defined in ./src/i18n.json file
+// globally set language value is used for determining correct string value
 function i18n(k)
 {
 	if (!__i18n.initialized)
@@ -29,7 +44,8 @@ function i18n(k)
 	return s;
 }
 
-function load_markup(key) // also used for template loading
+// this function is used for loading template files into HTMLElement
+function load_markup(key)
 {
 	var w = window;
 	if (!w.__markup_data[key])
@@ -65,6 +81,7 @@ function load_markup(key) // also used for template loading
 	return e;
 }
 
+// this function is used in components for loading
 function load_component(root, key)
 {
 	var $ = {};
