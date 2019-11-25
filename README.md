@@ -1,9 +1,41 @@
 # wk
+*CLI for writing web applications*
 
-CLI for writing web applications
+wk imposes a simple approach that utilizes
+html, css and javascript for writing web applications
+
+i wrote this out of frustration with current js development methods (aka: js frameworks)
+
+*this project is under active development and it is subjected to change*
+### Usage
+
+this CLI tool is available through npm
 
 	npm i -g wk-toolkit
-	wk
+
+
+### Initializing a project
+
+	wk init
+
+- Checks if current folder has already initialized
+- Creates boilerplate folders/files for a project if not initialized before
+
+### Starting development server
+
+	wk start
+
+- Starts the file server that hosts the web application on 127.0.0.1 in an available port
+- Starts a file watcher that concatanates the source files (css, js, html) upon change
+- Opens a browser window that runs the web application
+
+### Making a production build
+
+	wk build
+
+- Clones **./public** folder  as **./build**
+- Minifies & merges all javascript and css code under **./src** folder and puts them into **./build** folder with a time seed
+
 
 
 ## Migration Notes 0.3.0 to 0.3.1
@@ -68,4 +100,6 @@ major browsers, which makes one of the transpilation reasons fade away
 still, i am not convinced that dropping typescript is a good idea,
 since wk is still in an experimental stage, i may re-introduce typescript 
 in the future
+
+
 
