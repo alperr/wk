@@ -43,11 +43,11 @@ this CLI tool is available through npm
 
 A freshly initialized project will have following 5 files
 
-- ./src/components/app/app.html
-- ./src/components/app/app.css
-- ./src/components/app/app.js
-- ./public/index.html
-- ./jsconfig.json
+	./src/components/app/app.html
+	./src/components/app/app.css
+	./src/components/app/app.js
+	./public/index.html
+	./jsconfig.json
 
 - every **folder** put into components folder counts as one component
 and every component folder must have one js,css and html file in it.
