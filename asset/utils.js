@@ -81,7 +81,7 @@ function load_markup(key)
 	return e;
 }
 
-// this function is used in components for loading
+// this function is used in components for loading markup
 function load_component(root, key)
 {
 	var $ = {};
