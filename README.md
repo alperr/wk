@@ -58,10 +58,10 @@ or you can just use **wk new component-name** command
 - with **wk start** command, these these js, css and html files are merged and
 served via an http server built into CLI tool
 
-`dont serve the base project folder or public folder yourself for development`
+`dont serve the base project folder or public folder yourself for development always use wk start command for development`
 
 - main document of the web application is **./public/index.html**, you can 
-include 3rd party scripts/css or tweak the document by 
+include 3rd party scripts/css in it
 
 - all assets and 3rd party js/css files should be stored in **./public** folder
 
