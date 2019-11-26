@@ -1,12 +1,12 @@
 # wk 
 *CLI for writing web applications*
 
-wk imposes a simple approach that utilizes
-html, css and javascript for writing web applications
+wk imposes a simple approach that uses html, css and javascript
+for writing web applications
 
 i wrote this out of frustration with current web development methods (aka: js frameworks)
 
-*this project is under active development and it is subjected to change*
+*this project is under active development and its API is subjected to change*
 
 ### Installation
 
@@ -83,6 +83,13 @@ projects written with wk are encouraged to use following style guide
 - indentation is done with tabs
 - there is a soft limit on 3 level indentation and 80 char column size
 
+
+# Changelog
+
+wk is in under active development since 2018 and i have made lots of breaking 
+changes to it, below is the track of all those changes
+
+unfortunately there is no foreseeable date for stable version release yet
 
 ### Migration Notes 0.3.0 to 0.3.1
 August-26-2019
