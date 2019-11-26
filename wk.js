@@ -19,10 +19,10 @@ const SOURCE_HOT_RELOAD = 'dmFyIHdzID0gbmV3IFdlYlNvY2tldCgid3M6Ly8xMjcuMC4wLjE6e
 const SOURCE_SAMPLE_C = 'I2luY2x1ZGUgPHN0ZGludC5oPgoKdWludDMyX3QgYWRkKHVpbnQzMl90IGEsIHVpbnQzMl90IGIpCnsKCXJldHVybiBhK2I7Cn0=';
 const SOURCE_WASM_INIT = 'CQl2YXIgb3B0cyA9CgkJewoJCQkiZW52IjoKCQkJewoJCQkJIl9fbWVtb3J5X2Jhc2UiIDogMCwKCQkJCSdtZW1vcnknOiBuZXcgV2ViQXNzZW1ibHkuTWVtb3J5KHtpbml0aWFsOiA1MTJ9KSwKCQkJfSAKCQl9CgkJV2ViQXNzZW1ibHkuaW5zdGFudGlhdGVTdHJlYW1pbmcoZmV0Y2goJ2FwcC53YXNtJyksIG9wdHMpLnRoZW4ob253YXNtbG9hZCk7CgkJZnVuY3Rpb24gb253YXNtbG9hZChvYmopCgkJeyAKCQkJd2luZG93Lndhc20gPSB7fTsKCQkJd2FzbSA9IG9iai5pbnN0YW5jZS5leHBvcnRzOwoJCX0KCQluZXcgYXBwKGRvY3VtZW50LmJvZHkpOw==';
 
+const BASE_PATH_PUBLIC = "./public/";
+const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 const BASE_PATH_WASM_SOURCE = "./src/c/";
-const BASE_PATH_SRC = "./src/";
-const BASE_PATH_PUBLIC = "./public/";
 
 const VERSION = "0.4.12";
 
@@ -134,7 +134,7 @@ function init(type)
 	var is_wasm = false;
 	if (type.length == 1)
 	{
-		if (type[1] != "wasm")
+		if (type[0] != "wasm")
 		{
 			error("invalid initialization type: " + type);
 			log("if you want to init a webassembly project,");
@@ -159,7 +159,7 @@ function init(type)
 		b64_to_file(BASE_PATH_WASM_SOURCE + "app.c", SOURCE_SAMPLE_C);
 	}
 
-	b64_to_file("./public/index.html", SOURCE_INDEX);
+	b64_to_file(BASE_PATH_PUBLIC + "index.html", SOURCE_INDEX);
 	b64_to_file(BASE_PATH_SRC + "utils.js", SOURCE_UTILS);
 
 	new_component(["app"]);
@@ -513,7 +513,8 @@ function burn()
 
 	var UGLIFYJS = require("uglify-es");
 	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(FS.readFileSync("./public/index.html"));
+	
+	var $ = CHEERIO.load(FS.readFileSync(BASE_PATH_PUBLIC +"index.html"));
 
 	$("script[src$='dev.js']").remove();
 	$("link[href$='dev.css']").remove();
@@ -522,7 +523,7 @@ function burn()
 	embed_script += "		window.onload = function () { window.__markup_data = " + markup +";";
 	embed_script += "		new app(document.getElementById('root')); }"
 
-	var js_content =  FS.readFileSync("./public/dev.js", "utf8");
+	var js_content = FS.readFileSync(BASE_PATH_PUBLIC + "dev.js", "utf8");
 	var options = 
 	{
 		"mangle" :
@@ -541,7 +542,7 @@ function burn()
 	}
 	$("#wk-script").text(minified_js.code + "\n" + embed_script+ "\n");
 	var UGLIFYCSS = require('uglifycss');
-	var minified_css = UGLIFYCSS.processFiles([ './public/dev.css' ], {});
+	var minified_css = UGLIFYCSS.processFiles([ BASE_PATH_PUBLIC + "dev.css" ], {});
 
 	if (typeof $("style")[0] == "undefined")
 		$("head").append($("<style></style>")); 
