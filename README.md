@@ -1,13 +1,14 @@
-# wk
+# wk 
 *CLI for writing web applications*
 
 wk imposes a simple approach that utilizes
 html, css and javascript for writing web applications
 
-i wrote this out of frustration with current js development methods (aka: js frameworks)
+i wrote this out of frustration with current web development methods (aka: js frameworks)
 
 *this project is under active development and it is subjected to change*
-### Usage
+
+### Installation
 
 this CLI tool is available through npm
 
@@ -36,9 +37,51 @@ this CLI tool is available through npm
 - Clones **./public** folder  as **./build**
 - Minifies & merges all javascript and css code under **./src** folder and puts them into **./build** folder with a time seed
 
+## Documentation
+
+`documentation is not complete`
+
+A freshly initialized project will have following 5 files
+
+./src/components/app/app.html
+./src/components/app/app.css
+./src/components/app/app.js
+./public/index.html
+./jsconfig.json
+
+- every **folder** put into components folder counts as one component
+and every component folder must have one js,css and html file in it.
+
+- you can create a new component by creating the folder and necessary 3 files
+or you can just use **wk new component-name** command
+
+- with **wk start** command, these these js, css and html files are merged and
+served via an http server built into CLI tool
+
+`dont serve the base project folder or public folder yourself for development`
+
+- main document of the web application is **./public/index.html**, you can 
+include 3rd party scripts/css or tweak the document by 
+
+- all assets and 3rd party js/css files should be stored in **./public** folder
+
+- if you would like to make a production build use **wk build** command
 
 
-## Migration Notes 0.3.0 to 0.3.1
+### Style Guide
+
+projects written with wk are encouraged to use following style guide
+
+- variables and functions are snake_case
+- constants are UPPER_SNAKE_CASE
+- brace placement is in Allman Style
+- operators are surrounded by one space
+- global variables start with g_ prefix
+- indentation is done with tabs
+- there is a soft limit on 3 level indentation and 80 char column size
+
+
+### Migration Notes 0.3.0 to 0.3.1
 August-26-2019
 
 folder structure is changed with this release (this is a breaking change)
@@ -61,7 +104,7 @@ folder name 'com' has an undesired resemblance with Android package names
 complained with these cryptic namings.
 
 
-## Migration Notes 0.2.22 to 0.3.0
+### Migration Notes 0.2.22 to 0.3.0
 August-18-2019
 
 i have decided to make a breaking change to wk and dropped typescript support 
