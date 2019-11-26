@@ -43,11 +43,11 @@ this CLI tool is available through npm
 
 A freshly initialized project will have following 5 files
 
-./src/components/app/app.html
-./src/components/app/app.css
-./src/components/app/app.js
-./public/index.html
-./jsconfig.json
+- ./src/components/app/app.html
+- ./src/components/app/app.css
+- ./src/components/app/app.js
+- ./public/index.html
+- ./jsconfig.json
 
 - every **folder** put into components folder counts as one component
 and every component folder must have one js,css and html file in it.
@@ -65,7 +65,10 @@ include 3rd party scripts/css in it
 
 - all assets and 3rd party js/css files should be stored in **./public** folder
 
-- if you would like to make a production build use **wk build** command
+- if you would like to make a production build use **wk build** command, 
+it will copy all your assets in **./public** folder and minify all your source code 
+into a new folder **./build**. you can move content of this build folder to any
+http file server to serve your application
 
 
 ### Style Guide
