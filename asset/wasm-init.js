@@ -11,5 +11,5 @@
 		{ 
 			window.wasm = {};
 			wasm = obj.instance.exports;
+			new app(document.body);
 		}
-		new app(document.body);
