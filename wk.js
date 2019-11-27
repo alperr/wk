@@ -645,25 +645,10 @@ function update_markup_enums()
 	g_enums = s;
 }
 
-function error(m)
-{
-	console.log(FG_RED, m, RESET);
-}
-
-function log(m)
-{
-	console.log(RESET, m, RESET);
-}
-
-function highlight(m)
-{
-	console.log(BG_GREEN, m, RESET);
-}
-
-function minor_log(m)
-{
-	console.log(FG_DIM, m, RESET);
-}
+function error(m){ console.log(FG_RED, m, RESET); }
+function log(m){ console.log(RESET, m, RESET); }
+function highlight(m){ console.log(BG_GREEN, m, RESET); }
+function minor_log(m){ console.log(FG_DIM, m, RESET); }
 
 function transpile_all()
 {
@@ -923,16 +908,6 @@ function dash_to_snake(s)
 	return r.join("_");
 }
 
-function dash_to_pascal(s)
-{
-	var words = s.split("-");
-	var r = [];
-	for (var i in words)
-		r.push(words[i][0].toUpperCase() + words[i].slice(1));
-
-	return r.join("");
-}
-
 function dash_to_upper(s)
 {
 	var words = s.split("-");
@@ -941,12 +916,6 @@ function dash_to_upper(s)
 		r.push(words[i].toUpperCase());
 
 	return r.join("_");
-}
-
-function unlink_if_exists(path)
-{
-	try { FS.unlinkSync(path); }
-	catch (e) { }
 }
 
 function to_ascii(source)
@@ -1104,23 +1073,4 @@ function render_index_html(development_mode)
 	var h = $.html();
 	h = h.replace("{{WS_PORT}}" , g_ws_port);
 	return h;
-}
-
-function time_seed_v2()
-{
-	var months = [ 	"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-			"Sep", "Oct", "Nov", "Dec"];
-
-	var date = new Date();
-	var month = months[date.getUTCMonth()];
-	var day = date.getUTCDate();
-
-	var year = date.getUTCFullYear();
-	var hour = date.getHours();
-	var minutes = date.getMinutes();
-	var seconds = date.getSeconds();
-
-	var formatted = year + "_" + month + "_" + day + "_";
-	formatted += hour + "_" + minutes + "_" + seconds;
-	return formatted;
 }
