@@ -16,7 +16,7 @@ const SOURCE_BASIC_CSS = 'LmFwcHsKCW1hcmdpbi1sZWZ0OiBhdXRvOwoJbWFyZ2luLXJpZ2h0Oi
 const SOURCE_HTTP = 'dmFyIGh0dHBfYmFzZSA9ICJodHRwOi8vbG9jYWxob3N0OjgwNjAvIjsKCmZ1bmN0aW9uIGh0dHBfZ2V0X2ZvbyhpZCwgb25sb2FkKSAvLyBzYW1wbGUgZ2V0IHJlcXVlc3QKewoJaHR0cF94aHIoIkdFVCIsICJmb28/aWQ9IiArIGlkLCBvbmxvYWQpOwp9CgpmdW5jdGlvbiBodHRwX3Bvc3RfYmFyKGRhdGExLCBkYXRhMiwgb25sb2FkKSAvLyBzYW1wbGUgcG9zdCByZXF1ZXN0CnsKCXZhciBib2R5ID0KCXsKCQkiZGF0YTEiOiBkYXRhMSwKCQkiZGF0YTIiOiBkYXRhMgoJfTsKCglodHRwX3hocigiUE9TVCIsICJiYXIiLCBvbmxvYWQsIGJvZHkpOwp9CgpmdW5jdGlvbiBodHRwX3hocihtZXRob2QsIHVybCwgb25sb2FkLCBib2R5KQp7Cgl2YXIgeCA9IG5ldyBYTUxIdHRwUmVxdWVzdCgpOwoJeC5vcGVuKG1ldGhvZCwgaHR0cF9iYXNlICsgdXJsKTsKCXguc2V0UmVxdWVzdEhlYWRlcigiQ29udGVudC1UeXBlIiwgImFwcGxpY2F0aW9uL2pzb24iKTsKCXgub25sb2FkID0gZnVuY3Rpb24oKQoJewoJCWlmICh4LnN0YXR1cyAhPSAyMDApCgkJewoJCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCQkJcmV0dXJuOwoJCX0KCQl0cnkKCQl7CgkJCXZhciByID0geC5yZXNwb25zZVRleHQ7CgkJCW9ubG9hZChyLCBmYWxzZSk7CgkJfQoJCWNhdGNoKGUpCgkJewoJCQlvbmxvYWQociwgdHJ1ZSk7CgkJfQoJfQoKCXgub25lcnJvciA9IGZ1bmN0aW9uKCkKCXsKCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCX0KCglpZiAobWV0aG9kLnRvVXBwZXJDYXNlKCkgPT0gIlBPU1QiKQoJewoJCWlmICh0eXBlb2YgYm9keSA9PSAib2JqZWN0IikKCQkJYm9keSA9IEpTT04uc3RyaW5naWZ5KGJvZHkpOwoKCQl4LnNlbmQoYm9keSk7Cgl9CgllbHNlCgl7CgkJeC5zZW5kKCk7Cgl9Cn0=';
 const SOURCE_START_SCRIPT = 'PHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKCXZhciB4aHIgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXhoci5vcGVuKCJHRVQiLCIuL2Rldi5qc29uIik7Cgl4aHIuc2VuZCgpOwoJeGhyLm9ubG9hZCA9IGZ1bmN0aW9uKCkKCXsKCQl3aW5kb3cuX19tYXJrdXBfZGF0YSA9IEpTT04ucGFyc2UoeGhyLnJlc3BvbnNlVGV4dCk7Ci8vSE9UX1JFTE9BRF9DT0RFLy8KLy9JTklUSUFMSVpFUl9DT0RFLy8KCX0KfQo8L3NjcmlwdD4=';
 const SOURCE_HOT_RELOAD = 'dmFyIHdzID0gbmV3IFdlYlNvY2tldCgid3M6Ly8xMjcuMC4wLjE6e3tXU19QT1JUfX0iKTsKd3Mub25tZXNzYWdlID0gZnVuY3Rpb24oKXsgd2luZG93LmxvY2F0aW9uID0gd2luZG93LmxvY2F0aW9uOyB9';
-const SOURCE_SAMPLE_C = 'I2luY2x1ZGUgPHN0ZGludC5oPgoKdWludDMyX3QgYWRkKHVpbnQzMl90IGEsIHVpbnQzMl90IGIpCnsKCXJldHVybiBhK2I7Cn0=';
+const SOURCE_SAMPLE_C = 'I2luY2x1ZGUgPHN0ZGludC5oPgp0eXBlZGVmIHVpbnQ2NF90IHU2NDsJCQl0eXBlZGVmIHVpbnQzMl90IHUzMjsKdHlwZWRlZiB1aW50MTZfdCB1MTY7CQkJdHlwZWRlZiB1aW50OF90IHU4Owp0eXBlZGVmIGludDY0X3QgaTY0OwkJCXR5cGVkZWYgaW50MzJfdCBpMzI7CnR5cGVkZWYgaW50MTZfdCBpMTY7CQkJdHlwZWRlZiBpbnQ4X3QgaTg7CgovLyBnbG9iYWxzCnU4IF9faGVhcF9iYXNlOwp1MzIgaGVhcF9hZGRyZXNzID0gKHUzMikmX19oZWFwX2Jhc2U7CgovLyB3YXNtLWV4cG9ydAp1MzIgaW5pdCgpCnsKCXJldHVybiAodTMyKSgmX19oZWFwX2Jhc2UpOwp9CgovLyB3YXNtLWV4cG9ydAp1MzIgc3F1YXJlKHUzMiBhKQp7CglyZXR1cm4gYSAqIGE7Cn0KCi8vIHdhc20tZXhwb3J0CnUzMiBhZGQodTMyIGEsIHUzMiBiKQp7CglyZXR1cm4gYSArIGI7Cn0KCnZvaWQqIGFsbG9jKGludCBuKQp7Cgl1MzIgciA9IGhlYXBfYWRkcmVzczsKCWhlYXBfYWRkcmVzcyArPSBuOwoJcmV0dXJuICh2b2lkICopcjsKfQ==';
 const SOURCE_WASM_INIT = 'CQl2YXIgb3B0cyA9CgkJewoJCQkiZW52IjoKCQkJewoJCQkJIl9fbWVtb3J5X2Jhc2UiIDogMCwKCQkJCSdtZW1vcnknOiBuZXcgV2ViQXNzZW1ibHkuTWVtb3J5KHtpbml0aWFsOiA1MTJ9KSwKCQkJfSAKCQl9CgkJV2ViQXNzZW1ibHkuaW5zdGFudGlhdGVTdHJlYW1pbmcoZmV0Y2goJ2FwcC53YXNtJyksIG9wdHMpLnRoZW4ob253YXNtbG9hZCk7CgkJZnVuY3Rpb24gb253YXNtbG9hZChvYmopCgkJeyAKCQkJd2luZG93Lndhc20gPSB7fTsKCQkJd2FzbSA9IG9iai5pbnN0YW5jZS5leHBvcnRzOwoJCX0KCQluZXcgYXBwKGRvY3VtZW50LmJvZHkpOw==';
 
 const BASE_PATH_PUBLIC = "./public/";
@@ -24,7 +24,7 @@ const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 const BASE_PATH_WASM_SOURCE = "./src/c/";
 
-const VERSION = "0.4.12";
+const VERSION = "0.4.13";
 
 var commands =
 {
@@ -992,10 +992,19 @@ function time_seed()
 	return id;
 }
 
+function trim_paranthesis(s)
+{
+	var ind = s.indexOf("(");
+	if (ind != -1)
+		s = s.substr(0, ind);
+
+	return s.trim();
+}
+
 function find_exported_c_functions(c_files)
 {
 	var funcs = [];
-	for (var k=0;k<c_files;k++)
+	for (var k=0;k<c_files.length;k++)
 	{
 		var c_file = c_files[k];
 		var raw = FS.readFileSync(c_file, "utf8");
@@ -1006,7 +1015,8 @@ function find_exported_c_functions(c_files)
 			if (l.startsWith("// wasm-export"))
 			{
 				var parts = lines[i+1].split(" ");
-				var n = "\"_" + parts[1] + "\"";
+				var name = trim_paranthesis(parts[1]);
+				var n = "\"_" + name + "\"";
 				funcs.push(n);
 				i++;
 			}

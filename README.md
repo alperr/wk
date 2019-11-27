@@ -41,8 +41,9 @@ this CLI tool is available through npm
 
 `documentation is not complete`
 
-A freshly initialized project will have following 5 files
+A freshly initialized project will have following 6 files
 
+	./src/utils.js
 	./src/components/app/app.html
 	./src/components/app/app.css
 	./src/components/app/app.js
@@ -50,10 +51,18 @@ A freshly initialized project will have following 5 files
 	./jsconfig.json
 
 - every **folder** put into components folder counts as one component
-and every component folder must have one js,css and html file in it.
+and every component folder must have one js,css and html file in it.So 
+**app.js**, **app.css** and **app.html** are necessary for the **app** component
+
+- **app** component is the prime component of a wk project and entry point for 
+the program is the first line of **app.js**
 
 - you can create a new component by creating the folder and necessary 3 files
 or you can just use **wk new component-name** command
+
+- **./src/utils.js** contains a couple of functions to load markup(html) files
+into DOM elements (see: ./src/utils.js/load_markup ), usage example can be seen
+in **app.js**
 
 - with **wk start** command, these these js, css and html files are merged and
 served via an http server built into CLI tool
