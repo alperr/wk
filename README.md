@@ -4,6 +4,8 @@
 wk imposes a simple approach that uses html, css and javascript
 for writing web applications
 
+![usage](https://raw.githubusercontent.com/alperr/wk/master/asset/usage.svg)
+
 i wrote this out of frustration with current web development methods (aka: js frameworks)
 
 *this project is under active development and its API is subjected to change*
