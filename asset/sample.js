@@ -1,4 +1,8 @@
-function sample_component(root)
+class extends HTMLElement
 {
-	var $ = load_component(root, "sample-component");
+	constructor(){ super(); }
+	connectedCallback()
+	{
+		
+	}
 }
