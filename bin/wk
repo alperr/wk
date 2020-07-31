@@ -10,17 +10,19 @@ const RESET = "\x1b[0m";
 
 const SOURCE_INDEX = 'PGh0bWw+Cgk8aGVhZD4KCQk8bWV0YSBjaGFyc2V0PSJ1dGYtOCI+CgkJPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCI+CgkJPHRpdGxlPndrPC90aXRsZT4KCTwvaGVhZD4KCTxib2R5PgoJCTx3ZWItYXBwPjwvd2ViLWFwcD4KCTwvYm9keT4KPC9odG1sPg==';
 const SOURCE_SAMPLE = 'Y2xhc3MgZXh0ZW5kcyBIVE1MRWxlbWVudA0Kew0KCWNvbnN0cnVjdG9yKCl7IHN1cGVyKCk7IH0NCgljb25uZWN0ZWRDYWxsYmFjaygpDQoJew0KCQkNCgl9DQp9';
-const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwJz4KCTxoMj5oZWxsbzwvaDI+Cgk8cD50aGlzIHBhZ2UgaXMgZ2VuZXJhdGVkIGJ5IGEgY29tbWFuZCBsaW5lIGludGVyZmFjZTogPHN0cm9uZz53azwvc3Ryb25nPiA8L3A+Cgk8cD53ZWIgYXBwcyBnZW5lcmF0ZWQgd2l0aCA8c3Ryb25nPndrPC9zdHJvbmc+IGFyZSBjb21wb3NlZCBvZiA8c3Ryb25nPmNvbXBvbmVudHM8L3N0cm9uZz48L3A+Cgk8aDM+d2hhdCBpcyBhIGNvbXBvbmVudD88L2gzPgoJPHVsPgoJCTxsaT5ldmVyeSBpbmRlcGVuZGVudGx5IGZ1bmN0aW9uaW5nIHBhcnQgb2YgYSB1c2VyIGludGVyZmFjZSBpcyBjYWxsZWQgYXMgPHN0cm9uZz5jb21wb25lbnQ8L3N0cm9uZz48L2xpPgoJCTxsaT5ldmVyeSBjb21wb25lbnQgY29udGFpbnMgb25lIDxzdHJvbmc+amF2YXNjcmlwdDwvc3Ryb25nPiwgPHN0cm9uZz5jc3M8L3N0cm9uZz4gYW5kIDxzdHJvbmc+aHRtbDwvc3Ryb25nPiBmaWxlPC9saT4KCQk8bGk+PHN0cm9uZz5jb21wb25lbnRzPC9zdHJvbmc+IGFyZSBzdG9yZWQgdW5kZXIgPHN0cm9uZz5zcmMvY29tcG9uZW50cy88L3N0cm9uZz4gYXMgaW5kaXZpZHVhbCBmb2xkZXJzPC9saT4KCQk8bGk+ZXZlcnkgcHJvamVjdCBjb250YWlucyBhIG1haW4gY29tcG9uZW50IG5hbWVkIDxzdHJvbmc+YXBwPC9zdHJvbmc+PC9saT4KCQk8bGkgY2xhc3M9ImFjY2VudCI+eW91IGNhbiB0d2VhayB0aGlzIGFwcCBjb21wb25lbnQncyBzdHlsZSBieSBlZGl0aW5nIDxzdHJvbmc+c3JjL2NvbXBvbmVudHMvYXBwL2FwcC5jc3M8L3N0cm9uZz4gZmlsZTwvbGk+CgkJPGxpPm1hcmt1cCBvZiBhcHAgY29tcG9uZW50IGlzIHdyaXR0ZW4gaW50byA8c3Ryb25nPnNyYy9jb21wb25lbnRzL2FwcC9hcHAuaHRtbDwvc3Ryb25nPjwvbGk+CgkJPGxpPmNvbXBvbmVudHMgYXJlIGRlZmluZWQgYXMgPHN0cm9uZz5mdW5jdGlvbnM8L3N0cm9uZz4gaW4gLmpzIGZpbGVzIGFuZCBhbnkgY29tcG9uZW50IGNhbiBjcmVhdGUgYW5vdGhlciBvbmUganVzdCBieSBjYWxsaW5nIHRoZSBjb25zdHJ1Y3RvciBvZiB0aGF0IGNvbXBvbmVudDwvbGk+CgkJPGxpPnByb2dyYW0gZW50cnkgcG9pbnQgaXMgPHN0cm9uZz5zcmMvY29tcG9uZW50cy9hcHAvYXBwLmpzPC9zdHJvbmc+PC9saT4KCTwvdWw+CgoJPHA+CgkJYWxsIG90aGVyIC5qcyBmaWxlcyBzaG91bGQgYmUgcGxhY2VkIHVuZGVyIDxzdHJvbmc+c3JjLzwvc3Ryb25nPiBmb2xkZXIuCgkJd2sgY29uY2F0YW5hdGVzIGV2ZXJ5IC5qcyBmaWxlcyBpbiBzcmMgZm9sZGVyIChpbmNsdWRpbmcgamF2YXNjcmlwdCBmaWxlcyBvZiBlYWNoIGNvbXBvbmVudCkKCQlhbmQgc2VydmVzIHRoZW0gYXMgYSBzaW5nbGUgamF2YXNjcmlwdCBmaWxlLCBoZW5jZSB5b3UgZG9uJ3QgaGF2ZSB0byB1c2UgCgkJPHNwYW4gY2xhc3M9ImFjY2VudCI+cmVxdWlyZSgpPC9zcGFuPiBvciA8c3BhbiBjbGFzcz0iYWNjZW50Ij5pbXBvcnQ8L3NwYW4+CgkJdG8gZGV2ZWxvcCBpbiBhCW11bHRpcGxlIGZpbGUgamF2YXNjcmlwdCBlbnZpcm9ubWVudCwgZXZlcnl0aGluZyB5b3Ugd3JpdGUgaXMgcmVnaXN0ZXJlZCB0byBnbG9iYWwuCgk8L3A+CgoJPGhyPgoJPHA+cnVuIDxzdHJvbmc+d2sgaGVscDwvc3Ryb25nPiB0byBsZWFybiBkZXRhaWxzIG9mIENMSTwvcD4KPC9kaXY+';
+const SOURCE_BASIC_HTML = 'PGRpdiBjbGFzcz0nYXBwJz4KCTxoMj5oZWxsbzwvaDI+Cgk8cD50aGlzIHBhZ2UgaXMgZ2VuZXJhdGVkIGJ5IGEgY29tbWFuZCBsaW5lIGludGVyZmFjZTogPHN0cm9uZz53azwvc3Ryb25nPiA8L3A+Cgk8cD53ZWIgYXBwcyBnZW5lcmF0ZWQgd2l0aCA8c3Ryb25nPndrPC9zdHJvbmc+IGFyZSBjb21wb3NlZCBvZiA8c3Ryb25nPmNvbXBvbmVudHM8L3N0cm9uZz48L3A+Cgk8aDM+d2hhdCBpcyBhIGNvbXBvbmVudD88L2gzPgoJPHVsPgoJCTxsaT5ldmVyeSBpbmRlcGVuZGVudGx5IGZ1bmN0aW9uaW5nIHBhcnQgb2YgYSB1c2VyIGludGVyZmFjZSBpcyBjYWxsZWQgYXMgPHN0cm9uZz5jb21wb25lbnQ8L3N0cm9uZz48L2xpPgoJCTxsaT5ldmVyeSBjb21wb25lbnQgY29udGFpbnMgb25lIDxzdHJvbmc+amF2YXNjcmlwdDwvc3Ryb25nPiwgPHN0cm9uZz5jc3M8L3N0cm9uZz4gYW5kIAoJCTxzdHJvbmc+aHRtbDwvc3Ryb25nPiBmaWxlPC9saT4KCQk8bGk+PHN0cm9uZz5jb21wb25lbnRzPC9zdHJvbmc+IGFyZSBzdG9yZWQgdW5kZXIgPHN0cm9uZz5zcmMvY29tcG9uZW50cy88L3N0cm9uZz4gYXMgaW5kaXZpZHVhbCBmb2xkZXJzPC9saT4KCQk8bGk+ZXZlcnkgcHJvamVjdCBjb250YWlucyBhIG1haW4gY29tcG9uZW50IG5hbWVkIDxzdHJvbmc+d2ViLWFwcDwvc3Ryb25nPjwvbGk+CgkJPGxpIGNsYXNzPSJhY2NlbnQiPnlvdSBjYW4gdHdlYWsgdGhpcyB3ZWItYXBwIGNvbXBvbmVudCdzIHN0eWxlIGJ5IGVkaXRpbmcgCgkJPHN0cm9uZz5zcmMvY29tcG9uZW50cy93ZWItYXBwL3dlYi1hcHAuY3NzPC9zdHJvbmc+IGZpbGU8L2xpPgoJCTxsaT5tYXJrdXAgb2Ygd2ViLWFwcCBjb21wb25lbnQgaXMgd3JpdHRlbiBpbnRvIAoJCTxzdHJvbmc+c3JjL2NvbXBvbmVudHMvd2ViLWFwcC93ZWItYXBwLmh0bWw8L3N0cm9uZz48L2xpPgoJCTxsaT5jb21wb25lbnRzIGFyZSBkZWZpbmVkIGFzIDxzdHJvbmc+ZnVuY3Rpb25zPC9zdHJvbmc+CgkJaW4gLmpzIGZpbGVzIGFuZCBhbnkgY29tcG9uZW50IGNhbiBjcmVhdGUgYW5vdGhlciBvbmUganVzdCBieSBjYWxsaW5nIHRoZSBjb25zdHJ1Y3RvciBvZiB0aGF0IGNvbXBvbmVudDwvbGk+CgkJPGxpPnByb2dyYW0gZW50cnkgcG9pbnQgaXMgPHN0cm9uZz5zcmMvY29tcG9uZW50cy93ZWItYXBwL3dlYi1hcHAuanM8L3N0cm9uZz48L2xpPgoJPC91bD4KCgk8cD4KCQlhbGwgb3RoZXIgLmpzIGZpbGVzIHNob3VsZCBiZSBwbGFjZWQgdW5kZXIgPHN0cm9uZz5zcmMvPC9zdHJvbmc+IGZvbGRlci4KCQl3ayBjb25jYXRhbmF0ZXMgZXZlcnkgLmpzIGZpbGVzIGluIHNyYyBmb2xkZXIgKGluY2x1ZGluZyBqYXZhc2NyaXB0IGZpbGVzIG9mIGVhY2ggY29tcG9uZW50KQoJCWFuZCBzZXJ2ZXMgdGhlbSBhcyBhIHNpbmdsZSBqYXZhc2NyaXB0IGZpbGUsIGhlbmNlIHlvdSBkb24ndCBoYXZlIHRvIHVzZSAKCQk8c3BhbiBjbGFzcz0iYWNjZW50Ij5yZXF1aXJlKCk8L3NwYW4+IG9yIDxzcGFuIGNsYXNzPSJhY2NlbnQiPmltcG9ydDwvc3Bhbj4KCQl0byBkZXZlbG9wIGluIGEJbXVsdGlwbGUgZmlsZSBqYXZhc2NyaXB0IGVudmlyb25tZW50LCBldmVyeXRoaW5nIHlvdSB3cml0ZSBpcyByZWdpc3RlcmVkIHRvIGdsb2JhbC4KCTwvcD4KCgk8aHI+Cgk8cD5ydW4gPHN0cm9uZz53ayBoZWxwPC9zdHJvbmc+IHRvIGxlYXJuIGRldGFpbHMgb2YgQ0xJPC9wPgo8L2Rpdj4=';
 const SOURCE_BASIC_CSS = 'LmFwcHsKCW1hcmdpbi1sZWZ0OiBhdXRvOwoJbWFyZ2luLXJpZ2h0OiBhdXRvOwoJbWF4LXdpZHRoOiA3NzBweDsJCglwYWRkaW5nOiA0MHB4OwoJbGluZS1oZWlnaHQ6IDEuNDsKfQoKLmFwcCAqewoJZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJ1NlZ29lIFVJJywgUm9ib3RvLCAnSGVsdmV0aWNhIE5ldWUnLCBzYW5zLXNlcmlmOwp9CgouYXBwIC5hY2NlbnR7Cgljb2xvcjogIzBhZjsKfQoKLmFwcCBsaXsKCWxpbmUtaGVpZ2h0OiAyOwp9';
-const SOURCE_HTTP = 'dmFyIGh0dHBfYmFzZSA9ICJodHRwOi8vbG9jYWxob3N0OjgwNjAvIjsKCmZ1bmN0aW9uIGh0dHBfZ2V0X2ZvbyhpZCwgb25sb2FkKSAvLyBzYW1wbGUgZ2V0IHJlcXVlc3QKewoJaHR0cF94aHIoIkdFVCIsICJmb28/aWQ9IiArIGlkLCBvbmxvYWQpOwp9CgpmdW5jdGlvbiBodHRwX3Bvc3RfYmFyKGRhdGExLCBkYXRhMiwgb25sb2FkKSAvLyBzYW1wbGUgcG9zdCByZXF1ZXN0CnsKCXZhciBib2R5ID0KCXsKCQkiZGF0YTEiOiBkYXRhMSwKCQkiZGF0YTIiOiBkYXRhMgoJfTsKCglodHRwX3hocigiUE9TVCIsICJiYXIiLCBvbmxvYWQsIGJvZHkpOwp9CgpmdW5jdGlvbiBodHRwX3hocihtZXRob2QsIHVybCwgb25sb2FkLCBib2R5KQp7Cgl2YXIgeCA9IG5ldyBYTUxIdHRwUmVxdWVzdCgpOwoJeC5vcGVuKG1ldGhvZCwgaHR0cF9iYXNlICsgdXJsKTsKCXguc2V0UmVxdWVzdEhlYWRlcigiQ29udGVudC1UeXBlIiwgImFwcGxpY2F0aW9uL2pzb24iKTsKCXgub25sb2FkID0gZnVuY3Rpb24oKQoJewoJCWlmICh4LnN0YXR1cyAhPSAyMDApCgkJewoJCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCQkJcmV0dXJuOwoJCX0KCQl0cnkKCQl7CgkJCXZhciByID0geC5yZXNwb25zZVRleHQ7CgkJCW9ubG9hZChyLCBmYWxzZSk7CgkJfQoJCWNhdGNoKGUpCgkJewoJCQlvbmxvYWQociwgdHJ1ZSk7CgkJfQoJfQoKCXgub25lcnJvciA9IGZ1bmN0aW9uKCkKCXsKCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCX0KCglpZiAobWV0aG9kLnRvVXBwZXJDYXNlKCkgPT0gIlBPU1QiKQoJewoJCWlmICh0eXBlb2YgYm9keSA9PSAib2JqZWN0IikKCQkJYm9keSA9IEpTT04uc3RyaW5naWZ5KGJvZHkpOwoKCQl4LnNlbmQoYm9keSk7Cgl9CgllbHNlCgl7CgkJeC5zZW5kKCk7Cgl9Cn0=';
 const SOURCE_START_SCRIPT = 'PHNjcmlwdCBpZD0id2stc2NyaXB0Ij4Kd2luZG93Lm9ubG9hZCA9IGZ1bmN0aW9uICgpCnsKLy9IT1RfUkVMT0FEX0NPREUvLwp9Cjwvc2NyaXB0Pg==';
 const SOURCE_HOT_RELOAD = 'CXZhciB3cyA9IG5ldyBXZWJTb2NrZXQoIndzOi8vMTI3LjAuMC4xOnt7V1NfUE9SVH19Iik7Cgl3cy5vbm1lc3NhZ2UgPSBmdW5jdGlvbigpeyB3aW5kb3cubG9jYXRpb24gPSB3aW5kb3cubG9jYXRpb247IH0=';
+const SOURCE_HTTP = 'dmFyIGh0dHBfYmFzZSA9ICJodHRwOi8vbG9jYWxob3N0OjgwNjAvIjsKCmZ1bmN0aW9uIGh0dHBfZ2V0X2ZvbyhpZCwgb25sb2FkKSAvLyBzYW1wbGUgZ2V0IHJlcXVlc3QKewoJaHR0cF94aHIoIkdFVCIsICJmb28/aWQ9IiArIGlkLCBvbmxvYWQpOwp9CgpmdW5jdGlvbiBodHRwX3Bvc3RfYmFyKGRhdGExLCBkYXRhMiwgb25sb2FkKSAvLyBzYW1wbGUgcG9zdCByZXF1ZXN0CnsKCXZhciBib2R5ID0KCXsKCQkiZGF0YTEiOiBkYXRhMSwKCQkiZGF0YTIiOiBkYXRhMgoJfTsKCglodHRwX3hocigiUE9TVCIsICJiYXIiLCBvbmxvYWQsIGJvZHkpOwp9CgpmdW5jdGlvbiBodHRwX3hocihtZXRob2QsIHVybCwgb25sb2FkLCBib2R5KQp7Cgl2YXIgeCA9IG5ldyBYTUxIdHRwUmVxdWVzdCgpOwoJeC5vcGVuKG1ldGhvZCwgaHR0cF9iYXNlICsgdXJsKTsKCXguc2V0UmVxdWVzdEhlYWRlcigiQ29udGVudC1UeXBlIiwgImFwcGxpY2F0aW9uL2pzb24iKTsKCXgub25sb2FkID0gZnVuY3Rpb24oKQoJewoJCWlmICh4LnN0YXR1cyAhPSAyMDApCgkJewoJCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCQkJcmV0dXJuOwoJCX0KCQl0cnkKCQl7CgkJCXZhciByID0geC5yZXNwb25zZVRleHQ7CgkJCW9ubG9hZChyLCBmYWxzZSk7CgkJfQoJCWNhdGNoKGUpCgkJewoJCQlvbmxvYWQociwgdHJ1ZSk7CgkJfQoJfQoKCXgub25lcnJvciA9IGZ1bmN0aW9uKCkKCXsKCQlvbmxvYWQodW5kZWZpbmVkLCB0cnVlKTsKCX0KCglpZiAobWV0aG9kLnRvVXBwZXJDYXNlKCkgPT0gIlBPU1QiKQoJewoJCWlmICh0eXBlb2YgYm9keSA9PSAib2JqZWN0IikKCQkJYm9keSA9IEpTT04uc3RyaW5naWZ5KGJvZHkpOwoKCQl4LnNlbmQoYm9keSk7Cgl9CgllbHNlCgl7CgkJeC5zZW5kKCk7Cgl9Cn0=';
+const SOURCE_EVENT = 'Y29uc3QgU0FNUExFX0VWRU5UID0gMDsKY29uc3QgQU5PVEhFUl9FVkVOVCA9IDE7CgpmdW5jdGlvbiBvbihldmVudCwgZm4pCnsKCWRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoZXZlbnQsIGZuKTsKfQoKZnVuY3Rpb24gb2ZmKGV2ZW50LCBmbikKewoJZG9jdW1lbnQucmVtb3ZlRXZlbnRMaXN0ZW5lcihldmVudCwgZm4pOwp9CgpmdW5jdGlvbiBkaXNwYXRjaChldmVudCkKewoJZG9jdW1lbnQuZGlzcGF0Y2hFdmVudChuZXcgRXZlbnQoZXZlbnQpKTsKfQo=';
+const SOURCE_ROUTER = 'dmFyIHJvdXRlcl9wYXRocyA9IHt9CgpmdW5jdGlvbiBuYXZpZ2F0ZShwYXRoLCBzaG91bGRfYWRkX2hpc3RvcnkpCnsKCWlmICh0eXBlb2Ygcm91dGVyX3BhdGhzW3BhdGhdID09ICJ1bmRlZmluZWQiKQoJCXJldHVybjsKCQoJdmFyIHRpdGxlID0gcm91dGVyX3BhdGhzW3BhdGhdWzFdOwoJZG9jdW1lbnQudGl0bGUgPSB0aXRsZTsKCglpZiAoc2hvdWxkX2FkZF9oaXN0b3J5KQoJCXdpbmRvdy5oaXN0b3J5LnB1c2hTdGF0ZShwYXRoLCB0aXRsZSwgcGF0aCk7CgoJZm9yICh2YXIga2V5IGluIHJvdXRlcl9wYXRocykKCQlyb3V0ZXJfcGF0aHNba2V5XVswXS5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOwoKCXJvdXRlcl9wYXRoc1twYXRoXVswXS5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKfQoKZnVuY3Rpb24gaW5pdF9yb3V0ZXIoZG9tKQp7Cgl2YXIgY2hpbGRyZW4gPSBkb20uY2hpbGRyZW47Cglmb3IgKHZhciBpPTA7aTxjaGlsZHJlbi5sZW5ndGg7aSsrKQoJewoJCXZhciBjID0gY2hpbGRyZW5baV07CgkJdmFyIHBhdGggPSBjLmdldEF0dHJpYnV0ZSgicGF0aCIpOwoJCXZhciB0aXRsZSA9IGMuZ2V0QXR0cmlidXRlKCJ0aXRsZSIpOwoJCWlmIChwYXRoID09IG51bGwpCgkJCWNvbnRpbnVlOwoJCWlmICh0aXRsZSA9PSBudWxsKQoJCQl0aXRsZSA9ICIiOwoJCXJvdXRlcl9wYXRoc1twYXRoXSA9IFtjLCB0aXRsZV07Cgl9CgoJdmFyIGFsbF9saW5rcyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoImFbaW50ZXJuYWxdIik7Cglmb3IgKHZhciBpPTA7aTxhbGxfbGlua3MubGVuZ3RoO2krKykKCXsKCQl2YXIgYSA9IGFsbF9saW5rc1tpXTsKCQlhLm9uY2xpY2sgPSBmdW5jdGlvbihlKQoJCXsKCQkJZS5wcmV2ZW50RGVmYXVsdCgpOwoJCQluYXZpZ2F0ZSh0aGlzLmdldEF0dHJpYnV0ZSgiaHJlZiIpLCB0cnVlKTsKCQl9Cgl9CgoJbmF2aWdhdGUod2luZG93LmxvY2F0aW9uLnBhdGhuYW1lLCBmYWxzZSk7CgoJd2luZG93Lm9ucG9wc3RhdGUgPSBmdW5jdGlvbihlKQoJewoJCXZhciBwYXRoID0gIi8iOwoJCWlmIChlLnN0YXRlKQoJCQlwYXRoID0gZS5zdGF0ZTsKCQkJCgkJbmF2aWdhdGUocGF0aCwgZmFsc2UpOwoJfTsKfQo=';
 
 const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.0";
+const VERSION = "0.5.2";
 
 var commands =
 {
@@ -181,7 +183,6 @@ function start(port)
 	log("starting file server and auto-builder");
 	
 	start_watcher();
-	var OPN = require("open");
 
 	const EXPRESS = require('express');
 	const EXPRESS_APP = EXPRESS();
@@ -234,6 +235,7 @@ function start(port)
 		if (err)
 		{
 			error("no port available for http server");
+			process.exit();
 		}
 
 		EXPRESS_APP.listen(port);
@@ -241,7 +243,7 @@ function start(port)
 
 		setTimeout(function()
 		{
-			OPN('http://localhost:' + port);
+			EXEC("xdg-open " + 'http://localhost:' + port);
 		}, 250);
 
 		g_ws_port = port + 1;
@@ -317,6 +319,20 @@ function new_component(a)
 	}
 
 	create_component_files(a[0]);
+}
+
+function bundle()
+{
+	var CHEERIO = require('cheerio');
+	var $ = CHEERIO.load(render_index_html(false));
+
+	var scripts = $("script")
+	
+}
+
+function export_component()
+{
+	
 }
 
 function delete_component(a)
@@ -449,7 +465,6 @@ function build()
 	FS.writeFileSync( "./build/" + name + ".js", minified_js.code);
 	FS.writeFileSync("./build/index.html" , h);
 	FS.writeFileSync( "./build/" + name + ".css", minified_css);
-	
 
 	console.timeEnd(msg);
 	log("production build completed with seed " + name);
@@ -459,13 +474,22 @@ function build()
 
 function add_extras()
 {
-	var path;
+	var paths = 
+	[
+		["./src/http.js", SOURCE_HTTP],
+		["./src/event.js", SOURCE_EVENT],
+		["./src/router.js", SOURCE_ROUTER]
+	]
 
-	path = "./src/http.js"
-	if (!FS.existsSync(path))
+	for (var i=0;i<paths.length;i++)
 	{
-		b64_to_file(path, SOURCE_HTTP);
-		log("written " + path);
+		var path = paths[i][0];
+		var source = paths[i][1];
+		if (!FS.existsSync(path))
+		{
+			b64_to_file(path, source);
+			log("written " + path);
+		}
 	}
 }
 
@@ -518,7 +542,7 @@ function transpile_all()
 	if (css_changed) msg = " (css) |";
 	if (html_changed) msg = "(html) |";
 	msg = FG_DIM + msg + RESET + '\x1b[32m transpile \x1b[0m';
-	console.time(msg);
+	var start = Date.now();
 	
 	g_changed_files = [];
 	var js = "";
@@ -577,7 +601,7 @@ function transpile_all()
 		// ideally we shoud parse javascript and put this markup injecting
 		// code by modifying parsed javascript code
 		var search = "connectedCallback()\r\n\t{";
-		var target = "connectedCallback()\n\t{\n\t\tthis.innerHTML = `"+markup+"`";
+		var target = "connectedCallback()\n\t{\n\t\tthis.root = this.cloneNode(true);\n\t\tthis.innerHTML = `"+markup+"`";
 		
 		js_content = js_content.replace(search,target);
 		js += `customElements.define("${names[i]}", ${js_content});\n`;
@@ -603,17 +627,14 @@ function transpile_all()
 	g_js = js;
 	g_css = css;
 
-	console.timeEnd(msg);
+	console.log(msg + ": " + (Date.now() - start) + "ms");
 
 	for (var i in g_socket_clients)
-	{
 		g_socket_clients[i].send("reload-all");
-	}
 }
 
 function onchange(event, file_name)
 {
-	// console.log(file_name);
 	// write a better file watch handler
 	if (	!file_name.endsWith(".js") && 
 		!file_name.endsWith(".css") && 
@@ -642,19 +663,13 @@ function print_invalid_project_msg(path)
 function is_project_valid(path)
 {
 	if (!FS.existsSync(path + "public"))
-	{
 		return false;
-	}
 
 	if (!FS.existsSync(path + "src"))
-	{
 		return false;
-	}
 
 	if (!FS.existsSync(path + "src/components"))
-	{
 		return false;
-	}
 
 	return true;
 }
