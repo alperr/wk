@@ -10,7 +10,6 @@ var map =
 	"const SOURCE_SAMPLE = " 	: "sample.js",
 	"const SOURCE_BASIC_HTML = " 	: "basic-template.html",
 	"const SOURCE_BASIC_CSS = " 	: "basic-template.css",
-	"const SOURCE_CLEANSLATE = " 	: "cleanslate.css",
 	"const SOURCE_HTTP = " 		: "http.js",
 	"const SOURCE_EVENT = "		: "event.js",
 	"const SOURCE_ROUTER = "	: "router.js",
