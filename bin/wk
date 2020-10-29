@@ -22,7 +22,7 @@ const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.5";
+const VERSION = "0.5.6";
 
 var commands =
 {
@@ -55,7 +55,7 @@ var g_css;
 var g_js;
 var g_socket_clients = {};
 var g_ws_port;
-var g_transpile_mode = "LIBRARY";
+var g_transpile_mode = "STANDART";
 var g_library_name;
 
 var args = process.argv.slice(2);
@@ -632,7 +632,7 @@ function transpile_all()
 		
 		js_content = js_content.replace(search,target);
 
-		if (g_transpile_mode == "LIBRARY" && names[i] == "web-app")
+		if ((g_transpile_mode == "LIBRARY") && (names[i] == "web-app"))
 		{
 			js += `customElements.define("${g_library_name}", ${js_content});\n`;
 		}
