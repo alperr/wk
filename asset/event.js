@@ -1,5 +1,5 @@
-const SAMPLE_EVENT = 0;
-const ANOTHER_EVENT = 1;
+const ROUTE_CHANGE = 0;
+const ACCESS_VIOLATION = 1;
 
 function on(event, fn)
 {

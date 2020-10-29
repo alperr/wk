@@ -1,9 +1,31 @@
-var http_base = "http://localhost:8060/";
+var http_base = "https://remoteapi.com/";
 
-function http_get_foo(id, onload) // sample get request
+if (location.hostname == "localhost")
+	http_base = "http://localhost:7124/";
+
+function http_serialize(obj)
 {
-	http_xhr("GET", "foo?id=" + id, onload);
+	var q = "";
+	var count = 0;
+	for (var key in obj)
+	{
+		if (typeof obj[key] == "undefined")
+			continue;
+
+		if (count > 0)
+			q+= "&";
+
+		q += key;
+		q += "=";
+		q += encodeURIComponent(obj[key]);
+		count++;
+	}
+	if (q.length != 0)
+		q = "?" + q;
+
+	return q;
 }
+
 
 function http_post_bar(data1, data2, onload) // sample post request
 {
@@ -25,23 +47,23 @@ function http_xhr(method, url, onload, body)
 	{
 		if (x.status != 200)
 		{
-			onload(undefined, true);
+			onload(undefined, true, x.status);
 			return;
 		}
 		try
 		{
 			var r = x.responseText;
-			onload(r, false);
+			onload(r, false, x.status);
 		}
 		catch(e)
 		{
-			onload(r, true);
+			onload(r, true, x.status);
 		}
 	}
 
 	x.onerror = function()
 	{
-		onload(undefined, true);
+		onload(undefined, true, x.status);
 	}
 
 	if (method.toUpperCase() == "POST")

@@ -1,23 +1,46 @@
 var router_paths = {}
-var router_next_onhide_function = function(){}
+
 function navigate(path, should_add_history)
 {
 	if (typeof router_paths[path] == "undefined")
+	{
+		hide_all();
 		return;
+	}
+
+	function hide_all()
+	{
+		for (var key in router_paths)
+			router_paths[key][0].style.display = "none";		
+	}
+
 	
-	var [container, title, onshow, onhide] = router_paths[path];
+	var is_public = router_paths[path][2];
+
+	if (!is_public)
+	{
+		if (typeof g_token == "undefined")
+		{
+			dispatch(ACCESS_VIOLATION);
+			return;
+		}
+	}
+
+	var title = router_paths[path][1];
 	document.title = title;
 
 	if (should_add_history)
 		window.history.pushState(path, title, path);
 
-	for (var key in router_paths)
-		router_paths[key][0].style.display = "none";
+	// console.log(g_last_shown_route);
+	// console.log(g_current_route);
 
-	container.style.display = "block";
-	router_next_onhide_function();
-	router_next_onhide_function = onhide;
-	onshow();
+	g_last_shown_route = g_current_route;
+	g_current_route = path;
+	
+	hide_all();
+	router_paths[path][0].style.display = "block";
+	dispatch(ROUTE_CHANGE);
 }
 
 function init_router(dom)
@@ -28,17 +51,14 @@ function init_router(dom)
 		var c = children[i];
 		var path = c.getAttribute("path");
 		var title = c.getAttribute("title");
-		var onshow = c.onshow;
-		var onhide = c.onhide;
+		var is_public = c.hasAttribute("public");
+
 		if (path == null)
 			continue;
 		if (title == null)
 			title = "";
-		if (typeof onshow == "undefined")
-			onshow = function(){};
-		if (typeof onhide == "undefined")
-			onhide = function(){};
-		router_paths[path] = [c, title, onshow, onhide];
+
+		router_paths[path] = [c, title, is_public];
 	}
 
 	var all_links = document.querySelectorAll("a[internal]");
@@ -59,7 +79,7 @@ function init_router(dom)
 		var path = "/";
 		if (e.state)
 			path = e.state;
-		
+			
 		navigate(path, false);
 	};
 }
