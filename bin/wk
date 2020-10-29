@@ -22,7 +22,7 @@ const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.6";
+const VERSION = "0.5.7";
 
 var commands =
 {
@@ -31,10 +31,8 @@ var commands =
 	"start" : start,
 	"new" : new_component,
 	"build" : build,
-	"lib": library_build,
 	"help" : print_large_help,
 	"del" : delete_component,
-	"deploy": deploy,	// remove
 	"commit" : commit,	// remove
 	"extras": add_extras,
 	"-v" : version,
@@ -157,19 +155,6 @@ function deinit()
 	delete_folder_recursive(BASE_PATH_SRC);
 	delete_folder_recursive(BASE_PATH_PUBLIC);
 	log("- de initialized project and deleted all files");
-}
-
-function library_build(name)
-{
-	if (name.length == 0)
-	{
-		error("provide a name");
-		process.exit();
-	}
-
-	g_library_name = name[0];
-	g_transpile_mode = "LIBRARY";
-	build();
 }
 
 function start(port)
@@ -377,15 +362,6 @@ function version()
 	log("version: " + VERSION);
 }
 
-function deploy()
-{
-	build();
-	EXEC("git add -A;");
-	EXEC("git commit -m 'release';");
-	EXEC("git push;");
-	log("deployed");
-}
-
 function commit(message)
 {
 	if (typeof message === "undefined")
@@ -436,6 +412,7 @@ function check_version()
 function build()
 {
 	check_legacy_project();
+	check_build_type();
 
 	if (g_transpile_mode == "LIBRARY")
 		log("building library")
@@ -640,7 +617,6 @@ function transpile_all()
 		{
 			js += `customElements.define("${names[i]}", ${js_content});\n`;
 		}
-		
 
 		if (FS.existsSync(input + '.css'))
 		{
@@ -729,6 +705,20 @@ function check_legacy_project()
 			process.exit();
 		}
 	});
+}
+
+
+function check_build_type()
+{
+	try{
+		var conf = JSON.parse(FS.readFileSync("./jsconfig.json", "utf8"));
+	} catch(e) { error("can't read jsconfig.json"); }
+	
+	if (typeof conf["lib"] != "undefined")
+	{
+		g_library_name = conf["lib"];
+		g_transpile_mode = "LIBRARY";
+	}
 }
 
 function create_folder_if_not_exits(path)
