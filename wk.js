@@ -22,7 +22,7 @@ const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.7";
+const VERSION = "0.5.8";
 
 var commands =
 {
@@ -604,7 +604,7 @@ function transpile_all()
 		// this is very loose
 		// ideally we shoud parse javascript and put this markup injecting
 		// code by modifying parsed javascript code
-		var search = "connectedCallback()\r\n\t{";
+		var search = "connectedCallback()\n\t{";
 		var target = "connectedCallback()\n\t{\n\t\tthis.root = this.cloneNode(true);\n\t\tthis.innerHTML = `"+markup+"`";
 		
 		js_content = js_content.replace(search,target);
