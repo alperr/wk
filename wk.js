@@ -22,7 +22,7 @@ const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.8";
+const VERSION = "0.5.9";
 
 var commands =
 {
@@ -604,10 +604,19 @@ function transpile_all()
 		// this is very loose
 		// ideally we shoud parse javascript and put this markup injecting
 		// code by modifying parsed javascript code
-		var search = "connectedCallback()\n\t{";
-		var target = "connectedCallback()\n\t{\n\t\tthis.root = this.cloneNode(true);\n\t\tthis.innerHTML = `"+markup+"`";
 		
-		js_content = js_content.replace(search,target);
+		var lines = js_content.split("\n");
+		for (var j=0;j<lines.length;j++)
+		{
+			var l = lines[j];
+			if (l.indexOf("connectedCallback()") != -1)
+			{
+				lines.splice(j+2, 0, "\n\t\tthis.root = this.cloneNode(true);\n\t\tthis.innerHTML = `"+markup+"`")
+				break;
+			}
+		}
+		
+		js_content = lines.join("\n");
 
 		if ((g_transpile_mode == "LIBRARY") && (names[i] == "web-app"))
 		{
