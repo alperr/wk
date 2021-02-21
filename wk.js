@@ -22,7 +22,7 @@ const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.9";
+const VERSION = "0.5.10";
 
 var commands =
 {
@@ -471,6 +471,13 @@ function build()
 		FS.writeFileSync( "./build/" + name + ".css", minified_css);
 		log("production build completed with seed " + name);
 	}
+
+	function size(s)
+	{
+		return Math.floor(s / 1000) + "kB";
+	}
+
+	log(`JS: ${size(minified_js.code.length)} CSS: ${size(minified_css.length)}`);
 
 	console.timeEnd(msg);
 	return name;
