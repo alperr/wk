@@ -1,1 +1,143 @@
-hi
+<h1 id="wk">wk</h1>
+<p><em>CLI for writing web applications</em></p>
+<p>wk imposes a simple approach that uses html, css and javascript
+for writing web applications</p>
+<p><img src="https://raw.githubusercontent.com/alperr/wk/master/asset/usage.svg?sanitize=true" alt="usage"></p>
+<p>i wrote this out of frustration with current web development methods (aka: js frameworks)</p>
+<p><em>this project is under active development and its API is subjected to change</em></p>
+<h3 id="installation">Installation</h3>
+<p>this CLI tool is available through npm</p>
+<pre><code>npm <span class="hljs-selector-tag">i</span> -g wk-toolkit
+</code></pre><h3 id="initializing-a-project">Initializing a project</h3>
+<pre><code><span class="hljs-attribute">wk init</span>
+</code></pre><ul>
+<li>Checks if current folder has already initialized</li>
+<li>Creates boilerplate folders/files for a project if not initialized before</li>
+</ul>
+<h3 id="starting-development-server">Starting development server</h3>
+<pre><code>wk <span class="hljs-literal">start</span>
+</code></pre><ul>
+<li>Starts the file server that hosts the web application on 127.0.0.1 in an available port</li>
+<li>Starts a file watcher that concatanates the source files (css, js, html) upon change</li>
+<li>Opens a browser window that runs the web application</li>
+</ul>
+<h3 id="making-a-production-build">Making a production build</h3>
+<pre><code><span class="hljs-attribute">wk build</span>
+</code></pre><ul>
+<li>Clones <strong>./public</strong> folder  as <strong>./build</strong></li>
+<li>Minifies &amp; merges all javascript and css code under <strong>./src</strong> folder and puts them into <strong>./build</strong> folder with a time seed</li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<p><code>documentation is not complete</code></p>
+<p>A freshly initialized project will have following 5 files</p>
+<pre><code>./src/components/web-app/web-app<span class="hljs-selector-class">.html</span>
+./src/components/web-app/web-app<span class="hljs-selector-class">.css</span>
+./src/components/web-app/web-app<span class="hljs-selector-class">.js</span>
+./public/index<span class="hljs-selector-class">.html</span>
+./jsconfig.json
+</code></pre><ul>
+<li><p>every <strong>folder</strong> put into components folder counts as one component
+and every component folder must have one js,css and html file in it.So 
+<strong>web-app.js</strong>, <strong>web-app.css</strong> and <strong>web-app.html</strong> are necessary for the <strong>web-app</strong> component</p>
+</li>
+<li><p><strong>web-app</strong> component is the prime component of a wk project and entry point for 
+the program is the first line of <strong>web-app.js</strong></p>
+</li>
+<li><p>you can create a new component by creating the folder and necessary 3 files
+or you can just use <strong>wk new component-name</strong> command</p>
+</li>
+<li><p>with <strong>wk start</strong> command, these these js, css and html files are merged and
+served via an http server built into CLI tool</p>
+</li>
+</ul>
+<p><code>dont serve the base project folder or public folder yourself for development always use wk start command for development</code></p>
+<ul>
+<li><p>main document of the web application is <strong>./public/index.html</strong>, you can 
+include 3rd party scripts/css in it</p>
+</li>
+<li><p>all assets and 3rd party js/css files should be stored in <strong>./public</strong> folder</p>
+</li>
+<li><p>if you would like to make a production build use <strong>wk build</strong> command, 
+it will copy all your assets in <strong>./public</strong> folder and minify all your source code 
+into a new folder <strong>./build</strong>. you can move content of this build folder to any
+http file server to serve your application</p>
+</li>
+</ul>
+<h3 id="style-guide">Style Guide</h3>
+<p>projects written with wk are encouraged to use following style guide</p>
+<ul>
+<li>variables and functions are snake_case</li>
+<li>constants are UPPER_SNAKE_CASE</li>
+<li>brace placement is in Allman Style</li>
+<li>operators are surrounded by one space</li>
+<li>global variables start with g_ prefix</li>
+<li>indentation is done with tabs</li>
+<li>there is a soft limit on 3 level indentation and 80 char column size</li>
+</ul>
+<h1 id="changelog">Changelog</h1>
+<p>wk is in under active development since 2018 and i have made lots of breaking 
+changes to it, below is the track of all those changes</p>
+<p>unfortunately there is no foreseeable date for stable version release yet</p>
+<h3 id="migration-notes-0-4-14-to-0-5-0">Migration Notes 0.4.14 to 0.5.0</h3>
+<p>July-20-2020</p>
+<ul>
+<li>standart web components syntax is adopted for components. </li>
+<li>main component renamed from app to web-app (to match web components naming)</li>
+</ul>
+<h3 id="migration-notes-0-3-0-to-0-3-1">Migration Notes 0.3.0 to 0.3.1</h3>
+<p>August-26-2019</p>
+<p>folder structure is changed with this release (this is a breaking change)</p>
+<ul>
+<li><p>www is changed to public
+since this folder is for serving static files,
+i thought it would be a good idea to name it www/, 
+(just like default apache root folder name)
+but no one get the reference and i decided to change its name to public/
+which is inspired from create-react-app </p>
+</li>
+<li><p>src is kept same
+src is a good abbrevetion for name &#39;source&#39; so i kept it as it is</p>
+</li>
+<li><p>com is moved under src and renamed as src/components</p>
+</li>
+</ul>
+<p>folder name &#39;com&#39; has an undesired resemblance with Android package names 
+( eg: com.foo.bar ) i thought having 3 letter base folder names looked cool 
+( www, src, com) but every developer that tried to use wk, 
+complained with these cryptic namings.</p>
+<h3 id="migration-notes-0-2-22-to-0-3-0">Migration Notes 0.2.22 to 0.3.0</h3>
+<p>August-18-2019</p>
+<p>i have decided to make a breaking change to wk and dropped typescript support </p>
+<p>even though i love typescript and typed languages for programming, 
+i had some negative experiences with &#39;typescript&#39; so far </p>
+<ul>
+<li>typescript transpiler is slow and getting slower with each release.
+i have tried lots of things but there is no way for me to solve this problem
+(i have even experimented alternative compiler &#39;sucrase&#39;)</li>
+<li>typescript language is growing very rapidly and wk uses outdated typescript
+features like triple-slash-reference-directives and namespace keyword.wk already
+encourages to use a small subset of typescript language, the statement 
+&#39;wk is a toolkit for developing web apps with typescript&#39; is getting less true
+with each typescript release (which is too frequent for my taste)</li>
+<li>even it is very easy to understand how it works, typescript is 
+complexifying wk for new learners, new wk users are always asking typescript
+related questions instead of wk architecture to understand a project written
+with wk</li>
+<li>as of aug 2019, es6 &#39;class&#39; and &#39;extends&#39; keyword is very well supported by
+major browsers, which makes one of the transpilation reasons fade away</li>
+<li>one less dependency in the project always feels good</li>
+</ul>
+<h3 id="what-is-gained-by-dropping-typescript">what is gained by dropping typescript</h3>
+<ul>
+<li>faster build times (5-10 seconds to 10-50 milliseconds)</li>
+<li>less things to learn for new wk users</li>
+<li>smaller codebase for maintaining wk development itself</li>
+</ul>
+<h3 id="what-is-lost-by-dropping-typescript">what is lost by dropping typescript</h3>
+<ul>
+<li>very helpful type checks</li>
+<li>smart autocomplete, code navigation</li>
+</ul>
+<p>still, i am not convinced that dropping typescript is a good idea,
+since wk is still in an experimental stage, i may re-introduce typescript 
+in the future</p>
