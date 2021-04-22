@@ -32,7 +32,6 @@ var commands =
 	"build" : build,
 	"help" : print_large_help,
 	"del" : delete_component,
-	"commit" : commit,	// remove
 	"extras": add_extras,
 	"-v" : version,
 	"--v" : version,
