@@ -21,7 +21,7 @@ const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.11";
+const VERSION = "0.5.12";
 
 var commands =
 {
@@ -80,31 +80,25 @@ function print_large_help()
 {
 	version();
 	var msg = `
-wk (version ${version}) has following 6 commands
+wk (version ${VERSION}) has following 6 commands
 
-  wk init                            (i)
-initializes a new project
-creates required folders src, public
-and app component
+  wk init                                    (i)
+initializes the project
 
-  wk start <port?>                   (s)
-starts development server on 
-http://localhost:6040
-takes an optional argument for http port
+  wk start <port?>                           (s)
+starts development server on localhost:6040
 
-  wk build                           (b)
-creates a production build
-minifies javascript and css, puts them
-under build/ folder with a time seed
+  wk build                                   (b)
+creates build/ folder, minifies js&css
 
-  wk new <component-name>            (n)
-generates component folder
-generates necessary js,css and html files
+  wk new <component-name>                    (n)
+generates given component folder and
+necessary js,css and html files
 
-  wk del <component-name>            (d)
-deletes component folder recursively
+  wk del <component-name>                    (d)
+deletes given component folder recursively
 
-  wk extras                          (x)
+  wk extras                                  (x)
 generates extra utility javascript files
 	`;
 
