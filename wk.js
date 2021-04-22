@@ -100,6 +100,8 @@ deletes given component folder recursively
 
   wk extras                                  (x)
 generates extra utility javascript files
+
+for more info, visit -> wk.js.org
 	`;
 
 	log(msg);
