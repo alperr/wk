@@ -2,7 +2,6 @@
 
 const FS = require('fs');
 const PATH = require('path');
-const EXEC = require('child_process').execSync;
 const FG_RED = "\x1b[31m";
 const FG_DIM = "\x1b[2m";
 const BG_GREEN = "\x1b[42m";
@@ -22,7 +21,7 @@ const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.10";
+const VERSION = "0.5.11";
 
 var commands =
 {
@@ -82,7 +81,7 @@ function print_large_help()
 {
 	version();
 	var msg = `
-wk has following 8 commands
+wk (version ${version}) has following 6 commands
 
   wk init                            (i)
 initializes a new project
@@ -108,18 +107,12 @@ deletes component folder recursively
 
   wk extras                          (x)
 generates extra utility javascript files
-
-  wk help                            (h)
-prints this help text
-
-  wk version                         (v)
-prints version
 	`;
 
 	log(msg);
 }
 
-function init(type)
+function init()
 {
 	if (is_project_valid("./"))
 	{
@@ -319,20 +312,6 @@ function new_component(a)
 	create_component_files(a[0]);
 }
 
-function bundle()
-{
-	var CHEERIO = require('cheerio');
-	var $ = CHEERIO.load(render_index_html(false));
-
-	var scripts = $("script")
-	
-}
-
-function export_component()
-{
-	
-}
-
 function delete_component(a)
 {
 	if (a.length == 0)
@@ -360,16 +339,6 @@ function delete_component(a)
 function version()
 {
 	log("version: " + VERSION);
-}
-
-function commit(message)
-{
-	if (typeof message === "undefined")
-		message = "auto release";
-
-	EXEC("git add -A;");
-	EXEC("git commit -m '"+message+"';");
-	EXEC("git push;");
 }
 
 function check_version()
@@ -559,7 +528,7 @@ function transpile_all()
 	var js = "";
 	var css = "";
 	var markups = {}
-	var js_files = [];
+	
 	var names = [];
 
 	var files = FS.readdirSync(BASE_PATH_SRC);
@@ -567,9 +536,9 @@ function transpile_all()
 	{
 		var f = files[i];
 		if (f.endsWith(".js"))
-			js_files.push(BASE_PATH_SRC + f);
-
+			js += FS.readFileSync(BASE_PATH_SRC + f, "utf8") + '\n';
 	}
+
 
 	files = FS.readdirSync(BASE_PATH_COMPONENT);
 	for (var i=0;i<files.length;i++)
@@ -648,11 +617,7 @@ function transpile_all()
 	}
 	catch(e){}
 	
-	for (var i=0;i<js_files.length;i++)
-	{
-		var jf = js_files[i]
-		js += FS.readFileSync(jf, "utf8") + '\n';
-	}
+
 
 	g_js = js;
 	g_css = css;
