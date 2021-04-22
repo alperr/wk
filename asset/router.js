@@ -1,4 +1,6 @@
 var router_paths = {}
+var g_current_route = "/";
+var g_last_shown_route;
 
 function navigate(path, should_add_history)
 {
@@ -14,7 +16,6 @@ function navigate(path, should_add_history)
 			router_paths[key][0].style.display = "none";		
 	}
 
-	
 	var is_public = router_paths[path][2];
 
 	if (!is_public)
@@ -31,9 +32,6 @@ function navigate(path, should_add_history)
 
 	if (should_add_history)
 		window.history.pushState(path, title, path);
-
-	// console.log(g_last_shown_route);
-	// console.log(g_current_route);
 
 	g_last_shown_route = g_current_route;
 	g_current_route = path;
@@ -82,4 +80,22 @@ function init_router(dom)
 			
 		navigate(path, false);
 	};
+}
+
+function init_page(page)
+{
+	var tag = page.tagName.toLowerCase();
+	var path = "/" + tag.substring(5)
+	var onroutechange = ()=>
+	{
+		if (g_last_shown_route == g_current_route)
+			return;
+
+		if (g_last_shown_route == path)
+			page.onhide();
+
+		if (g_current_route == path)
+			page.onshow();
+	}
+	on(ROUTE_CHANGE, onroutechange);
 }

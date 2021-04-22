@@ -8,6 +8,7 @@ var map =
 {
 	"const SOURCE_INDEX = " 	: "index.html",
 	"const SOURCE_SAMPLE = " 	: "sample.js",
+	"const SOURCE_SAMPLE_PAGE = " 	: "sample-page.js",
 	"const SOURCE_BASIC_HTML = " 	: "basic-template.html",
 	"const SOURCE_BASIC_CSS = " 	: "basic-template.css",
 	"const SOURCE_HTTP = " 		: "http.js",
