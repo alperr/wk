@@ -2,6 +2,24 @@ var router_paths = {}
 var g_current_route = "/";
 var g_last_shown_route;
 
+
+// this function is toggles 2 classes depending on the condition
+// toggle_class(is_enabled, d, "btn-blue", "btn-red")
+function toggle_class(dom, condition, a, b)
+{
+	if(condition)
+	{
+		dom.classList.add(a);
+		dom.classList.remove(b);
+	}
+	else
+	{
+		dom.classList.add(b);
+		dom.classList.remove(a);
+	}
+}
+
+
 function navigate(path, should_add_history)
 {
 	if (typeof router_paths[path] == "undefined")
