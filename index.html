@@ -10,7 +10,7 @@
 @charset "utf-8";
 html, body, header, nav, ul, li {margin:0;padding:0;border:0;font-size:100%;font-weight:normal;vertical-align:baseline;background:transparent;}
 html {font:16px monospace;}
-body {color:#000000;margin:20px auto 80px auto;max-width:800px; width:96%;background:#fefefe;}
+body {color:#000000;margin:20px auto 80px auto;max-width:820px; width:96%;background:#fefefe;}
 ul {list-style-position:outside; margin-left:10px;}
 ul li {margin-left:10px;padding-bottom:5px;}
 ul.index {margin:0;padding:0;}
@@ -71,7 +71,7 @@ footer { margin:30px 0px;}
 body{background-color: #222; color: #ddd;}
 /*a{color: #15e724;}
 a:visited{color: #15b724;}*/
-a{color:#fff;font-weight: bolder;text-decoration: underline;}
+a{color:#fff;font-weight: bolder;}
 a:visited{color: #aaa;}
 pre{background: #111; color: #cec; border-color: #333;}
 /*a{color:#fff;}*/
@@ -88,9 +88,10 @@ pre{background: #111; color: #cec; border-color: #333;}
 <!--<a href="https://github.com/alperr/wk">Binary Download (linux-x86-64)</a>-->
 
 
-<p class="info info-blue abstract">wk is a CLI tool for developing single-page-applications with <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements">standart web components syntax</a>.</p>
+<p class="info info-blue abstract">wk is a CLI tool for developing single-page-applications with <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements">web components syntax</a>.</p>
 
-<p><img style="width: 100%; border-radius:10px; box-sizing: border-box; padding: 20px; background: #0a0a0a;" src="https://raw.githubusercontent.com/alperr/wk/master/asset/usage.svg?sanitize=true" alt="usage"></p>
+<p><img style="border-radius: 10px;padding: 20px;background: #0b0b0b;width: 100%;box-sizing: border-box;" src="https://raw.githubusercontent.com/alperr/wk/master/asset/usage.svg?sanitize=true" alt="usage"></p>
+
 
 <!--<h3>Table of content</h3>
 <ul>
@@ -130,15 +131,24 @@ Since these binaries include a nodejs runtime in it they are pretty big (~20mb)<
 
 <h2 id="who-is-this-for">Who is this for?</h2>
 <p>
-This tool is not meant to be widely accepted by most web developers and it does not
-follow the latest trends in web development. It neither does not integrate with other
-web development tools.
+This is an experimental build tool that I use in my own projects, and I don't
+expect anyone to find this useful and use in their own work. 
+</p>
+
+<p>
+I have prepared this document for those who really dislikes <i>modern</i> web development and 
+looking for an alternative approach to build web applications.
+</p>
+
+<p>
+Since I am biased against modern methods of web development, I tried to get rid of
+all unnecessary (IMO) frameworks, transpilers, task runners, dependency managers
+as much as possible and implemented some of their functionality in this CLI in a very minimal way.
 </p>
 
 <p>
 Here are the list of the most radical decisions in this web 
-application development method that can show you if this CLI and development method
-is a good fit for you or not.
+application development method that can show you if this CLI is a good fit for you or not.
 </p>
 
 <!--<p class="info info-red abstract">1. Imperative over Declarative / Markup and logic separated </p>-->
