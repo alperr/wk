@@ -106,7 +106,7 @@ pre{background: #111; color: #cec; border-color: #333;}
 </ul>-->
 
 <h2 id="introduction">Introduction</h2>
-<p>wk is a simple and <a href="#who-is-this-for">extremely opinionated</a> CLI tool
+<p>wk is a simple and <a href="#who-is-this-for">opinionated</a> CLI tool
 that imposes a simple approach that (only) uses html, css and javascript for writing web applications.</p>
 <p>This CLI has 6 simple commands that is sufficient to 
 <ul>
@@ -154,14 +154,27 @@ application development method that can show you if this CLI is a good fit for y
 <!--<p class="info info-red abstract">1. Imperative over Declarative / Markup and logic separated </p>-->
 <h3>1. Imperative over Declarative / Markup and logic separated </h3>
 <p>
-	Despite writing more code, imperative programming is easier to debug and has less
-	hidden behaviour. Not having the full control on rendering makes trivial problems like 'preventing redundant re-renders' a big issue
-	and forces you to either learn the internals of the declarative rendering logic 
-	or blindly follow the constantly-changing-best-practice for that specific problem.
+Despite writing more code, imperative programming is easier to debug and has less
+hidden behaviour. Not having the full control on rendering makes trivial problems 
+like 'preventing redundant re-renders' a big issueand forces you to either
+learn the internals of the declarative rendering logic 
+or blindly follow the constantly-changing-best-practice for that specific problem.
+</p>
+
+<p>
+Wk also tries to keep markup and logic separated which is impossible for 
+declerative UI programming. Mixing markup and logic requires you to invent a new
+language or a new syntax (eg: directives in angular/vue and jsx in react).
+
+HTML/JS/CSS are already very high level and powerful concepts and adding another
+language 
+There is no need to learn a new programming or markup language
+This results effort to 
+
+
 </p>
 
 <!--easily takes away the convenience of writing less code
- 
 
 Since wk does not introduce any runtime itself, only concept
 that should be understood is the <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks"> lifecycle callbacks </a>
@@ -175,11 +188,25 @@ Mixing markup and logic requires you to invent a new language or a new syntax
 (eg: directives in angular/vue and jsx in react). Which results  effort to 
 -->
 <h3>2. Manual DOM manipulation</h3>
-<i>WIP</i>
+<p>
+Methods like data binding, virtual DOM are not used in projects developed with wk.
+Those concepts introduces lots of complexity and mostly ends up writing more code than
+their 
+
+Hence all dom manipulation is done manually with using methods and properties like
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelector">querySelector</a>,
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode">cloneNode</a> and ,
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">innerHTML</a>.
+
+In order to develop web apps with this tool you must be proficient with standart
+Web APIs and manual DOM manipulation techniques.
+
+</p>
 
 <h3>3. No 3rd party tool support </h3>
 <i>WIP</i>
-	
+
+As of 2021 any github contains tens of configuration files 
 
 <!--<p>Source code of the CLI tool is simple and small as well. It has less than 1k LOC and 
 
@@ -314,13 +341,12 @@ major browsers, which makes one of the transpilation reasons fade away</li>
 <h3 id="what-is-gained-by-dropping-typescript">what is gained by dropping typescript</h3>
 <ul>
 <li>faster build times (5-10 seconds to 10-50 milliseconds)</li>
-<li>less things to learn for new wk users</li>
+<li>less things to learn</li>
 <li>smaller codebase for maintaining wk development itself</li>
 </ul>
 <h3 id="what-is-lost-by-dropping-typescript">what is lost by dropping typescript</h3>
 <ul>
-<li>very helpful type checks</li>
-<li>smart autocomplete, code navigation</li>
+<li>type checks, IDE refactoring features</li>
 </ul>
 <p>still, i am not convinced that dropping typescript is a good idea,
 since wk is still in an experimental stage, i may re-introduce typescript 
