@@ -4,6 +4,7 @@ package-lock.json
 **/.DS_Store
 .env
 .sublime-project
+jsconfig.json
 com/*
 src/*
 www/*
