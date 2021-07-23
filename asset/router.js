@@ -1,29 +1,10 @@
 var router_paths = {}
-var g_current_route = "/";
-var g_last_shown_route;
-
-
-// this function is toggles 2 classes depending on the condition
-// toggle_class(is_enabled, d, "btn-blue", "btn-red")
-function toggle_class(dom, condition, a, b)
-{
-	if(condition)
-	{
-		dom.classList.add(a);
-		dom.classList.remove(b);
-	}
-	else
-	{
-		dom.classList.add(b);
-		dom.classList.remove(a);
-	}
-}
-
 
 function navigate(path, should_add_history)
 {
 	if (typeof router_paths[path] == "undefined")
 	{
+		console.error("cant find path " + path);
 		hide_all();
 		return;
 	}
@@ -65,12 +46,18 @@ function init_router(dom)
 	for (var i=0;i<children.length;i++)
 	{
 		var c = children[i];
-		var path = c.getAttribute("path");
 		var title = c.getAttribute("title");
 		var is_public = c.hasAttribute("public");
+		var tag_name = c.tagName.toLowerCase();
 
-		if (path == null)
+		var path;
+		if (tag_name == "page-main")
+			path = "/"
+		else if (tag_name.startsWith("page-"))
+			path = "/" + tag_name.substring(5);
+		else
 			continue;
+
 		if (title == null)
 			title = "";
 
@@ -92,6 +79,7 @@ function init_router(dom)
 
 	window.onpopstate = function(e)
 	{
+		console.log(e);
 		var path = "/";
 		if (e.state)
 			path = e.state;
@@ -100,20 +88,19 @@ function init_router(dom)
 	};
 }
 
-function init_page(page)
+function init_page(path, onshow, onhide)
 {
-	var tag = page.tagName.toLowerCase();
-	var path = "/" + tag.substring(5)
-	var onroutechange = ()=>
+	if (typeof onhide == "undefined")
+		onhide = function(){}
+
+	function f()
 	{
-		if (g_last_shown_route == g_current_route)
-			return;
-
-		if (g_last_shown_route == path)
-			page.onhide();
-
 		if (g_current_route == path)
-			page.onshow();
+			onshow();
+	
+		if (g_last_shown_route == path)
+			onhide();
 	}
-	on(ROUTE_CHANGE, onroutechange);
+
+	on(ROUTE_CHANGE, f);
 }
