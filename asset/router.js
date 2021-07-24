@@ -91,20 +91,24 @@ function init_router(dom)
 
 function init_page(page)
 {
-	var path = this.tagName.toLowerCase()
-	var onshow = page.onshow;
-	var onhide = page.onhide;
+	var tag_name = page.tagName.toLowerCase()
  
+	var path;
+	if (tag_name == "page-main")
+		path = "/"
+	else if (tag_name.startsWith("page-"))
+		path = "/" + tag_name.substring(5);
+
 	if (typeof onhide == "undefined")
 		onhide = function(){}
 
 	function f()
 	{
 		if (g_current_route == path)
-			onshow();
+			page.onshow();
 	
 		if (g_last_shown_route == path)
-			onhide();
+			page.onhide();
 	}
 
 	on(ROUTE_CHANGE, f);
