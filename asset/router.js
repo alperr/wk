@@ -1,8 +1,9 @@
-var router_paths = {}
+var g_router_paths = {}
+var g_current_route;
 
 function navigate(path, should_add_history)
 {
-	if (typeof router_paths[path] == "undefined")
+	if (typeof g_router_paths[path] == "undefined")
 	{
 		console.error("cant find path " + path);
 		hide_all();
@@ -11,11 +12,11 @@ function navigate(path, should_add_history)
 
 	function hide_all()
 	{
-		for (var key in router_paths)
-			router_paths[key][0].style.display = "none";		
+		for (var key in g_router_paths)
+			g_router_paths[key][0].style.display = "none";		
 	}
 
-	var is_public = router_paths[path][2];
+	var is_public = g_router_paths[path][2];
 
 	if (!is_public)
 	{
@@ -26,7 +27,7 @@ function navigate(path, should_add_history)
 		}
 	}
 
-	var title = router_paths[path][1];
+	var title = g_router_paths[path][1];
 	document.title = title;
 
 	if (should_add_history)
@@ -36,7 +37,7 @@ function navigate(path, should_add_history)
 	g_current_route = path;
 	
 	hide_all();
-	router_paths[path][0].style.display = "block";
+	g_router_paths[path][0].style.display = "block";
 	dispatch(ROUTE_CHANGE);
 }
 
@@ -61,7 +62,7 @@ function init_router(dom)
 		if (title == null)
 			title = "";
 
-		router_paths[path] = [c, title, is_public];
+		g_router_paths[path] = [c, title, is_public];
 	}
 
 	var all_links = document.querySelectorAll("a[internal]");
@@ -88,8 +89,12 @@ function init_router(dom)
 	};
 }
 
-function init_page(path, onshow, onhide)
+function init_page(page)
 {
+	var path = this.tagName.toLowerCase()
+	var onshow = page.onshow;
+	var onhide = page.onhide;
+ 
 	if (typeof onhide == "undefined")
 		onhide = function(){}
 

@@ -1,6 +1,6 @@
 {
   "name": "wk-toolkit",
-  "version": "0.5.15",
+  "version": "0.5.16",
   "repository": "github:alperr/wk",
   "bin": {
     "wk": "./bin/wk"
