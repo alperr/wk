@@ -108,13 +108,15 @@ for more info, visit -> wk.js.org
 	log(msg);
 }
 
-function init()
+function init(type)
 {
 	if (is_project_valid("./"))
 	{
 		error("current folder is already initialized");
 		return;
 	}
+
+	console.log("type", type)
 
 	log("initializing a new  project");
 	

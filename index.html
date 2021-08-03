@@ -156,7 +156,7 @@ application development method that can show you if this CLI is a good fit for y
 <p>
 Despite writing more code, imperative programming is easier to debug and has less
 hidden behaviour. Not having the full control on rendering makes trivial problems 
-like 'preventing redundant re-renders' a big issueand forces you to either
+like 'preventing redundant re-renders' a big issue and forces you to either
 learn the internals of the declarative rendering logic 
 or blindly follow the constantly-changing-best-practice for that specific problem.
 </p>
@@ -167,7 +167,9 @@ declerative UI programming. Mixing markup and logic requires you to invent a new
 language or a new syntax (eg: directives in angular/vue and jsx in react).
 
 HTML/JS/CSS are already very high level and powerful concepts and adding another
-language and there is no need to learn a new programming or markup language ..
+language to the web is redundant. There is no need to learn a new programming or 
+markup language since current ones already sufficient to build complex web applications.
+
 <!--This results effort to -->
 
 
@@ -190,7 +192,7 @@ Mixing markup and logic requires you to invent a new language or a new syntax
 <p>
 Methods like data binding, virtual DOM are not used in projects developed with wk.
 Those concepts introduces lots of complexity and mostly ends up writing more code than
-their 
+their manual DOM management counterparts.
 
 Hence all dom manipulation is done manually with using methods and properties like
 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelector">querySelector</a>,
@@ -198,14 +200,19 @@ Hence all dom manipulation is done manually with using methods and properties li
 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">innerHTML</a>.
 
 In order to develop web apps with this tool you must be proficient with standart
-Web APIs and manual DOM manipulation techniques.
+Web APIs and manual DOM manipulation techniques. Wk is not a beginner friendly tool and
+it expects you to know most Web APIs by heart.
 
 </p>
 
-<h3>3. No 3rd party tool support </h3>
-<i>WIP</i>
+<h3>3. No 3rd party tool support and not configurable</h3>
+<p>Wk is especially designed as non-integrable with other popular tools like
+webpack, grunt, gulp, babel, typescript, sass, eslint, package.json and etc..
+If one of these tools are essential for your workflow or if you like configuration files
+wk is probably not a good tool for you.
+</p>
 
-As of 2021 any github contains tens of configuration files 
+<!-- As of 2021 any github contains tens of configuration files -->
 
 <!--<p>Source code of the CLI tool is simple and small as well. It has less than 1k LOC and 
 
