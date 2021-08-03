@@ -156,7 +156,7 @@ application development method that can show you if this CLI is a good fit for y
 <h3>1. Imperative over Declarative / Markup and logic separated </h3>
 <p>
 Despite writing more code, imperative programming is easier to debug and has less
-hidden behaviour. Not having the full control on rendering makes trivial problems 
+hidden behaviour. Not having the full control on (so-called) rendering makes trivial problems 
 like 'preventing redundant re-renders' a big issue and forces you to either
 learn the internals of the declarative rendering logic 
 or blindly follow the constantly-changing-best-practice for that specific problem.
@@ -180,17 +180,6 @@ of the standart web components.
 
 </p>
 
-<!--easily takes away the convenience of writing less code
-
-
-
-Advanta
-selecting a node from markup and updating its value
-In order to reduce the repeating patterns 
-For the sake of writing less but obscure
-Mixing markup and logic requires you to invent a new language or a new syntax
-(eg: directives in angular/vue and jsx in react). Which results  effort to 
--->
 <h3>2. Manual DOM manipulation</h3>
 <p>
 Methods like data binding, virtual DOM are not used in projects developed with wk.
@@ -204,7 +193,7 @@ Hence all dom manipulation is done manually with using methods and properties li
 
 In order to develop web apps with this tool you must be proficient with standart
 Web APIs and manual DOM manipulation techniques. Wk is not a beginner friendly tool and
-it expects you to know most Web APIs by heart.
+it expects you to know <b>all</b> Web APIs by heart.
 
 </p>
 
@@ -218,7 +207,8 @@ wk is probably not a good tool for you.
 
 
 <h2>FAQ</h2>
-If you don't use 
+<p>Q1) If you don't use package.json, how do you install dependencies</p>
+<p>A1) script tag is introduced in 1995 and capable of loading external script sources</p>
 
 <!-- As of 2021 any github contains tens of configuration files -->
 
