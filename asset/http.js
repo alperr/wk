@@ -5,9 +5,6 @@ var g_http_base = "https://remoteapi.com/";
 if (location.hostname == "localhost")
 	g_http_base = "http://localhost:7124/";
 
-
-
-	
 function http_post_bar(data1, data2, onload) // sample post request
 {
 	var body =
@@ -19,23 +16,10 @@ function http_post_bar(data1, data2, onload) // sample post request
 	http_xhr("POST", "bar", onload, body);
 }
 
-function http_xhr(method, url, params, onload, is_secure, prevent_parse)
+function http_xhr(method, url, onload, body, should_parse)
 {
-	var body;
-	if (method.toUpperCase() == "POST")
-	{
-		body = params;
-		if(is_secure)
-			body.token = g_token;
-	}
-
-	if (method.toUpperCase() == "GET")
-	{
-		url += http_serialize(params, is_secure)
-	}
-
-	if (typeof prevent_parse == "undefined")
-		prevent_parse = false;
+	if (typeof should_parse == "undefined")
+		should_parse = true;
 
 	var x = new XMLHttpRequest();
 	x.open(method, g_http_base + url);
@@ -57,14 +41,14 @@ function http_xhr(method, url, params, onload, is_secure, prevent_parse)
 		try
 		{
 			var r = x.responseText;
-			if (!prevent_parse)
+			if (should_parse)
 				r = JSON.parse(r);
 
 			try{
 				onload(r, false, x.status);
 			} catch(e) { 
-				console.log("http handler error");
-				console.log(e);
+				console.error("http handler error");
+				console.warn(e);
 			}
 		}
 		catch(e)
