@@ -1,9 +1,11 @@
-var g_router_paths = {}
-var g_current_route;
+var router = {};
+router.paths = {};
+router.current = undefined
+router.previous = undefined;
 
-function navigate(path, should_add_history)
+router.navigate = function (path, should_add_history)
 {
-	if (typeof g_router_paths[path] == "undefined")
+	if (typeof router.paths[path] == "undefined")
 	{
 		console.error("cant find path " + path);
 		hide_all();
@@ -12,11 +14,12 @@ function navigate(path, should_add_history)
 
 	function hide_all()
 	{
-		for (var key in g_router_paths)
-			g_router_paths[key][0].style.display = "none";		
+		for (var key in router.paths)
+			router.paths[key][0].style.display = "none";		
 	}
 
-	var is_public = g_router_paths[path][2];
+	
+	var is_public = router.paths[path][2];
 
 	if (!is_public)
 	{
@@ -27,22 +30,37 @@ function navigate(path, should_add_history)
 		}
 	}
 
-	var title = g_router_paths[path][1];
+	var title = router.paths[path][1];
 	document.title = title;
 
 	if (should_add_history)
 		window.history.pushState(path, title, path);
 
-	g_last_shown_route = g_current_route;
-	g_current_route = path;
+	router.previous = router.current;
+	router.current = path;
 	
 	hide_all();
-	g_router_paths[path][0].style.display = "block";
+	router.paths[path][0].style.display = "block";
 	dispatch(ROUTE_CHANGE);
 }
 
-function init_router(dom)
+router.init = function(dom)
 {
+	dom = dom.children[0]
+	function is_root_valid(d)
+	{
+		var children = d.children;
+		for (var i=0;i<children.length;i++)
+		{
+			var c = children[i];
+			var tag_name = c.tagName.toLowerCase();
+			if (tag_name.startsWith("page-"))
+				return true;
+		}
+
+		return false;
+	}
+
 	var children = dom.children;
 	for (var i=0;i<children.length;i++)
 	{
@@ -59,10 +77,12 @@ function init_router(dom)
 		else
 			continue;
 
+		console.error(c);
+
 		if (title == null)
 			title = "";
 
-		g_router_paths[path] = [c, title, is_public];
+		router.paths[path] = [c, title, is_public];
 	}
 
 	var all_links = document.querySelectorAll("a[internal]");
@@ -72,11 +92,12 @@ function init_router(dom)
 		a.onclick = function(e)
 		{
 			e.preventDefault();
-			navigate(this.getAttribute("href"), true);
+			//console.log("qq")
+			router.navigate(this.getAttribute("href"), true);
 		}
 	}
 
-	navigate(window.location.pathname, false);
+	router.navigate(window.location.pathname, false);
 
 	window.onpopstate = function(e)
 	{
@@ -85,15 +106,14 @@ function init_router(dom)
 		if (e.state)
 			path = e.state;
 			
-		navigate(path, false);
+		router.navigate(path, false);
 	};
 }
 
-function init_page(page)
+router.init_page = function(page)
 {
 	var tag_name = page.tagName.toLowerCase()
- 
-	var path;
+ 	var path;
 	if (tag_name == "page-main")
 		path = "/"
 	else if (tag_name.startsWith("page-"))
@@ -104,10 +124,10 @@ function init_page(page)
 
 	function f()
 	{
-		if (g_current_route == path)
+		if (router.current == path)
 			page.onshow();
 	
-		if (g_last_shown_route == path)
+		if (router.previous == path)
 			page.onhide();
 	}
 
