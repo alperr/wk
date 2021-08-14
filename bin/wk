@@ -23,7 +23,7 @@ const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.18";
+const VERSION = "0.5.19";
 
 var commands =
 {
@@ -108,13 +108,15 @@ for more info, visit -> wk.js.org
 	log(msg);
 }
 
-function init()
+function init(type)
 {
 	if (is_project_valid("./"))
 	{
 		error("current folder is already initialized");
 		return;
 	}
+
+	console.log("type", type)
 
 	log("initializing a new  project");
 	

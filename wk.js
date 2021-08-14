@@ -23,7 +23,7 @@ const BASE_PATH_PUBLIC = "./public/";
 const BASE_PATH_SRC = "./src/";
 const BASE_PATH_COMPONENT = "./src/components/";
 
-const VERSION = "0.5.18";
+const VERSION = "0.5.19";
 
 var commands =
 {
