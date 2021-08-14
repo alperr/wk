@@ -1,1 +1,1 @@
-[Project Website](https://wk.js.org)
+[wk.js.org](https://wk.js.org)

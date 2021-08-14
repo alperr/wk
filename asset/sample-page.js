@@ -3,7 +3,7 @@ class extends HTMLElement
 	constructor(){ super(); }
 	connectedCallback()
 	{
-		init_page(this);
+		router.init_page(this);
 	}
 
 	onshow()

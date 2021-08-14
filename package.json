@@ -12,6 +12,6 @@
     "node-watch": "0.6.3"
   },
   "scripts": {
-    "pub": "pkg wk.js --target node12-linux-x64 --output dist/wk"
+    "pub": "pkg wk.js --target node12-linux-x64 --output dist/wk;sudo cp dist/wk /usr/local/bin;"
   }
 }
