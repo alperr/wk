@@ -104,17 +104,8 @@ that imposes a simple approach that (only) uses html, css and javascript for wri
 </ul>
 	
 <h3 id="installation">Installation</h3>
-<p>This CLI tool is available as an executable binary for linux-x64</p>
+<p>This CLI tool is available as an executable binary only for linux-x64</p>
 <pre><code>wget wk.js.org/dist/wk</code></pre>
-
-<!--<p>If you don't have nodejs or npm installed on your machine you can download prebuilt binaries of the CLI for your OS and CPU architechture.
-Since these binaries include a nodejs runtime in it they are pretty big (~20mb)</p>
-<ul>
-	<li><a href="">linux-x86-64</a></li>
-	<li><a href="">win-x86-64</a></li>
-	<li><a href="">osx-x86-64</a></li>
-	<li><a href="">osx-ARM-64 (Apple CPUs)</a></li>
-</ul>-->
 
 
 <h2 id="who-is-this-for">Who is this for?</h2>
@@ -192,28 +183,14 @@ wk is probably not a good tool for you.
 </p>
 
 
+<!-- <h2>FAQ</h2> -->
+<!-- <p>Q1) If you don't use package.json, how do you install dependencies</p> -->
+<!-- <p>A1) script tag is introduced in 1995 and capable of loading external script sources</p> -->
 
-<h2>FAQ</h2>
-<p>Q1) If you don't use package.json, how do you install dependencies</p>
-<p>A1) script tag is introduced in 1995 and capable of loading external script sources</p>
-
-<!-- As of 2021 any github contains tens of configuration files -->
-
-<!--<p>Source code of the CLI tool is simple and small as well. It has less than 1k LOC and 
-
-</p>-->
-
-<!--<p>i wrote this out of frustration with current web development methods (aka: js frameworks)</p>
-<p><em>this project is under active development and its API is subjected to change</em></p>-->
-<!--<h3 id="installation">Installation</h3>
-<p>this CLI tool is available through npm</p>
-<pre><code>npm <span class="hljs-selector-tag">i</span> -g wk-toolkit-->
-<!--</code></pre>-->
 <h2 id="cli-usage">CLI Usage</h2>
 <h3 id="initializing-a-project">Initializing a project</h3>
 <pre><code><span class="hljs-attribute">wk init</span>
 </code></pre><ul>
-<li>Checks if current folder has already initialized</li>
 <li>Creates boilerplate folders/files for a project if not initialized before</li>
 </ul>
 <h3 id="starting-development-server">Starting development server</h3>
@@ -221,7 +198,6 @@ wk is probably not a good tool for you.
 </code></pre><ul>
 <li>Starts the file server that hosts the web application on 127.0.0.1 in an available port</li>
 <li>Starts a file watcher that concatanates the source files (css, js, html) upon change</li>
-<li>Opens a browser window that runs the web application</li>
 </ul>
 <h3 id="making-a-production-build">Making a production build</h3>
 <pre><code><span class="hljs-attribute">wk build</span>
