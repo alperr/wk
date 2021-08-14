@@ -2,9 +2,6 @@
   "name": "wk-toolkit",
   "version": "0.5.19",
   "repository": "github:alperr/wk",
-  "bin": {
-    "wk": "./bin/wk"
-  },
   "dependencies": {
     "express": "4.17.1",
     "portscanner": "2.2.0",
@@ -15,6 +12,6 @@
     "node-watch": "0.6.3"
   },
   "scripts": {
-    "pub": "cp wk.js ./bin/wk && git add -A && git commit -m 'npm release' && git push && npm publish"
+    "pub": "pkg wk.js --target node12-linux-x64 --output dist/wk"
   }
 }
