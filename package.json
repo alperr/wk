@@ -1,6 +1,6 @@
 {
   "name": "wk-toolkit",
-  "version": "0.5.19",
+  "version": "0.5.22",
   "repository": "github:alperr/wk",
   "dependencies": {
     "express": "4.17.1",

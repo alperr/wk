@@ -47,20 +47,6 @@ router.navigate = function (path, should_add_history)
 router.init = function(dom)
 {
 	dom = dom.children[0]
-	function is_root_valid(d)
-	{
-		var children = d.children;
-		for (var i=0;i<children.length;i++)
-		{
-			var c = children[i];
-			var tag_name = c.tagName.toLowerCase();
-			if (tag_name.startsWith("page-"))
-				return true;
-		}
-
-		return false;
-	}
-
 	var children = dom.children;
 	for (var i=0;i<children.length;i++)
 	{
@@ -76,8 +62,6 @@ router.init = function(dom)
 			path = "/" + tag_name.substring(5);
 		else
 			continue;
-
-		console.error(c);
 
 		if (title == null)
 			title = "";
