@@ -77,9 +77,7 @@ pre{background: #111; color: #cec; border-color: #333;}
 /*a{color:#fff;}*/
 .info-blue{color: #bbd5ff;background-color: #004085;border-color: #005095;}
 .info-blue>a{font-weight: bold; color: #eeffff}
-/*.info-red{color: #cce5ff;background-color: #004085;border-color: #005095;}*/
 .info-red{color: #f8d7da;background-color: #721c24;border-color: #822c34;}
-/*.info-red {color:#721c24;background-color:#f8d7da;border-color:#f5c6cb;}*/
 </style>
 </head>
 <body>
@@ -98,16 +96,21 @@ that imposes a simple approach that (only) uses html, css and javascript for wri
 <p>This CLI has 3 simple commands that is sufficient to 
 <ul>
 <li>Initialize a project and create necessary boilerplate files</li>
-<li>Start a file watcher that auto-builds the source code as you change</li>
-<li>Start a development file server</li>
-<li>Build the css and javascript source code and minify & merge them for production</li>
+<li>Start a development file server and a file watcher that auto-builds the source code as you change</li>
+<li>Minify & merge the css and javascript source code for production</li>
 </ul>
 	
 <h3 id="installation">Installation</h3>
-<p>This CLI tool is available as an executable binary only for linux-x64</p>
+<p>This CLI tool is available as an executable binary only for linux-x86-64</p>
 <pre><code>wget wk.js.org/dist/wk</code></pre>
 
-
+<h2 id="goals">Goals</h2>
+<ul>
+<li>Small javascript output (~50kb for reasonably large web apps)</li>
+<li>Fast development (&lt;5ms) and production (&lt;2s) builds</li>
+<li>Zero configuration and external tools (other than wk) for development</li>
+<li>No new languages/markup to learn other than HTML/CSS/JS</li>
+</ul>
 <h2 id="who-is-this-for">Who is this for?</h2>
 <p>
 This is an experimental build tool that I use in my own projects, and I don't
@@ -130,7 +133,6 @@ Here are the list of the most radical decisions in this web
 application development method that can show you if this CLI is a good fit for you or not.
 </p>
 
-<!--<p class="info info-red abstract">1. Imperative over Declarative / Markup and logic separated </p>-->
 <h3>1. Imperative over Declarative / Markup and logic separated </h3>
 <p>
 Despite writing more code, imperative programming is easier to debug and has less
@@ -152,9 +154,6 @@ markup language since current ones already sufficient to build complex web appli
 Since wk does not introduce any runtime itself, only concept that should be understood is the 
 <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks"> lifecycle callbacks </a>
 of the standart web components.
-
-<!--This results effort to -->
-
 
 </p>
 
