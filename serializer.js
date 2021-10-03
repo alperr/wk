@@ -14,8 +14,6 @@ var map =
 	"const SOURCE_HTTP = " 		: "http.js",
 	"const SOURCE_EVENT = "		: "event.js",
 	"const SOURCE_ROUTER = "	: "router.js",
-	"const SOURCE_START_SCRIPT = "	: "start-script.html",
-	"const SOURCE_HOT_RELOAD = "	: "hot-reload.js",
 	"const SOURCE_UTIL = "		: "util.js"
 }
 

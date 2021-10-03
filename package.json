@@ -1,13 +1,12 @@
 {
   "name": "wk-toolkit",
-  "version": "0.5.22",
+  "version": "0.5.23",
   "repository": "github:alperr/wk",
   "dependencies": {
     "express": "4.17.1",
     "portscanner": "2.2.0",
     "uglify-es": "3.3.9",
     "uglifycss": "0.0.29",
-    "ws": "7.1.2",
     "cheerio": "1.0.0-rc.2",
     "node-watch": "0.6.3"
   },
