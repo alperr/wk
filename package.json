@@ -3,7 +3,7 @@
   "version": "0.5.24",
   "repository": "github:alperr/wk",
   "dependencies": {
-    "express": "4.17.1",
+    "express": "4.19.2",
     "portscanner": "2.2.0",
     "uglify-es": "3.3.9",
     "uglifycss": "0.0.29",
